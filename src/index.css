@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+
+* {
+  border: red 1px soli;
+}
+
+
+@theme {
+  --color-accent: #E5F066;
+  --color-primary: #2E2E38;
+  --color-text-light: #F1F1F1;
+  --color-background: #1B1B1B;
+}
+
+
+h1 {
+  @apply text-[4rem] font-bold text-primary
+}
