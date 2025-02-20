@@ -17,3 +17,7 @@
 h1 {
   @apply text-[4rem] font-bold text-primary
 }
+
+p {
+  @apply text-[1rem]
+}
