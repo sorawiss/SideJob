@@ -1,8 +1,6 @@
 .rizzui-input-container {
     background-color: #F2F8AF;
     border: none !important;
-    outline: none !important;
     box-shadow: none !important;
-    ring-width: 0 !important;
     border-radius: 16px;
 }

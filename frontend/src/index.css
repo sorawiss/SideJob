@@ -4,6 +4,12 @@
 * {
   border: red 1px soli;
 }
+body {
+  font-family: "Noto Sans Thai", sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  
+}
 
 
 @theme {
@@ -15,7 +21,7 @@
 
 
 h1 {
-  @apply text-[4rem] font-bold text-primary
+  @apply text-[4rem] font-extrabold text-primary
 }
 
 p {
