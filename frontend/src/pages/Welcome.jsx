@@ -1,6 +1,8 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
+
 import WelcomeSVG from '../assets/svg/welcome1.svg'
-import { Button } from "rizzui";
+import ButtonXL from '../components/ButtonXL'
 
 function Welcome() {
     return (
@@ -17,9 +19,9 @@ function Welcome() {
 
 
             {/* Input-SECTION */}
-            <div className="InputContainer flex flex-col items-center ">
-                <Button variant='solid' className='w-[22.5rem] bg-background text-text-light text-[2.25rem] h-[3.5rem] rounded-[0.75rem] '>Button</Button>
-                <p className='text-[1.25rem] '>Register</p>
+            <div className="InputContainer flex flex-col items-center gap-[1rem] ">
+                <Link to={'login'}><ButtonXL text='Login' /></Link>
+                <Link to={'register'}><p className='text-[1.25rem] '>Register</p></Link>
             </div>
 
 
