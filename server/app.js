@@ -40,7 +40,7 @@ app.post('/register',
             return
           }
 
-          res.json({ Phone: req.body.phone_number })
+          res.json({ message : "Register success", Phone: req.body.phone_number })
         }
       )
     })

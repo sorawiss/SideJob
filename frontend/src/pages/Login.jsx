@@ -17,7 +17,6 @@ function Login() {
     async function handleSubmit (e) {
         e.preventDefault()
         const loginData = { phone_number: phoneNumber, password: password }
-        console.log('collect data', loginData)
 
         // API Connection
         try {
@@ -26,14 +25,20 @@ function Login() {
                 headers : {
                     'Content-Type' : 'application/json',
                 },
-                body: JSON.stringify(jsonData)
+                body: JSON.stringify(loginData)
             })
+            
             const data = await response.json();
-            console.log("API Response:", data);
+            console.log(data)
+
+            if (data.message == 'Login Success') {
+                localStorage.setItem("token", data.token);
+                window.location = '/home'
+            }
         
             }
         catch (error) {
-            console.error("API Error:", error);
+            console.error("API Error in login API Connection:", error);
           }
 
     }
@@ -46,6 +51,7 @@ function Login() {
 
             <div className="form-container flex flex-col items-center bg-accent w-full h-[42rem] rounded-tl-[90px] gap-[2.5rem] py-[4.375rem] ">
                 <h1 className='text-primary'>เข้าสู่ระบบ</h1>
+                {/* Form */}
                 <form action="" onSubmit={handleSubmit} className='flex flex-col items-center gap-[2.5rem] border-none '>
                     <Input className='w-[22.5rem] h-[3.125rem] rounded-[16px]'
                         label="หมายเลขโทรศัพท์"
@@ -65,10 +71,10 @@ function Login() {
                                 e.preventDefault()
                                 setShowPassword(!showPassword)
                             }}
-                            onChange={ (e) => { setPassword(e.target.value) } }
                         />}
+                        onChange={ (e) => { setPassword(e.target.value) } }
                     />
-                    <ButtonXL text='เข้าสู่ระบบ' type = 'submit' />
+                    <ButtonXL text='เข้าสู่ระบบ' />
 
                     <p>ยังไม่มีบัญขี <Link to={'/register'}><span className='highlight'>สมัคร</span></Link></p>
                 </form>
