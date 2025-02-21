@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState } from 'react';
+import { Link } from 'react-router-dom'
 
 import { Input } from "rizzui";
 import ButtonXL from '../components/ButtonXL';
@@ -66,7 +67,7 @@ function Register() {
                     />
                     <ButtonXL text='สมัคร' />
 
-                    <p>Lorem ipsum dolor sit amet, login</p>
+                    <p>มีบัญชีแล้ว <Link to={'/login'}><span className='highlight'>เข้าสู่ระบบ</span></Link></p>
                 </form>
             </div>
         </div>

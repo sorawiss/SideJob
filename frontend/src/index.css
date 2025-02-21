@@ -27,3 +27,7 @@ h1 {
 p {
   @apply text-[1rem]
 }
+
+.highlight {
+  font-weight: 600;
+}
