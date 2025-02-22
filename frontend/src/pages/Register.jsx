@@ -49,7 +49,7 @@ function Register() {
 
 
     // Password check
-    const passwordError = password1 != password2 ? "รหัสผ่านไม่ตรงกัน" : ""
+    const passwordError = password1 != password2 ? "*รหัสผ่านไม่ตรงกัน" : ""
 
 
     return (
@@ -94,7 +94,11 @@ function Register() {
                         onChange={(e) => {setPassword1(e.target.value)}}
                     />
                     <Input className='w-[22.5rem] h-[3.125rem] rounded-[32px]'
-                        label= {`ยืนยันรหัสผ่าน ${passwordError}`}
+                        label= {
+                            <>
+                                ยืนยันรหัสผ่าน <span className="text-red-500">{passwordError}</span>
+                            </>
+                        }
                         placeholder="Enter your passoword"
                         type={showPassword2 ? 'text' : 'password'}
                         suffix={<img
@@ -108,6 +112,8 @@ function Register() {
                         />}
                         onChange={(e) => {setPassword2(e.target.value)}}
                     />
+                    <p>{passwordError}</p>
+
                     <ButtonXL text='สมัคร' />
 
                     <p>มีบัญชีแล้ว <Link to={'/login'}><span className='highlight'>เข้าสู่ระบบ</span></Link></p>
