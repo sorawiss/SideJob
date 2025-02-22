@@ -1,6 +1,10 @@
-.rizzui-input-container {
+.rizzui-input-container, .rizzui-password-container {
     background-color: #F2F8AF;
     border: none !important;
     box-shadow: none !important;
     border-radius: 16px;
+}
+
+.rizzui-password-toggle-icon {
+    cursor: pointer;
 }

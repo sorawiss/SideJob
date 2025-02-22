@@ -2,9 +2,8 @@ import React from 'react'
 import { useState } from 'react';
 import { Link } from 'react-router-dom'
 
-import { Input } from "rizzui";
+import { Input, Password } from "rizzui";
 import ButtonXL from '../components/ButtonXL';
-import eyes from '../assets/svg/eyes.svg'
 
 function Login() {
 
@@ -14,20 +13,20 @@ function Login() {
 
 
     // onSubmit Function
-    async function handleSubmit (e) {
+    async function handleSubmit(e) {
         e.preventDefault()
         const loginData = { phone_number: phoneNumber, password: password }
 
         // API Connection
         try {
             const response = await fetch('http://localhost:3333/login', {
-                method : 'POST',
-                headers : {
-                    'Content-Type' : 'application/json',
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(loginData)
             })
-            
+
             const data = await response.json();
             console.log(data)
 
@@ -35,11 +34,11 @@ function Login() {
                 localStorage.setItem("token", data.token);
                 window.location = '/home'
             }
-        
-            }
+
+        }
         catch (error) {
             console.error("API Error in login API Connection:", error);
-          }
+        }
 
     }
 
@@ -57,22 +56,12 @@ function Login() {
                         label="หมายเลขโทรศัพท์"
                         placeholder="Enter your phone number"
                         type='number'
-                        onChange={ (e) => { setPhoneNumber(e.target.value) } }
+                        onChange={(e) => { setPhoneNumber(e.target.value) }}
                     />
-                    <Input className='w-[22.5rem] h-[3.125rem] rounded-[32px]'
+                    <Password className='w-[22.5rem] h-[3.125rem] rounded-[32px]'
                         label="รหัสผ่าน"
-                        placeholder="Enter your passoword"
-                        type={showPassword ? 'text' : 'password'}
-                        suffix={<img
-                            src={eyes}
-                            alt="toggle password"
-                            className={`cursor-pointer ${showPassword ? 'opacity-40' : 'opacity-100'}`}
-                            onClick={(e) => {
-                                e.preventDefault()
-                                setShowPassword(!showPassword)
-                            }}
-                        />}
-                        onChange={ (e) => { setPassword(e.target.value) } }
+                        placeholder="Enter your password"
+                        onChange={(e) => setPassword(e.target.value)}
                     />
                     <ButtonXL text='เข้าสู่ระบบ' />
 
