@@ -9,8 +9,6 @@ import ButtonXL from '../components/ButtonXL';
 
 function Register() {
 
-    const [showPassword1, setShowPassword1] = useState(false);
-    const [showPassword2, setShowPassword2] = useState(false);
 
     // Form collector variables
     const [fname, setFName] = useState('')

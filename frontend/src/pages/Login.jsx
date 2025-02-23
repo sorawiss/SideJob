@@ -7,7 +7,7 @@ import ButtonXL from '../components/ButtonXL';
 
 function Login() {
 
-    const [showPassword, setShowPassword] = useState(false)
+
     const [password, setPassword] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')
 
