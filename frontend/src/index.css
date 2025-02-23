@@ -28,6 +28,10 @@ p {
   @apply text-[1rem]
 }
 
+.error {
+  @apply text-red-500
+}
+
 .highlight {
   font-weight: 600;
 }

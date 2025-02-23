@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { use } from 'react'
 import { useState } from 'react';
 import { Link } from 'react-router-dom'
 
@@ -10,6 +10,8 @@ function Login() {
 
     const [password, setPassword] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')
+    const [userFound, setUserFound] = useState('')
+    const [checkPassword, setCheckPassword] = useState('')
 
 
     // onSubmit Function
@@ -28,11 +30,19 @@ function Login() {
             })
 
             const data = await response.json();
-            console.log(data)
+            setUserFound('')
+            setCheckPassword('')
+
 
             if (data.message == 'Login Success') {
                 localStorage.setItem("token", data.token);
                 window.location = '/home'
+            }
+            else if (data.message == 'No user found') {
+                setUserFound('*ไม่มีบัญชีผู้ใช้นี้')
+            }
+            else if (data.message == 'Wrong') {
+                setCheckPassword('*รหัสผ่านไม่ถูกต้อง')
             }
 
         }
@@ -53,13 +63,17 @@ function Login() {
                 {/* Form */}
                 <form action="" onSubmit={handleSubmit} className='flex flex-col items-center gap-[2.5rem] border-none '>
                     <Input className='w-[22.5rem] h-[3.125rem] rounded-[16px]'
-                        label="หมายเลขโทรศัพท์"
+                        label= {
+                            <p>หมายเลขโทรศัพท์ <span className='error'>{userFound}</span></p>
+                        }
                         placeholder="Enter your phone number"
                         type='number'
                         onChange={(e) => { setPhoneNumber(e.target.value) }}
                     />
                     <Password className='w-[22.5rem] h-[3.125rem] rounded-[32px]'
-                        label="รหัสผ่าน"
+                        label= {
+                            <p>รหัสผ่าน <span className='error'>{checkPassword}</span></p>
+                        }
                         placeholder="Enter your password"
                         onChange={(e) => setPassword(e.target.value)}
                     />

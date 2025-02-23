@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 
 import { Input, Password } from "rizzui";
 import ButtonXL from '../components/ButtonXL';
+import lock from '../assets/svg/lock-icon.svg'
 
 
 
@@ -85,11 +86,15 @@ function Register() {
                         label="รหัสผ่าน"
                         placeholder="Enter your password"
                         onChange={ (e) => setPassword1(e.target.value)}
+                        prefix = {<img src = {lock} />}
                     />
                     <Password className='w-[22.5rem] h-[3.125rem] rounded-[32px]'
-                        label="ยืนยันรหัสผ่าน"
+                        label= {
+                            <p>ยืนยันรหัสผ่าน <span className='error'>{passwordError}</span></p>
+                        }
                         placeholder="Enter your password"
                         onChange={ (e) => setPassword2(e.target.value)}
+                        prefix = {<img src = {lock} />}
                     />
 
                     <ButtonXL text='สมัคร' />

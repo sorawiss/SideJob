@@ -69,7 +69,7 @@ app.post('/login',
             res.json({ message: 'Login Success', token })
           }
           else {
-            res.json({ message: 'Login failed' })
+            res.json({ message: 'Wrong' })
           }
         });
 
