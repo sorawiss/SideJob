@@ -35,9 +35,8 @@ function Register() {
             }
             )
             const data = await response.json()
-            console.log("VAR")
-            if (data.message == "Register success") {
-                console.log(data)
+            if (data.message == "Register Success") {
+                localStorage.setItem('token', data.token)
                 window.location = '/home'
             }
         }

@@ -1,4 +1,4 @@
-import React, { use } from 'react'
+import React from 'react'
 import { useState } from 'react';
 import { Link } from 'react-router-dom'
 
@@ -6,7 +6,6 @@ import { Input, Password } from "rizzui";
 import ButtonXL from '../components/ButtonXL';
 
 function Login() {
-
 
     const [password, setPassword] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')

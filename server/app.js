@@ -40,7 +40,8 @@ app.post('/register',
             return
           }
 
-          res.json({ message : "Register success", Phone: req.body.phone_number })
+          var token = jwt.sign({ phone_number: req.body.phone_number }, SECRET_KEY);
+          res.json({ message : 'Register Success', token})
         }
       )
     })
@@ -65,7 +66,7 @@ app.post('/login',
         }
         bcrypt.compare(req.body.password, users[0].password, function (err, isLogin) {
           if (isLogin) {
-            var token = jwt.sign({ phone_number: users[0].phone_number }, SECRET_KEY);
+            var token = jwt.sign({ phone_number: users[0].phone_number }, SECRET_KEY)
             res.json({ message: 'Login Success', token })
           }
           else {
@@ -85,7 +86,7 @@ app.post('/authentication',
     try {
       const token = req.headers.authorization.split(' ')[1]
       var decoded = jwt.verify(token, SECRET_KEY);
-      res.json({ decoded })
+      res.json({message : 'ok' })
     }
     catch (err) {
       res.json({message : err.message})
