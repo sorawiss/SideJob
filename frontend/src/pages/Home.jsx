@@ -15,8 +15,8 @@ function Home() {
                   },
   
               })
-              const responseFromAuth = await res.json()
-              if (responseFromAuth.message === 'ok') {
+              const data = await res.json()
+              if (data.message === 'ok') {
               }
               
               else {
