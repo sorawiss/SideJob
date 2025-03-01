@@ -1,5 +1,8 @@
 // Libraries Import
 import express from "express"
+import 'dotenv/config'
+
+
 
 
 // Essential Variable Declaration
@@ -8,13 +11,11 @@ app.use(express.json())
 
 
 // Routes Import
-import authRoute from './routes/auth'
+import authRoute from './routes/auth.js'
 
 
 // Routes Activation
 app.use(authRoute)
-
-
 
 
 

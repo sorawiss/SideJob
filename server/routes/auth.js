@@ -1,29 +1,31 @@
-
 import express from "express";
+
+
+import connection from '../db.js'
+
+
 const router = express.Router();
 
+
 // Bcrypt
-const bcrypt = require('bcrypt');
+import bcrypt from 'bcrypt'
 const saltRounds = 10;
 
-// jsonwebtoken
-var jwt = require('jsonwebtoken');
-const SECRET_KEY = "your_secret_key";
 
-// Mysql
-const mysql = require('mysql2')
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  database: 'sidejobdb',
-})
+// jsonwebtoken
+import jwt from 'jsonwebtoken'
+const SECRET_KEY = process.env.SECRET_KEY;
+
+
+
+
 
 // REGISTER
 router.post('/register',
   function (req, res, next) {
     bcrypt.hash(req.body.password, saltRounds, function (err, password_hash) {
       connection.execute(
-        'INSERT INTO users (phone_number, password, fname, lname) VALUES(?, ?, ?, ?)',
+        'INSERT INTO members (phone_number, password, fname, lname) VALUES(?, ?, ?, ?)',
         [req.body.phone_number, password_hash, req.body.fname, req.body.lname],
         // Callback
         function (err, results, fields) {
@@ -46,7 +48,7 @@ router.post('/login',
     // Callback
   function (req, res, next) {
     connection.execute(
-      'SELECT * FROM users WHERE phone_number = ?', [req.body.phone_number],
+      'SELECT * FROM members WHERE phone_number = ?', [req.body.phone_number],
       // Callback
       function (err, users) {
         if (err) {
