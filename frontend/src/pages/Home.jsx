@@ -16,7 +16,7 @@ function Home() {
   
               })
               const data = await res.json()
-              if (data.message === 'ok') {
+              if (data.message === 'TokenConfirm') {
               }
               
               else {
