@@ -40,7 +40,7 @@ function Login() {
             else if (data.message == 'No user found') {
                 setUserFound('*ไม่มีบัญชีผู้ใช้นี้')
             }
-            else if (data.message == 'Wrong') {
+            else if (data.message == 'WrongPassword') {
                 setCheckPassword('*รหัสผ่านไม่ถูกต้อง')
             }
 

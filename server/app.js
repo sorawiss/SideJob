@@ -1,6 +1,7 @@
 // Libraries Import
 import express from "express"
 import 'dotenv/config'
+import cors from 'cors'
 
 
 
@@ -8,6 +9,7 @@ import 'dotenv/config'
 // Essential Variable Declaration
 var app = express()
 app.use(express.json())
+app.use(cors())
 
 
 // Routes Import

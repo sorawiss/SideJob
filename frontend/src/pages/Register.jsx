@@ -35,7 +35,7 @@ function Register() {
             }
             )
             const data = await response.json()
-            if (data.message == "Register Success") {
+            if (data.message == "RegisterSuccess") {
                 localStorage.setItem('token', data.token)
                 window.location = '/home'
             }

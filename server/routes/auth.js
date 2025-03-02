@@ -17,10 +17,6 @@ import jwt from 'jsonwebtoken'
 const SECRET_KEY = process.env.SECRET_KEY;
 
 
-// Constants
-const REGISTER_QUERY = 'INSERT INTO members (phone_number, password, fname, lname) VALUES(?, ?, ?, ?)';
-const LOGIN_QUERY = 'SELECT * FROM members WHERE phone_number = ?';
-
 
 // Helper functions
 async function hashPassword(password) {
@@ -37,17 +33,17 @@ router.post('/register',
 
     const { error } = await supabase
       .from('members')
-      .insert({ phone_number: phone_number, password: hashedPassword, fname : fname, lname : lname })
+      .insert({ phone_number, password : hashedPassword,  fname, lname })
 
-      if (error) {
-        res.json({ status: 'Failed to create user', message: error })
-        return
-      }
-
-      var token = jwt.sign({ phone_number: phone_number }, SECRET_KEY);
-      res.json({ message: 'Register Success', token })
+    if (error) {
+      res.json({ status: 'Failed to create user', message: error })
+      return
     }
-  )
+
+    var token = jwt.sign({ phone_number: phone_number }, SECRET_KEY);
+    res.json({ message: 'RegisterSuccess', token })
+  }
+)
 
 
 
@@ -55,36 +51,37 @@ router.post('/register',
 
 // LOGIN
 router.post('/login',
-  // Callback
-  function (req, res, next) {
+  async function (req, res, next) {
     const { phone_number, password } = req.body;
-    connection.execute(
-      LOGIN_QUERY, [phone_number],
 
-      // Callback
-      function (err, users) {
-        if (err) {
-          res.json({ message: err })
-          return
-        }
+    const { data, error } = await supabase
+      .from('members')
+      .select('*')
+      .eq('phone_number', phone_number);
 
-        if (users.length == 0) {
-          res.json({ message: 'No user found' })
-          return
-        }
 
-        bcrypt.compare(req.body.password, users[0].password, function (err, isLogin) {
-          if (isLogin) {
-            var token = jwt.sign({ phone_number: users[0].phone_number }, SECRET_KEY)
-            res.json({ message: 'Login Success', token })
-          }
-          else {
-            res.json({ message: 'Wrong' })
-          }
-        });
-
+      if (error) {
+        res.json({ message: error })
+        return
       }
-    )
+
+      if (data.length == 0) {
+        res.json({ message: 'No user found' })
+        return
+      }
+
+      bcrypt.compare(password, data[0].password, function (err, isLogin) {
+        if (isLogin) {
+          var token = jwt.sign({ phone_number: data[0].phone_number }, SECRET_KEY)
+          res.json({ message: 'Login Success', token })
+        }
+        else {
+          res.json({ message: 'WrongPassword' })
+        }
+      });
+
+    
+
   })
 
 
