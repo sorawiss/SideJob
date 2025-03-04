@@ -78,7 +78,7 @@ router.post('/login',
           res.cookie("AccessToken", token, {
             httpOnly: true,
           })
-          res.json({ message: 'Login Success', token })
+          res.json({ message: 'Login Success'})
         }
         else {
           res.json({ message: 'WrongPassword' })
@@ -93,18 +93,21 @@ router.post('/login',
 
 
 // Authentication API
-router.post('/authentication',
-  function (req, res) {
-    try {
-      const token = req.headers.authorization.split(' ')[1]
-      var decoded = jwt.verify(token, SECRET_KEY);
-      res.json({ message: 'TokenConfirm' })
-    }
-    catch (err) {
-      res.json({ message: err.message })
-    }
+router.post('/authentication', (req, res) => {
+  try {
+      const token = req.cookies.access_token; // Get token from cookies
+      
+      if (!token) {
+          return res.status(401).json({ message: 'No token provided' });
+      }
+
+      const decoded = jwt.verify(token, SECRET_KEY);
+      res.json({ message: 'Token Confirm', user: decoded });
   }
-)
+  catch (err) {
+      res.status(403).json({ message: 'Invalid token' });
+  }
+});
 
 
 
