@@ -9,8 +9,8 @@ function Login() {
 
     const [password, setPassword] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')
-    const [userFound, setUserFound] = useState('')
-    const [checkPassword, setCheckPassword] = useState('')
+    const [userFound, setUserFound] = useState(null)
+    const [checkPassword, setCheckPassword] = useState(null)
 
 
     // onSubmit Function
@@ -29,18 +29,17 @@ function Login() {
             })
 
             const data = await response.json();
-            setUserFound('')
-            setCheckPassword('')
+            setUserFound(null)
+            setCheckPassword(null)
 
 
-            if (data.message == 'Login Success') {
-                localStorage.setItem("token", data.token);
+            if (data.message === 'Login Success') {
                 window.location = '/home'
             }
-            else if (data.message == 'No user found') {
+            else if (data.message === 'No user found') {
                 setUserFound('*ไม่มีบัญชีผู้ใช้นี้')
             }
-            else if (data.message == 'WrongPassword') {
+            else if (data.message === 'WrongPassword') {
                 setCheckPassword('*รหัสผ่านไม่ถูกต้อง')
             }
 
@@ -51,6 +50,8 @@ function Login() {
 
     }
 
+
+    // Frontend
     return (
         <div className='bg-primary h-screen flex flex-col items-center pt-[6.5rem] gap-[7.5rem] '>
             <div className="logo-container">

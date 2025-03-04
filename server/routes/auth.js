@@ -28,6 +28,7 @@ async function hashPassword(password) {
 // REGISTER
 router.post('/register',
   async function (req, res, next) {
+    // Parameters
     const { phone_number, password, fname, lname } = req.body;
     const hashedPassword = await hashPassword(password);
 
@@ -52,6 +53,7 @@ router.post('/register',
 // LOGIN
 router.post('/login',
   async function (req, res, next) {
+    // Parameters
     const { phone_number, password } = req.body;
 
     const { data, error } = await supabase
@@ -73,6 +75,9 @@ router.post('/login',
       bcrypt.compare(password, data[0].password, function (err, isLogin) {
         if (isLogin) {
           var token = jwt.sign({ phone_number: data[0].phone_number }, SECRET_KEY)
+          res.cookie("AccessToken", token, {
+            httpOnly: true,
+          })
           res.json({ message: 'Login Success', token })
         }
         else {
