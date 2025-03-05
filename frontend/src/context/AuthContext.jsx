@@ -3,39 +3,45 @@ import { createContext, useState, useEffect } from "react";
 export const AuthContext = createContext();
 
 export const AuthProvider = (prop) => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [curentUser, setCurentUser] = useState(JSON.parse(localStorage.getItem("user")) || null)
     const [loading, setLoading] = useState(true);
 
-    const login = () => {
-        setIsAuthenticated(true)
+
+    const login = (user) => {
+        localStorage.setItem('user', JSON.stringify(user))
+        setCurentUser(user)
     }
 
     const logout = () => {
-        Cookies.remove('AccessToken');
-        setIsAuthenticated(false)
+        setCurentUser(null)
+        localStorage.removeItem('user')
     }
 
     useEffect(() => {
         async function checkToken() {
             try {
-                console.log(isAuthenticated)
+                console.log(curentUser)
                 const res = await fetch('http://localhost:3333/authentication', {
                     method: 'POST',
                     credentials: 'include',
                 });
                 const data = await res.json();
-                setIsAuthenticated(data.message === 'TokenConfirm');
+                if (data.message !== 'TokenConfirm') {
+                    setCurentUser(null);
+                    localStorage.removeItem('user');
+                    console.log(curentUser)
+                }
             } catch (error) {
-                setIsAuthenticated(false);
+                setCurentUser(null);
             } finally {
                 setLoading(false);
             }
         }
         checkToken();
-    }, [isAuthenticated]); // Re-run when isAuthenticated changes
+    }, [curentUser]); // Re-run when isAuthenticated changes
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, loading, login, logout  }}>
+        <AuthContext.Provider value={{ curentUser, loading, login, logout }}>
             {prop.children}
         </AuthContext.Provider>
     );

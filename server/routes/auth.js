@@ -81,7 +81,9 @@ router.post('/login',
           res.cookie("AccessToken", token, {
             httpOnly: true,
           })
-          res.json({ message: 'Login Success', cookie : token})
+
+          const { password, ...rest } = data[0]
+          res.json({ message: 'Login Success', cookie : token, user : rest })
         }
         else {
           res.json({ message: 'WrongPassword' })

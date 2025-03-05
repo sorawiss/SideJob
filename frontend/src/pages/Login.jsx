@@ -40,7 +40,7 @@ function Login() {
 
 
             if (data.message === 'Login Success') {
-                login()
+                login(data.user)
                 navigate('/home')
             }
             else if (data.message === 'No user found') {

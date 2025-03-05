@@ -5,16 +5,16 @@ import { AuthContext } from "./context/AuthContext";
 
 const ProtectedRoute = () => {
 
-    const { isAuthenticated, loading } = useContext(AuthContext)
+    const { curentUser, loading } = useContext(AuthContext)
 
     if (loading) {
         return <div>Loading...</div>;
     }
 
-    if (isAuthenticated) {
-        return <Outlet />;
+    if (curentUser === null) {
+        return <Navigate to="/" replace={true} />;
     }
-    return <Navigate to="/" replace={true} />;
+    return <Outlet />;
 };
 
 export default ProtectedRoute; 
