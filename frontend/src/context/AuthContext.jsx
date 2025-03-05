@@ -6,30 +6,18 @@ export const AuthProvider = (prop) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [loading, setLoading] = useState(true);
 
-    // Add login and logout functions to the context
-    const login = async () => {
-        //Store Token
-        try {
-            const res = await fetch('http://localhost:3333/login', {
-                method: 'POST',
-                credentials: 'include',
-            });
-            const data = await res.json();
-            if (data.message === 'Login') {
-                setIsAuthenticated(true);
-            }
-        } catch (error) {
-            console.error("Login Error: ", error);
-        }
-    };
+    const login = () => {
+        setIsAuthenticated(true)
+    }
 
     const logout = () => {
-        setIsAuthenticated(false);
-    };
+        setIsAuthenticated(false)
+    }
 
     useEffect(() => {
         async function checkToken() {
             try {
+                console.log(isAuthenticated)
                 const res = await fetch('http://localhost:3333/authentication', {
                     method: 'POST',
                     credentials: 'include',
@@ -46,7 +34,7 @@ export const AuthProvider = (prop) => {
     }, [isAuthenticated]); // Re-run when isAuthenticated changes
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, loading, login, logout }}>
+        <AuthContext.Provider value={{ isAuthenticated, loading, login, logout  }}>
             {prop.children}
         </AuthContext.Provider>
     );
