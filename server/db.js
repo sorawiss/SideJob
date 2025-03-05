@@ -1,4 +1,3 @@
-import mysql from 'mysql2'
 import {createClient} from '@supabase/supabase-js'
 
 // Initialize Supabase client

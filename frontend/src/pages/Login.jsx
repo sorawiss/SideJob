@@ -1,12 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'
 
 import { Input, Password } from "rizzui";
 import ButtonXL from '../components/ButtonXL';
 
+import { AuthContext } from '../context/AuthContext';
+
 function Login() {
 
+    const { login } = useContext(AuthContext)
     const navigate = useNavigate()
 
     const [password, setPassword] = useState('')
@@ -37,6 +40,7 @@ function Login() {
 
 
             if (data.message === 'Login Success') {
+                login()
                 navigate('/home')
             }
             else if (data.message === 'No user found') {
