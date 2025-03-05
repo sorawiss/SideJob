@@ -1,11 +1,13 @@
 import React from 'react'
 import { useState } from 'react';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import { Input, Password } from "rizzui";
 import ButtonXL from '../components/ButtonXL';
 
 function Login() {
+
+    const navigate = useNavigate()
 
     const [password, setPassword] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')
@@ -22,6 +24,7 @@ function Login() {
         try {
             const response = await fetch('http://localhost:3333/login', {
                 method: 'POST',
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -34,7 +37,7 @@ function Login() {
 
 
             if (data.message === 'Login Success') {
-                window.location = '/home'
+                navigate('/home')
             }
             else if (data.message === 'No user found') {
                 setUserFound('*ไม่มีบัญชีผู้ใช้นี้')

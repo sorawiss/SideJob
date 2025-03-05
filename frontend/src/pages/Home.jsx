@@ -1,27 +1,24 @@
 import React, { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
 
+  const navigate = useNavigate()
+
   // useEffect
       useEffect (() => {
-          const token = localStorage.getItem('token')
-          
           async function checkToken () {
               const res = await fetch('http://localhost:3333/authentication', {
                   method: 'POST',
-                  headers: {
-                      'Content-Type' : 'application/json',
-                      'Authorization' : 'Bearer ' +token
-                  },
-  
+                  credentials: 'include',
               })
-              const data = await res.json()
-              if (data.message === 'TokenConfirm') {
-              }
+
               
-              else {
-                alert('Please Login')
-                window.location = '/login'
+              const data = await res.json()
+              if (data.message !== 'TokenConfirm') {
+                console.log(data.message)
+                alert('Please Login',);
+                navigate('/login');
               }
           }
 

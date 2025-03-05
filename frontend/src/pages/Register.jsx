@@ -10,14 +10,6 @@ import lock from '../assets/svg/lock-icon.svg'
 
 function Register() {
 
-
-    // Form collector variables
-    const [fname, setFName] = useState('')
-    const [lname, setLname] = useState('')
-    const [phoneNumber, setPhoneNumber] = useState('')
-    const [password1, setPassword1] = useState('')
-    const [password2, setPassword2] = useState('')
-
     const [formData, setFormData] = useState({
         fname: '',
         lname: '',
@@ -34,7 +26,6 @@ function Register() {
             ...prevState,
             [name]: value
         }));
-        console.log(formData)
     };
 
 
@@ -53,6 +44,7 @@ function Register() {
         try {
             const response = await fetch('http://localhost:3333/register', {
                 method: 'POST',
+                credentials: 'include',
                 headers: {
                     'content-type': 'application/json'
                 },
@@ -61,7 +53,6 @@ function Register() {
             )
             const data = await response.json()
             if (data.message == "RegisterSuccess") {
-                localStorage.setItem('token', data.token)
                 window.location = '/home'
             }
         }
@@ -70,9 +61,6 @@ function Register() {
         }
     }
 
-
-    // Password check
-    const passwordError = password1 != password2 ? "*รหัสผ่านไม่ตรงกัน" : ""
 
 
     return (

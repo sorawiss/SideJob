@@ -41,7 +41,10 @@ router.post('/register',
       return
     }
 
-    var token = jwt.sign({ phone_number: phone_number }, SECRET_KEY);
+    var token = jwt.sign({ phone_number: phone_number }, SECRET_KEY)
+    res.cookie("AccessToken", token, {
+      httpOnly: true,
+    })
     res.json({ message: 'RegisterSuccess', token })
   }
 )
@@ -78,7 +81,7 @@ router.post('/login',
           res.cookie("AccessToken", token, {
             httpOnly: true,
           })
-          res.json({ message: 'Login Success'})
+          res.json({ message: 'Login Success', cookie : token})
         }
         else {
           res.json({ message: 'WrongPassword' })
@@ -95,17 +98,17 @@ router.post('/login',
 // Authentication API
 router.post('/authentication', (req, res) => {
   try {
-      const token = req.cookies.access_token; // Get token from cookies
+      const token = req.cookies.AccessToken
       
       if (!token) {
-          return res.status(401).json({ message: 'No token provided' });
+          return res.json({ message: 'NoTokenProvided' });
       }
 
-      const decoded = jwt.verify(token, SECRET_KEY);
-      res.json({ message: 'Token Confirm', user: decoded });
+      const decoded = jwt.verify(token, process.env.SECRET_KEY);
+      res.json({ message: 'TokenConfirm', user: decoded });
   }
   catch (err) {
-      res.status(403).json({ message: 'Invalid token' });
+      res.json({ message: 'InvalidToken' });
   }
 });
 
