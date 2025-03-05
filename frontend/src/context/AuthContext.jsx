@@ -11,6 +11,7 @@ export const AuthProvider = (prop) => {
     }
 
     const logout = () => {
+        Cookies.remove('AccessToken');
         setIsAuthenticated(false)
     }
 
