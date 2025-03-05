@@ -10,24 +10,41 @@ import lock from '../assets/svg/lock-icon.svg'
 
 function Register() {
 
+    const [formData, setFormData] = useState({
+        fname: '',
+        lname: '',
+        phoneNumber: '',
+        birthdate: '',
+        password1: '',
+        password2: ''
+    });
 
-    // Form collector variables
-    const [fname, setFName] = useState('')
-    const [lname, setLname] = useState('')
-    const [phoneNumber, setPhoneNumber] = useState('')
-    const [password1, setPassword1] = useState('')
-    const [password2, setPassword2] = useState('')
-    const [date, setDate] = useState('')
+    // Generic function to handle input changes
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
+
 
 
     // Form submit handle
     async function submitHandle(e) {
         e.preventDefault()
-        const registerData = { fname: fname, lname: lname, phone_number: phoneNumber, password: password2 }
+        const registerData = {
+            fname: formData.fname,
+            lname: formData.lname,
+            phone_number: formData.phoneNumber,
+            birthdate: formData.birthdate,
+            password: formData.password2
+        }
 
         try {
             const response = await fetch('http://localhost:3333/register', {
                 method: 'POST',
+                credentials: 'include',
                 headers: {
                     'content-type': 'application/json'
                 },
@@ -36,7 +53,6 @@ function Register() {
             )
             const data = await response.json()
             if (data.message == "RegisterSuccess") {
-                localStorage.setItem('token', data.token)
                 window.location = '/home'
             }
         }
@@ -45,9 +61,6 @@ function Register() {
         }
     }
 
-
-    // Password check
-    const passwordError = password1 != password2 ? "*รหัสผ่านไม่ตรงกัน" : ""
 
 
     return (
@@ -58,42 +71,65 @@ function Register() {
 
             <div className="form-container flex flex-col items-center bg-accent w-full h-full rounded-tl-[90px] gap-[2.5rem] py-[4.375rem] ">
                 <form onSubmit={submitHandle} className='flex flex-col items-center gap-[2.5rem] border-none '>
-                    <Input className='w-[22.5rem] h-[3.125rem] rounded-[16px]'
+                    <Input
+                        className='w-[22.5rem] h-[3.125rem] rounded-[16px]'
                         label="ชื่อ"
-                        placeholder="Enter your phone number"
+                        placeholder="Enter your first name"
                         type='text'
-                        onChange={(e) => { setFName(e.target.value) }}
+                        name="fname"
+                        value={formData.fname}
+                        onChange={handleChange}
                     />
-                    <Input className='w-[22.5rem] h-[3.125rem] rounded-[32px]'
+
+                    <Input
+                        className='w-[22.5rem] h-[3.125rem] rounded-[32px]'
                         label="นามสกุล"
-                        placeholder="Enter your passoword"
+                        placeholder="Enter your last name"
                         type='text'
-                        onChange={(e) => { setLname(e.target.value) }}
+                        name="lname"
+                        value={formData.lname}
+                        onChange={handleChange}
                     />
-                    <Input className='w-[22.5rem] h-[3.125rem] rounded-[32px]'
+
+                    <Input
+                        className='w-[22.5rem] h-[3.125rem] rounded-[32px]'
                         label="เบอร์โทรศัพท์"
-                        placeholder="Enter your passoword"
+                        placeholder="Enter your phone number"
                         type='number'
-                        onChange={(e) => { setPhoneNumber(e.target.value) }}
+                        name="phoneNumber"
+                        value={formData.phoneNumber}
+                        onChange={handleChange}
                     />
-                    <Input className='w-[22.5rem] h-[3.125rem] rounded-[32px]'
+
+                    <Input
+                        className='w-[22.5rem] h-[3.125rem] rounded-[32px]'
                         label="วัน/เดือน/ปี เกิด"
                         type='date'
-                        onChange={ (e) => setDate(e.target.value) }
+                        name="birthdate"
+                        value={formData.birthdate}
+                        onChange={handleChange}
                     />
-                    <Password className='w-[22.5rem] h-[3.125rem] rounded-[32px]'
+
+                    <Password
+                        className='w-[22.5rem] h-[3.125rem] rounded-[32px]'
                         label="รหัสผ่าน"
                         placeholder="Enter your password"
-                        onChange={ (e) => setPassword1(e.target.value)}
-                        prefix = {<img src = {lock} />}
+                        name="password1"
+                        value={formData.password1}
+                        onChange={handleChange}
+                        prefix={<img src={lock} />}
                     />
-                    <Password className='w-[22.5rem] h-[3.125rem] rounded-[32px]'
-                        label= {
-                            <p>ยืนยันรหัสผ่าน <span className='error'>{passwordError}</span></p>
+
+                    <Password
+                        className='w-[22.5rem] h-[3.125rem] rounded-[32px]'
+                        label={
+                            <p>ยืนยันรหัสผ่าน <span className='error'>{formData.password1 !== formData.password2 ? "*รหัสผ่านไม่ตรงกัน" : ""}</span></p>
                         }
-                        placeholder="Enter your password"
-                        onChange={ (e) => setPassword2(e.target.value)}
-                        prefix = {<img src = {lock} />}
+                        placeholder="Confirm your password"
+                        name="password2"
+                        value={formData.password2}
+                        onChange={handleChange}
+                        prefix={<img src={lock} />}
                     />
 
                     <ButtonXL text='สมัคร' />

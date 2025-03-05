@@ -28,6 +28,7 @@ async function hashPassword(password) {
 // REGISTER
 router.post('/register',
   async function (req, res, next) {
+    // Parameters
     const { phone_number, password, fname, lname } = req.body;
     const hashedPassword = await hashPassword(password);
 
@@ -40,7 +41,10 @@ router.post('/register',
       return
     }
 
-    var token = jwt.sign({ phone_number: phone_number }, SECRET_KEY);
+    var token = jwt.sign({ phone_number: phone_number }, SECRET_KEY)
+    res.cookie("AccessToken", token, {
+      httpOnly: true,
+    })
     res.json({ message: 'RegisterSuccess', token })
   }
 )
@@ -52,6 +56,7 @@ router.post('/register',
 // LOGIN
 router.post('/login',
   async function (req, res, next) {
+    // Parameters
     const { phone_number, password } = req.body;
 
     const { data, error } = await supabase
@@ -73,7 +78,10 @@ router.post('/login',
       bcrypt.compare(password, data[0].password, function (err, isLogin) {
         if (isLogin) {
           var token = jwt.sign({ phone_number: data[0].phone_number }, SECRET_KEY)
-          res.json({ message: 'Login Success', token })
+          res.cookie("AccessToken", token, {
+            httpOnly: true,
+          })
+          res.json({ message: 'Login Success', cookie : token})
         }
         else {
           res.json({ message: 'WrongPassword' })
@@ -88,18 +96,21 @@ router.post('/login',
 
 
 // Authentication API
-router.post('/authentication',
-  function (req, res) {
-    try {
-      const token = req.headers.authorization.split(' ')[1]
-      var decoded = jwt.verify(token, SECRET_KEY);
-      res.json({ message: 'TokenConfirm' })
-    }
-    catch (err) {
-      res.json({ message: err.message })
-    }
+router.post('/authentication', (req, res) => {
+  try {
+      const token = req.cookies.AccessToken
+      
+      if (!token) {
+          return res.json({ message: 'NoTokenProvided' });
+      }
+
+      const decoded = jwt.verify(token, process.env.SECRET_KEY);
+      res.json({ message: 'TokenConfirm', user: decoded });
   }
-)
+  catch (err) {
+      res.json({ message: 'InvalidToken' });
+  }
+});
 
 
 
