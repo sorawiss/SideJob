@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from "react";
+import { data } from "react-router-dom";
 
 export const AuthContext = createContext();
 
@@ -20,7 +21,6 @@ export const AuthProvider = (prop) => {
     useEffect(() => {
         async function checkToken() {
             try {
-                console.log(curentUser)
                 const res = await fetch('http://localhost:3333/authentication', {
                     method: 'POST',
                     credentials: 'include',
@@ -29,12 +29,11 @@ export const AuthProvider = (prop) => {
                 if (data.message !== 'TokenConfirm') {
                     setCurentUser(null);
                     localStorage.removeItem('user');
-                    console.log(curentUser)
                 }
             } catch (error) {
                 setCurentUser(null);
             } finally {
-                setLoading(false);
+                setLoading(false)
             }
         }
         checkToken();

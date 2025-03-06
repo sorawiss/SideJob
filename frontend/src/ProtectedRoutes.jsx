@@ -12,6 +12,7 @@ const ProtectedRoute = () => {
     }
 
     if (curentUser === null) {
+        
         return <Navigate to="/" replace={true} />;
     }
     return <Outlet />;

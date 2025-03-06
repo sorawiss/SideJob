@@ -110,7 +110,7 @@ router.post('/authentication', (req, res) => {
       res.json({ message: 'TokenConfirm', user: decoded });
   }
   catch (err) {
-      res.json({ message: 'InvalidToken' });
+      res.json({ message: 'InvalidToken', err });
   }
 });
 

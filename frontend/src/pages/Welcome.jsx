@@ -6,10 +6,6 @@ import ButtonXL from '../components/ButtonXL'
 
 function Welcome() {
 
-    useEffect(() => {
-        localStorage.clear()
-    }, [])
-
 
     return (
         <div className='bg-accent h-screen p-[3.5rem] pt-[3.6rem] flex flex-col gap-[4.75rem] items-center '>
