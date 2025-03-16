@@ -1,14 +1,20 @@
 import React from 'react'
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
 import { Input, Password } from "rizzui";
 import ButtonXL from '../components/ButtonXL';
 import lock from '../assets/svg/lock-icon.svg'
 
+import { AuthContext } from '../context/AuthContext';
+
+
 
 
 function Register() {
+    const { login } = useContext(AuthContext)
+    const navigate = useNavigate()
 
     const [formData, setFormData] = useState({
         fname: '',
@@ -53,7 +59,8 @@ function Register() {
             )
             const data = await response.json()
             if (data.message == "RegisterSuccess") {
-                window.location = '/home'
+                login()
+                navigate('/home')
             }
         }
         catch (error) {
