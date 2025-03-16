@@ -13,9 +13,16 @@ body {
 
 
 @theme {
-  --color-accent: #E5F066;
+  /* Accent */
+  --color-accent: #E5F066; 
+
+  /* Primary-Dark */
   --color-primary: #2E2E38;
+
+  /* Primary-Light */
   --color-light: #F1F1F1;
+
+  /* Backgorund-Dark */
   --color-background: #1B1B1B;
 }
 
