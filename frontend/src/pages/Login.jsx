@@ -1,16 +1,21 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useState } from 'react';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import { Input, Password } from "rizzui";
 import ButtonXL from '../components/ButtonXL';
 
+import { AuthContext } from '../context/AuthContext';
+
 function Login() {
+
+    const { login } = useContext(AuthContext)
+    const navigate = useNavigate()
 
     const [password, setPassword] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')
-    const [userFound, setUserFound] = useState('')
-    const [checkPassword, setCheckPassword] = useState('')
+    const [userFound, setUserFound] = useState(null)
+    const [checkPassword, setCheckPassword] = useState(null)
 
 
     // onSubmit Function
@@ -22,26 +27,30 @@ function Login() {
         try {
             const response = await fetch('http://localhost:3333/login', {
                 method: 'POST',
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(loginData)
+                body: JSON.stringify(loginData) 
             })
 
             const data = await response.json();
-            setUserFound('')
-            setCheckPassword('')
+            setUserFound(null)
+            setCheckPassword(null)
 
 
-            if (data.message == 'Login Success') {
-                localStorage.setItem("token", data.token);
-                window.location = '/home'
+            if (data.message === 'Login Success') {
+                login(data.user)
+                navigate('/home')
             }
-            else if (data.message == 'No user found') {
+            else if (data.message === 'No user found') {
                 setUserFound('*ไม่มีบัญชีผู้ใช้นี้')
             }
-            else if (data.message == 'Wrong') {
+            else if (data.message === 'IncorrectPassword') {
                 setCheckPassword('*รหัสผ่านไม่ถูกต้อง')
+            }
+            else {
+                console.log(data)
             }
 
         }
@@ -51,6 +60,8 @@ function Login() {
 
     }
 
+
+    // Frontend
     return (
         <div className='bg-primary h-screen flex flex-col items-center pt-[6.5rem] gap-[7.5rem] '>
             <div className="logo-container">

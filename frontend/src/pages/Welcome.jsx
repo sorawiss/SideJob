@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {Link} from 'react-router-dom'
 
 import WelcomeSVG from '../assets/svg/welcome1.svg'
 import ButtonXL from '../components/ButtonXL'
 
 function Welcome() {
+
+
     return (
         <div className='bg-accent h-screen p-[3.5rem] pt-[3.6rem] flex flex-col gap-[4.75rem] items-center '>
 
