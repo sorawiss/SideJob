@@ -1,22 +1,40 @@
 import { createContext, useState, useEffect } from "react";
-import { data } from "react-router-dom";
 
 export const AuthContext = createContext();
 
-export const AuthProvider = (prop) => {
-    const [curentUser, setCurentUser] = useState(JSON.parse(localStorage.getItem("user")) || null)
-    const [loading, setLoading] = useState(true);
+export const AuthProvider = (props) => {
+
+    const getUserFromStorage = () => {
+        try {
+            const user = localStorage.getItem("user")
+            return user ? JSON.parse(user) : null
+        } catch (error) {
+            console.error("Error parsing user from localStorage:", error)
+            return null;
+        }
+    }
+
+    
+    const [currentUser, setCurrentUser] = useState(getUserFromStorage())
+    const [loading, setLoading] = useState(true)
 
 
     const login = (user) => {
         localStorage.setItem('user', JSON.stringify(user))
-        setCurentUser(user)
+        setCurrentUser(user)
     }
 
-    const logout = () => {
-        setCurentUser(null)
+    
+    const logout = async () => {
         localStorage.removeItem('user')
+        setCurrentUser(null)
+        await fetch('http://localhost:3333/logout', {
+            method: 'POST',
+            credentials: 'include',
+        }) 
     }
+
+
 
     useEffect(() => {
         async function checkToken() {
@@ -27,21 +45,21 @@ export const AuthProvider = (prop) => {
                 });
                 const data = await res.json();
                 if (data.message !== 'TokenConfirm') {
-                    setCurentUser(null);
+                    setCurrentUser(null);
                     localStorage.removeItem('user');
                 }
             } catch (error) {
-                setCurentUser(null);
+                setCurrentUser(null);
             } finally {
                 setLoading(false)
             }
         }
         checkToken();
-    }, [curentUser]); // Re-run when isAuthenticated changes
+    }, []); 
 
     return (
-        <AuthContext.Provider value={{ curentUser, loading, login, logout }}>
-            {prop.children}
+        <AuthContext.Provider value={{ currentUser, loading, login, logout }}>
+            {props.children}
         </AuthContext.Provider>
     );
 };

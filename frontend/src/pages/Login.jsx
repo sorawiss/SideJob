@@ -21,7 +21,17 @@ function Login() {
     // onSubmit Function
     async function handleSubmit(e) {
         e.preventDefault()
+
         const loginData = { phone_number: phoneNumber, password: password }
+
+        setUserFound(null)
+        setCheckPassword(null)
+        
+        if (password.length == 0 || phoneNumber.length == 0) { 
+            setUserFound('*กรุณากรอกข้อมูลให้ครบถ้วน')
+            return
+        }
+
 
         // API Connection
         try {
@@ -31,23 +41,23 @@ function Login() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(loginData)
+                body: JSON.stringify(loginData) 
             })
 
             const data = await response.json();
-            setUserFound(null)
-            setCheckPassword(null)
-
-
+            
             if (data.message === 'Login Success') {
                 login(data.user)
                 navigate('/home')
             }
-            else if (data.message === 'No user found') {
+            else if (data.status = 404) {
                 setUserFound('*ไม่มีบัญชีผู้ใช้นี้')
             }
-            else if (data.message === 'WrongPassword') {
+            else if (data.message === 'IncorrectPassword') {
                 setCheckPassword('*รหัสผ่านไม่ถูกต้อง')
+            }
+            else {
+                console.log(data)
             }
 
         }
@@ -58,15 +68,16 @@ function Login() {
     }
 
 
+
     // Frontend
     return (
-        <div className='bg-primary h-screen flex flex-col items-center pt-[6.5rem] gap-[7.5rem] '>
+        <div className='login-page-container bg-primarydark h-screen flex flex-col items-center pt-[6.5rem] gap-[7.5rem] '>
             <div className="logo-container">
-                <h1 className='text-light '>LOGO</h1>
+                <h1 className='text-primarylight '>LOGO</h1>
             </div>
 
             <div className="form-container flex flex-col items-center bg-accent w-full h-[42rem] rounded-tl-[90px] gap-[2.5rem] py-[4.375rem] ">
-                <h1 className='text-primary'>เข้าสู่ระบบ</h1>
+                <h1 className='text-primarydark'>เข้าสู่ระบบ</h1>
                 {/* Form */}
                 <form action="" onSubmit={handleSubmit} className='flex flex-col items-center gap-[2.5rem] border-none '>
                     <Input className='w-[22.5rem] h-[3.125rem] rounded-[16px]'
