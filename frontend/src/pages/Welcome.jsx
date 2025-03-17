@@ -11,7 +11,7 @@ function Welcome() {
 
             {/* Welcome-SECTION */}
             <div className='welcome-container'>
-                <h1 className='text-primary-dark'>Welcome Message</h1>
+                <h1 className='text-primarydark'>Welcome Message</h1>
             </div>
 
 
