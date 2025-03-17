@@ -21,7 +21,17 @@ function Login() {
     // onSubmit Function
     async function handleSubmit(e) {
         e.preventDefault()
+
         const loginData = { phone_number: phoneNumber, password: password }
+
+        setUserFound(null)
+        setCheckPassword(null)
+        
+        if (password.length == 0 || phoneNumber.length == 0) { 
+            setUserFound('*กรุณากรอกข้อมูลให้ครบถ้วน')
+            return
+        }
+
 
         // API Connection
         try {
@@ -35,15 +45,12 @@ function Login() {
             })
 
             const data = await response.json();
-            setUserFound(null)
-            setCheckPassword(null)
-
-
+            
             if (data.message === 'Login Success') {
                 login(data.user)
                 navigate('/home')
             }
-            else if (data.message === 'No user found') {
+            else if (data.status = 404) {
                 setUserFound('*ไม่มีบัญชีผู้ใช้นี้')
             }
             else if (data.message === 'IncorrectPassword') {

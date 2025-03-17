@@ -19,8 +19,6 @@ export const AuthProvider = (props) => {
     const [loading, setLoading] = useState(true)
 
 
-
-
     const login = (user) => {
         localStorage.setItem('user', JSON.stringify(user))
         setCurrentUser(user)
