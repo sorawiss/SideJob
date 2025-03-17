@@ -31,7 +31,7 @@ function Login() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(loginData)
+                body: JSON.stringify(loginData) 
             })
 
             const data = await response.json();
@@ -46,8 +46,11 @@ function Login() {
             else if (data.message === 'No user found') {
                 setUserFound('*ไม่มีบัญชีผู้ใช้นี้')
             }
-            else if (data.message === 'WrongPassword') {
+            else if (data.message === 'IncorrectPassword') {
                 setCheckPassword('*รหัสผ่านไม่ถูกต้อง')
+            }
+            else {
+                console.log(data)
             }
 
         }

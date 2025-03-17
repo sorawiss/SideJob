@@ -59,7 +59,8 @@ function Register() {
             )
             const data = await response.json()
             if (data.message == "RegisterSuccess") {
-                login()
+                const { password, ...rest } = registerData
+                login(rest) 
                 navigate('/home')
             }
         }

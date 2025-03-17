@@ -8,7 +8,7 @@ import ProtectedRoute from './ProtectedRoutes';
 
 
 // Import Pages
-import Welcome from './pages/welcome'
+import Welcome from './pages/Welcome'
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
