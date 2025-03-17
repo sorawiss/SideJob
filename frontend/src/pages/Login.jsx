@@ -61,15 +61,16 @@ function Login() {
     }
 
 
+
     // Frontend
     return (
-        <div className='bg-primary h-screen flex flex-col items-center pt-[6.5rem] gap-[7.5rem] '>
+        <div className='login-page-container bg-primary-dark h-screen flex flex-col items-center pt-[6.5rem] gap-[7.5rem] '>
             <div className="logo-container">
-                <h1 className='text-light '>LOGO</h1>
+                <h1 className='text-primary-light '>LOGO</h1>
             </div>
 
             <div className="form-container flex flex-col items-center bg-accent w-full h-[42rem] rounded-tl-[90px] gap-[2.5rem] py-[4.375rem] ">
-                <h1 className='text-primary'>เข้าสู่ระบบ</h1>
+                <h1 className='text-primary-dark'>เข้าสู่ระบบ</h1>
                 {/* Form */}
                 <form action="" onSubmit={handleSubmit} className='flex flex-col items-center gap-[2.5rem] border-none '>
                     <Input className='w-[22.5rem] h-[3.125rem] rounded-[16px]'

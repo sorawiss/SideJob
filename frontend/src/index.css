@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 
+
 * {
   border: red 1px soli;
 }
@@ -14,9 +15,9 @@ body {
 
 @theme {
   --color-accent: #E5F066;
-  --color-primary: #2E2E38;
-  --color-light: #F1F1F1;
-  --color-background: #1B1B1B;
+  --color-primary-dark: #2E2E38;
+  --color-primary-light: #F1F1F1;
+  --color-background-dark: #1B1B1B;
 }
 
 

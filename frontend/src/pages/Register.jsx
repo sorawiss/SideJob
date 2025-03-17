@@ -72,9 +72,9 @@ function Register() {
 
 
     return (
-        <div className='bg-primary h-screen flex flex-col items-center pt-[5.3rem] gap-[2.5rem] '>
+        <div className='bg-primary-dark h-screen flex flex-col items-center pt-[5.3rem] gap-[2.5rem] '>
             <div>
-                <h1 className='text-light '>สมัครใช้งาน</h1>
+                <h1 className='text-primary-light '>สมัครใช้งาน</h1>
             </div>
 
             <div className="form-container flex flex-col items-center bg-accent w-full h-full rounded-tl-[90px] gap-[2.5rem] py-[4.375rem] ">
