@@ -18,6 +18,7 @@ body {
   --color-primarydark: #2E2E38;
   --color-primarylight: #F1F1F1;
   --color-backgrounddark: #1B1B1B;
+  --color-secondary: #616165;
 }
 
 
@@ -25,8 +26,22 @@ h1 {
   @apply text-[4rem] font-extrabold 
 }
 
+h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
 p {
   @apply text-[1rem]
+}
+
+.p2 {
+  font-size: 0.8rem;
+  line-height: 15px;
+}
+
+.p3 {
+  @apply text-[0.6rem] leading-[0.6rem]
 }
 
 .error {

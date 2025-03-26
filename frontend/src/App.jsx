@@ -15,6 +15,7 @@ import Register from './pages/Register';
 import Home from './pages/Home';
 
 
+
 const queryClient = new QueryClient()
 
 

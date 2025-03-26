@@ -1,4 +1,9 @@
 import React from 'react'
+import { useQuery } from '@tanstack/react-query'
+
+
+import PostObject from './PostObject'
+
 
 function Post() {
 
@@ -15,9 +20,15 @@ function Post() {
     if (error) return 'An error has occurred: ' + error.message
 
     console.log(data)
-    
+
     return (
-        <div>Post</div>
+        <div className='post-grid-container bg-primarylight flex flex-col items-center gap-[1rem] h-screen '>
+            {data.map((items, index) =>
+                <PostObject key={index} postDate={items.postDate} title={items.title} detail={items.details} />
+            )}
+        </div>
+
+
     )
 }
 
