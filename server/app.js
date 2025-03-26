@@ -27,10 +27,15 @@ app.use(cors(corsOptions));
 
 // Routes Import
 import authRoute from './routes/auth.js'
+import postRoute from './routes/post.js'
+
 
 
 // Routes Activation
 app.use(authRoute)
+app.use(postRoute)
+
+
 
 
 
