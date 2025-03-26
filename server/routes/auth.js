@@ -2,10 +2,7 @@ import express from "express";
 import supabase from '../db.js'
 
 
-
 const router = express.Router();
-
-
 
 
 // Bcrypt
@@ -111,7 +108,7 @@ router.post('/authentication', (req, res) => {
 
 
 
-
+// LOGOUT
 router.post("/logout", (req, res) => {
   res.clearCookie("AccessToken", {
       httpOnly: true
