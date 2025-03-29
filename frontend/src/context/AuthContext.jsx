@@ -22,6 +22,7 @@ export const AuthProvider = (props) => {
     const login = (user) => {
         localStorage.setItem('user', JSON.stringify(user))
         setCurrentUser(user)
+        console.log(user)
     }
 
     
@@ -38,6 +39,7 @@ export const AuthProvider = (props) => {
 
     useEffect(() => {
         async function checkToken() {
+            console.log('Checking token...');
             try {
                 const res = await fetch('http://localhost:3333/authentication', {
                     method: 'POST',
@@ -47,15 +49,17 @@ export const AuthProvider = (props) => {
                 if (data.message !== 'TokenConfirm') {
                     setCurrentUser(null);
                     localStorage.removeItem('user');
+                    console.log("invalid token")
                 }
             } catch (error) {
                 setCurrentUser(null);
             } finally {
                 setLoading(false)
+                console.log("token checked")
             }
         }
         checkToken();
-    }, []); 
+    }, [currentUser]); 
 
     return (
         <AuthContext.Provider value={{ currentUser, loading, login, logout }}>

@@ -53,9 +53,6 @@ router.post('/register',
 router.post('/login',
   async (req, res) => {
     const { phone_number, password } = req.body;
-    if (!phone_number || !password) {
-        return res.status(400).json({ message: "Phone number and password are required" });
-    }
     
     const { data, error } = await supabase
       .from('members')
@@ -70,7 +67,7 @@ router.post('/login',
         return res.status(404).json({ message: 'No user found' });
       }
 
-      bcrypt.compare(password, data[0].password, function (err, isLogin) {
+      bcrypt.compare(password, data[0].password, (err, isLogin) => {
         if (isLogin) {
           var token = generateToken(phone_number)
           res.cookie("AccessToken", token, {
