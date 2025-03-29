@@ -3,10 +3,10 @@ import React from 'react'
 import starIcon from '../assets/svg/star.svg'
 import pinIcon from '../assets/svg/pin.svg'
 
-function PostObject( {postDate, title, detail} ) {
+function PostObject( {postDate, title, detail, price} ) {
 
     return (
-        <div className='post-object-container w-[30rem] bg-white p-[1rem] rounded-[16px] flex flex-col gap-[0.9rem] '>
+        <div className='post-object-container w-[30rem] bg-white p-[1rem] rounded-[16px] flex flex-col gap-[1rem] p-1rem '>
             {/* ProfileSection (Header) */}
             <div className="profile flex gap-[0.5rem] ">
                 <img src="*" alt="" className='w-[2.6rem] h-[2.6rem] ' />
@@ -37,9 +37,13 @@ function PostObject( {postDate, title, detail} ) {
 
 
             {/* PostSection */}
-            <div className="post-section">
+            <div className="post-section  ">
                 <h2 className='text-primarydark'>{title}</h2>
                 <p className='p2 text-secondary'>{detail}</p>
+
+                <div className="price bg-primarydark w-[10rem] rounded-[16px] px-[1rem] py-[4px] flex items-center ">
+                    <p className='text-accent '>{price}</p>
+                </div>
             </div>
         </div>
     )
