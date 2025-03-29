@@ -3,7 +3,7 @@ import React from 'react'
 import starIcon from '../assets/svg/star.svg'
 import pinIcon from '../assets/svg/pin.svg'
 
-function PostObject( {postDate, title, detail, price, fname, lname} ) {
+function PostObject( {postDate, title, detail, price, fname, lname, category} ) {
 
     return (
         <div className='post-object-container w-[30rem] bg-white p-[1rem] rounded-[16px] flex flex-col gap-[1rem] p-1rem '>
@@ -16,7 +16,7 @@ function PostObject( {postDate, title, detail, price, fname, lname} ) {
                         <p>{fname} {lname}</p>
 
                         <div className="categary bg-accent px-[0.5rem] py-[1px] rounded-[16px] ">
-                            Entertainment
+                            {category}
                         </div>
 
                         <div className="rating">
