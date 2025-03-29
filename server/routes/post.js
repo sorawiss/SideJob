@@ -9,7 +9,7 @@ router.get('/posts', async (req, res) => {
   try {
     const { data, error } = await supabase
       .from('workPost')
-      .select('*, members!posterID(fname, lname)')
+      .select('*, members!posterID(fname, lname), category!categoryID(name)')
 
     if (error) {
       return res.status(500).json({ message: 'Failed to fetch posts', error: error.message });
