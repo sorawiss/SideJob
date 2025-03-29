@@ -1,8 +1,13 @@
 import React from 'react';
 
+
+import Post from '../components/Post';
+
 function Home() {
     return (
-        <div>Home</div>
+        <div>
+            <Post />
+        </div>
     );
 }
 

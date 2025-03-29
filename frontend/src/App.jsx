@@ -1,5 +1,6 @@
 import './App.css'
 import { BrowserRouter as Router, Route, Routes, BrowserRouter } from 'react-router-dom';
+import { QueryClient, QueryClientProvider, } from '@tanstack/react-query'
 
 
 // Import Modules
@@ -15,22 +16,27 @@ import Home from './pages/Home';
 
 
 
+const queryClient = new QueryClient()
+
+
 function App() {
 
   return (
-    <AuthProvider>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Welcome />} />
-          <Route path='/login' element = {<Login />} />
-          <Route path='register' element = {<Register />} />
-          <Route element = {<ProtectedRoute />}>
-            <Route path='/home' element = {<Home />} />
-          </Route>
-        </Routes>
-      </Router>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Welcome />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='register' element={<Register />} />
+            <Route element={<ProtectedRoute />}>
+              <Route path='/home' element={<Home />} />
+            </Route>
+          </Routes>
+        </Router>
       </AuthProvider>
-  )
+    </QueryClientProvider>
+      )
 }
 
-export default App
+      export default App
