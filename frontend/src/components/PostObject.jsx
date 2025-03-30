@@ -5,7 +5,7 @@ import pinIcon from '../assets/svg/pin.svg'
 
 import WordCuter from '../function/WordCuter';
 
-function PostObject( {postDate, title, detail, price, fname, lname, category, location, rating} ) {
+function PostObject( {postDate, title, detail, price, fname, lname, category, location, rating, images} ) {
 
     const dateFormat = new Date(postDate).toLocaleDateString('th-TH');
     
@@ -51,9 +51,6 @@ function PostObject( {postDate, title, detail, price, fname, lname, category, lo
                     </div>
                 </div>
 
-
-                {/* PinIcon */}
-                <img src={pinIcon} alt="" />
             </div>
 
 
@@ -61,6 +58,8 @@ function PostObject( {postDate, title, detail, price, fname, lname, category, lo
             <div className="post-section  ">
                 <h2 className='text-primarydark'>{title}</h2>
                 <p className='p2 text-secondary'>{detail}</p>
+
+                { images.length > 0 ? (<img src={'/upload/' + images[0].image} alt="" />) : null }
 
                 <div className="price bg-primarydark w-[10rem] rounded-[16px] px-[1rem] py-[4px] flex items-center mt-[0.9rem] ">
                     <p className='text-accent '>{price} บาท</p>
