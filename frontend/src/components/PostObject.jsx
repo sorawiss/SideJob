@@ -12,7 +12,7 @@ function PostObject( {postDate, title, detail, price, fname, lname, category, lo
 
     // avgRating FUNCTION
     function avgRating(rating) {
-        if(rating.length === 0) return ('')
+        if(rating.length === 0) return null
         let sum = 0
         for (let i = 0; i < rating.length; i++) {
             sum += rating[i].rating
@@ -26,8 +26,10 @@ function PostObject( {postDate, title, detail, price, fname, lname, category, lo
            
             {/* ProfileSection (Header) */}
             <div className="profile flex gap-[0.5rem] ">
+                {/* ProfilePic */}
                 <img src="*" alt="" className='w-[2.6rem] h-[2.6rem] ' />
 
+                {/* ProfileDetail */}
                 <div className="profile-detail gap-[0.5rem] w-[22rem] ">
                     <div className="upper flex gap-[0.5rem] items-center mb-[0.4rem] ">
                         <p>{fname} {lname}</p>
@@ -37,7 +39,7 @@ function PostObject( {postDate, title, detail, price, fname, lname, category, lo
                         </div>
 
                         <div className="rating flex items-center gap-[2px] ">
-                            <img src={starIcon} alt="" className='w-[1.2rem] h-[1.2rem] '/>
+                            {rating.length > 0 ? (<img src={starIcon} alt="" className='w-[1.2rem] h-[1.2rem] '/>) : '' }
                             <p className='text-primarydark mt-[4px] '> {avgRating(rating)} </p>
                         </div>
                     </div>
@@ -50,6 +52,7 @@ function PostObject( {postDate, title, detail, price, fname, lname, category, lo
                 </div>
 
 
+                {/* PinIcon */}
                 <img src={pinIcon} alt="" />
             </div>
 
