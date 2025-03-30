@@ -40,8 +40,12 @@ function PostObject({ postDate, title, detail, price, fname, lname, category, lo
                         </div>
 
                         <div className="rating flex items-center gap-[2px] ">
-                            {rating.length > 0 ? (<img src={starIcon} alt="" className='w-[1.2rem] h-[1.2rem] ' />) : ''}
-                            <p className='text-primarydark mt-[4px] '> {avgRating(rating)} </p>
+                            {rating.length > 0 ? (
+                                <>
+                                    <img src={starIcon} alt="" className='w-[1.2rem] h-[1.2rem] ' />
+                                    <p className='text-primarydark mt-[4px] p2 inline '> {avgRating(rating)} </p> <p className='inline mt-[4px] p2 text-secondary '>({rating.length})</p>
+                                </>)
+                                : null}
                         </div>
                     </div>
 
@@ -60,7 +64,7 @@ function PostObject({ postDate, title, detail, price, fname, lname, category, lo
                 <h2 className='text-primarydark'>{title}</h2>
                 <p className='p2 text-secondary'>{detail}</p>
 
-                {images.length > 0 ? (<img src={'/upload/' + images[0].image} alt="" />) : null}
+                {images.length > 0 ? (<img src={'/upload/' + images[0].image} alt="Image in post" className='max-h-[15rem] object-cover w-[100%] ' />) : null}
 
                 <div className="price bg-primarydark w-[10rem] rounded-[16px] px-[1rem] py-[4px] flex items-center mt-[0.9rem] ">
                     <p className='text-accent '>{price.toLocaleString()} บาท</p>
