@@ -3,6 +3,7 @@ import express from "express"
 import "dotenv/config"
 import cors from "cors"
 import cookieParser from "cookie-parser"
+import multer from "multer"
 
 
 
@@ -21,7 +22,7 @@ const corsOptions = {
   allowedHeaders: ["Content-Type", "Authorization"],
 };
 
-app.use(cors(corsOptions)); 
+app.use(cors(corsOptions));
 
 
 
@@ -37,8 +38,28 @@ app.use(postRoute)
 
 
 
+// Multer
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, '../frontend/public/upload')
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + file.originalname)
+  }
+})
 
+const upload = multer({ storage: storage })
 
+// Multer Upload
+app.post('/upload', upload.single('image'), async (req, res) => {
+  try {
+    const file = req.file
+    res.status(200).json(file.filename)
+  }
+  catch (err) {
+    res.status(500).json({ message: 'Error in /upload', error: err.message })
+  }
+})
 
 
 
