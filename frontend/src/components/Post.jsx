@@ -27,7 +27,7 @@ function Post() {
     return (
         <div className='post-grid-container bg-primarylight flex flex-col items-center gap-[1rem] h-screen '>
             {data.map((items, index) =>
-                <PostObject key={index} postDate={items.postDate} title={items.title} detail={items.details} price={items.salary} fname={items.members.fname} lname={items.members.lname} category={items.category.name} location={items.job?.workPlaceAddress || 'ไม่ระบุ'} rating={items.review} />
+                <PostObject key={index} postDate={items.postDate} title={items.title} detail={items.details} price={items.salary} fname={items.members.fname} lname={items.members.lname} category={items.category.name} location={items.job?.workPlaceAddress || 'ไม่ระบุ'} rating={items.review} images={items.picture} />
             )}
         </div>
 
