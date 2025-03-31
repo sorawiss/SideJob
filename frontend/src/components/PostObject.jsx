@@ -1,7 +1,7 @@
 import React from 'react'
+import moment from 'moment'
 
 import starIcon from '../assets/svg/star.svg'
-import pinIcon from '../assets/svg/pin.svg'
 
 import WordCuter from '../function/WordCuter';
 
@@ -51,7 +51,7 @@ function PostObject({ postDate, title, detail, price, fname, lname, category, lo
 
 
                     <div className="lower flex gap-[1rem] ">
-                        <p className='p3 text-secondary '>{dateFormat}</p>
+                        <p className='p3 text-secondary '>{moment(postDate).fromNow()}</p>
                         <p className='p3 text-secondary'>{WordCuter(location, 54)}</p>
                     </div>
                 </div>
