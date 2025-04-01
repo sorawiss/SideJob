@@ -2,6 +2,7 @@ import React from 'react'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
 
+
 import starIcon from '../assets/svg/star.svg'
 import phone from '../assets/svg/phone.svg'
 import line from '../assets/svg/line.svg'
@@ -10,11 +11,14 @@ import starLG from '../assets/svg/star-lg.svg'
 
 import WordCuter from '../function/WordCuter';
 
+import Review from './Review'
+
+
 function PostObject({ postDate, title, details, salary, location, picture, posterID, category, members, review }) {
 
     const dateFormat = new Date(postDate).toLocaleDateString('th-TH');
 
-  
+
 
 
 
@@ -30,7 +34,7 @@ function PostObject({ postDate, title, details, salary, location, picture, poste
 
 
     return (
-        <div className='Inpost-object-container w-[30rem] bg-white p-[1rem] rounded-[16px] flex flex-col gap-[1rem] p-1rem '>
+        <div className='Inpost-object-container w-[30rem] bg-white p-[1rem] rounded-[16px] flex flex-col gap-[1rem] p-1rem min-h-screen '>
             {/* ProfileSection (Header) */}
             <div className="profile flex gap-[0.5rem] ">
                 {/* ProfilePic */}
@@ -119,7 +123,7 @@ function PostObject({ postDate, title, details, salary, location, picture, poste
 
 
 
-            {/* Review */}
+            {/* ReviewRating */}
             <div className="review-wrapper flex flex-col items-center gap-[0.5rem] ">
                 <div className="review-point flex flex-col items-center gap-[1.5rem] mt-[3rem] ">
                     <h2>คะแนนและความคิดเห็น</h2>
@@ -133,6 +137,18 @@ function PostObject({ postDate, title, details, salary, location, picture, poste
                 <p className='text-secondary' >ผู้รีวิว {review.length} คน</p>
             </div>
 
+
+            {/* ReviewSection */}
+            <div className="review-wrapper flex flex-col items-center gap-[1rem] ">
+                {review.length > 0 ? (
+                    review.map((items, index) => {
+                        return (
+                            <Review key={index} member={items.members} detail={items.reviewDetails} date={items.reviewDate} />
+                        )
+                    })
+                ) : null}
+
+            </div>
         </div>
     )
 }

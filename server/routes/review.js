@@ -1,4 +1,6 @@
 import express from "express";
+import moment from "moment";
+
 
 import supabase from '../db.js';
 
@@ -18,6 +20,7 @@ router.post('/createReview', async (req, res) => {
             reviewedID,
         } = req.body
 
+        const time = moment(Date.now()).format("YYYY-MM-DD HH:mm:ss")
 
         const { error } = await supabase
             .from('review')
@@ -28,6 +31,7 @@ router.post('/createReview', async (req, res) => {
                     rating,
                     reviewerID,
                     reviewedID,
+                    reviewDate: time
                 },
             )
         
