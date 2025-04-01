@@ -7,6 +7,8 @@ import ButtonXL from '../components/ButtonXL';
 
 import { AuthContext } from '../context/AuthContext';
 
+import './Style/LoginAndReg.css'
+
 function Login() {
 
     const { login } = useContext(AuthContext)

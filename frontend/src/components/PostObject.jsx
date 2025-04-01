@@ -6,7 +6,7 @@ import starIcon from '../assets/svg/star.svg'
 
 import WordCuter from '../function/WordCuter';
 
-function PostObject({ postDate, title, detail, price, fname, lname, category, location, rating, images, postID }) {
+function PostObject({ postDate, title, detail, price, fname, lname, category, location, rating, images, postID, posterID }) {
 
     const dateFormat = new Date(postDate).toLocaleDateString('th-TH');
 
@@ -27,14 +27,20 @@ function PostObject({ postDate, title, detail, price, fname, lname, category, lo
         <div className='post-object-container w-[30rem] bg-white p-[1rem] rounded-[16px] flex flex-col gap-[1rem] p-1rem '>
 
             {/* ProfileSection (Header) */}
+
             <div className="profile flex gap-[0.5rem] ">
                 {/* ProfilePic */}
-                <img src="*" alt="" className='w-[2.6rem] h-[2.6rem] ' />
+                <Link to={'profile/' + posterID} className=''>
+                    <img src="*" alt="" className='w-[2.6rem] h-[2.6rem] ' />
+                </Link>
+    
 
                 {/* ProfileDetail */}
                 <div className="profile-detail gap-[0.5rem] w-[22rem] ">
                     <div className="upper flex gap-[0.5rem] items-center mb-[0.4rem] ">
-                        <p>{fname} {lname}</p>
+                        <Link to={'profile/' + posterID}>
+                            <p>{fname} {lname}</p>
+                        </Link>
 
                         <div className="categary bg-accent px-[0.5rem] py-[1px] rounded-[16px] p2 ">
                             {category}

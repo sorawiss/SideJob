@@ -14,6 +14,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
 import InPost from './pages/InPost';
+import Profile from './pages/Profile';
 
 
 
@@ -33,6 +34,7 @@ function App() {
             <Route element={<ProtectedRoute />}>
               <Route path='/home' element={<Home />} />
               <Route path='/home/post/:id' element={<InPost />} />
+              <Route path='/home/profile/:id' element={<Profile />} />
             </Route>
           </Routes>
         </Router>

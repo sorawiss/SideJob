@@ -8,11 +8,11 @@ import Post from '../components/Post';
 
 function Home() {
     return (
-        <div className='bg-primarylight flex flex-col items-center gap-[1rem] w-screen h-screen '>
+        <div className='home-container bg-primarylight flex flex-col items-center gap-[1rem] w-screen h-screen '>
             <Input
                 suffix= {<img src={searchIcon} />}
                 placeholder="Search..."
-                className='search-bar w-[30rem] mt-[1.5rem]  '
+                className=' w-[30rem] mt-[1.5rem]  '
                 size='lg'
             />
 
