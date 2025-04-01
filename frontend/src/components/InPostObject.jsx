@@ -1,6 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
+import { Rating } from "@material-tailwind/react";
 
 
 import starIcon from '../assets/svg/star.svg'
@@ -122,6 +123,10 @@ function PostObject({ postDate, title, details, salary, location, picture, poste
             </div>
 
 
+            {/* Rate */}
+            <Rating ratedColor="amber" />
+
+
 
             {/* ReviewRating */}
             <div className="review-wrapper flex flex-col items-center gap-[0.5rem] ">
@@ -141,9 +146,10 @@ function PostObject({ postDate, title, details, salary, location, picture, poste
             {/* ReviewSection */}
             <div className="review-wrapper flex flex-col items-center gap-[1rem] ">
                 {review.length > 0 ? (
+                    console.log(review),
                     review.map((items, index) => {
                         return (
-                            <Review key={index} member={items.members} detail={items.reviewDetails} date={items.reviewDate} />
+                            <Review key={index} member={items.members} detail={items.reviewDetails} date={items.reviewDate} rating={items.rating} />
                         )
                     })
                 ) : null}
