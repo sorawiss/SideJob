@@ -17,8 +17,8 @@ const SECRET_KEY = process.env.SECRET_KEY;
 async function hashPassword(password) {
   return await bcrypt.hash(password, SALT_ROUNDS);
 }
-function generateToken(phone_number) {
-  return jwt.sign(phone_number, SECRET_KEY);
+function generateToken(phone_number, id) {
+  return jwt.sign({phone_number, id}, SECRET_KEY);
 }
 
 
@@ -30,15 +30,19 @@ router.post('/register',
     const { phone_number, password, fname, lname } = req.body;
     const hashedPassword = await hashPassword(password);
 
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from('members')
       .insert({ phone_number, password : hashedPassword,  fname, lname })
+      .select('id')
+      .single()
+      
+
 
     if (error) {
       return res.status(500).json({ message: 'Failed to create user', error: error.message });
     }
 
-    const token = generateToken(phone_number)
+    const token = generateToken(phone_number, data.id)
     res.cookie("AccessToken", token, {
       httpOnly: true,
     })
@@ -69,12 +73,12 @@ router.post('/login',
 
       bcrypt.compare(password, data[0].password, (err, isLogin) => {
         if (isLogin) {
-          var token = generateToken(phone_number)
+          const { password, ...rest } = data[0]
+          const token = generateToken(phone_number, rest.id)
+
           res.cookie("AccessToken", token, {
             httpOnly: true,
           })
-
-          const { password, ...rest } = data[0]
           res.json({ message: 'Login Success', user : rest })
         }
         else {

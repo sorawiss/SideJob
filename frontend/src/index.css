@@ -57,3 +57,8 @@ p {
 .highlight {
   font-weight: 600;
 }
+
+a {
+  border: none;
+  text-decoration: none;
+}

@@ -9,6 +9,7 @@ import lock from '../assets/svg/lock-icon.svg'
 
 import { AuthContext } from '../context/AuthContext';
 
+import './Style/LoginAndReg.css'
 
 
 
