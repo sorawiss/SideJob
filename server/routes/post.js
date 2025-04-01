@@ -31,7 +31,7 @@ router.get('/getPosts', verifyToken, async (req, res) => {
   try {
     const { data, error } = await supabase
       .from('workPost')
-      .select('*, members!posterID(fname, lname), category!categoryID(name), job(workPlaceAddress), review(rating), picture(image)')
+      .select('*, members!posterID(fname, lname), category!categoryID(name), review(rating), picture(image)')
 
     if (error) {
       return res.status(500).json({ message: 'Failed to fetch posts', error: error.message });
@@ -54,13 +54,14 @@ router.post('/createPost', verifyToken, async (req, res) => {
       salary,
       details,
       categoryID,
-      workPlaceAddress
+      location,
+      isJob,
     } = req.body
 
     const time = moment(Date.now()).format("YYYY-MM-DD HH:mm:ss")
     const posterID = req.user.id
 
-    const { data, postError } = await supabase
+    const { error } = await supabase
       .from('workPost')
       .insert(
         {
@@ -69,27 +70,15 @@ router.post('/createPost', verifyToken, async (req, res) => {
           categoryID,
           posterID,
           salary,
+          location,
+          isJob,
           postDate: time,
           status: true
         },
       )
-      .select()
-      .single()
 
-    if (postError) {
+    if ( error) {
       return res.status(500).json({ message: 'Failed to create post in workPost table', error: error.message });
-    }
-
-
-    const { picError } = await supabase
-      .from('job')
-      .insert({
-         postID: data.postID,
-         workPlaceAddress
-      });
-
-    if (picError) {
-      return res.status(500).json({ message: 'Failed to create post in job table', error: error.message });
     }
 
     res.status(201).json({ message: 'Post created successfully' });

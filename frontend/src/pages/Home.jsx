@@ -8,7 +8,7 @@ import Post from '../components/Post';
 
 function Home() {
     return (
-        <div className='home-container bg-primarylight flex flex-col items-center gap-[1rem] w-screen h-screen '>
+        <div className='home-container bg-primarylight flex flex-col items-center gap-[1rem] w-screen '>
             <Input
                 suffix= {<img src={searchIcon} />}
                 placeholder="Search..."
