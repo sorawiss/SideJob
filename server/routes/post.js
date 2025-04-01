@@ -48,18 +48,19 @@ router.get('/getPosts', verifyToken, async (req, res) => {
 
 // CreatePost
 router.post('/createPost', verifyToken, async (req, res) => {
-    try {
-      const {
-        title,
-        salary,
-        details,
-        categoryID
-      } = req.body
-      
-      const time = moment(Date.now()).format("YYYY-MM-DD HH:mm:ss")
-      const posterID = req.user.id
-      
-      const { error } = await supabase
+  try {
+    const {
+      title,
+      salary,
+      details,
+      categoryID,
+      workPlaceAddress
+    } = req.body
+
+    const time = moment(Date.now()).format("YYYY-MM-DD HH:mm:ss")
+    const posterID = req.user.id
+
+    const { data, postError } = await supabase
       .from('workPost')
       .insert(
         {
@@ -72,18 +73,32 @@ router.post('/createPost', verifyToken, async (req, res) => {
           status: true
         },
       )
-    
-      if (error) {
-        return res.status(500).json({ message: 'Failed to create post', error: error.message });
-      }
+      .select()
+      .single()
 
-      res.status(201).json({ message: 'Post created successfully' });
-    
+    if (postError) {
+      return res.status(500).json({ message: 'Failed to create post in workPost table', error: error.message });
     }
-    catch (err) {
-      res.status(500).json({ message: 'Internal server error', error: err.message })
+
+
+    const { picError } = await supabase
+      .from('job')
+      .insert({
+         postID: data.postID,
+         workPlaceAddress
+      });
+
+    if (picError) {
+      return res.status(500).json({ message: 'Failed to create post in job table', error: error.message });
     }
-  })
+
+    res.status(201).json({ message: 'Post created successfully' });
+
+  }
+  catch (err) {
+    res.status(500).json({ message: 'Internal server error', error: err.message })
+  }
+})
 
 
 
