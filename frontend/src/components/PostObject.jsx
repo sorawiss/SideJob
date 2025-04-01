@@ -70,7 +70,7 @@ function PostObject({ postDate, title, detail, price, fname, lname, category, lo
             <Link to={'post/' + postID} >
                 <div className="post-section  ">
                     <h2 className='text-primarydark'>{title}</h2>
-                    <p className='p2 text-secondary'>{detail}</p>
+                    <p className='p2 text-secondary'>{WordCuter(detail, 200)}</p>
 
                     {images.length > 0 ? (<img src={'/upload/' + images[0].image} alt="Image in post" className='max-h-[15rem] object-cover w-[100%] ' />) : null}
 

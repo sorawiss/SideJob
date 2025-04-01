@@ -3,6 +3,10 @@ import moment from 'moment'
 import { Link } from 'react-router-dom';
 
 import starIcon from '../assets/svg/star.svg'
+import phone from '../assets/svg/phone.svg'
+import line from '../assets/svg/line.svg'
+import gmail from '../assets/svg/gmail.svg'
+import starLG from '../assets/svg/star-lg.svg'
 
 import WordCuter from '../function/WordCuter';
 
@@ -25,14 +29,13 @@ function PostObject({ postDate, title, details, salary, location, review, pictur
 
     return (
         <div className='Inpost-object-container w-[30rem] bg-white p-[1rem] rounded-[16px] flex flex-col gap-[1rem] p-1rem '>
-
             {/* ProfileSection (Header) */}
-
             <div className="profile flex gap-[0.5rem] ">
                 {/* ProfilePic */}
                 <Link to={'profile/' + posterID} className=''>
                     <img src="*" alt="" className='w-[2.6rem] h-[2.6rem] ' />
                 </Link>
+
 
 
                 {/* ProfileDetail */}
@@ -66,28 +69,64 @@ function PostObject({ postDate, title, details, salary, location, review, pictur
             </div>
 
 
-            {/* PostSection */}
 
+            {/* PostSection */}
             <div className="post-section  ">
                 <h2 className='text-primarydark'>{title}</h2>
                 <p className='p2 text-secondary'>{details}</p>
 
-                {picture.length > 0 ? (
-                    picture.map((items, index) => {
-                        return(
-                        <img key={index} src={'/upload/' + items.image} alt="Image in post" className='w-[100%] my-[1rem] ' />)
-                    }))
-                     : null
-                    
-                    }
 
+                <div className="contact-wrapper mt-[1rem] flex flex-col gap-[0.5rem] ">
+                    {members.phone_number ? (
+                        <div className="phone-wrapper flex items-center gap-[0.5rem] ">
+                            <img src={phone} alt="Phone Icoon" className='inline ' />
+                            <p className='inline ' > {members.phone_number} </p>
+                        </div>
+                    ) : null}
+
+                    {members.phone_number ? (
+                        <div className="phone-wrapper flex items-center gap-[0.5rem] p2 ">
+                            <img src={line} alt="Phone Icoon" className='inline ' />
+                            <p className='inline ' > {members.phone_number} </p>
+                        </div>
+                    ) : null}
+
+                    {members.phone_number ? (
+                        <div className="phone-wrapper flex items-center gap-[0.5rem]  ">
+                            <img src={gmail} alt="Phone Icoon" className='inline ' />
+                            <p className='inline ' > {members.phone_number} </p>
+                        </div>
+                    ) : null}
+                </div>
+
+                
                 <div className="price bg-primarydark w-[10rem] rounded-[16px] px-[1rem] py-[4px] flex items-center mt-[0.9rem] ">
                     <p className='text-accent '>{salary.toLocaleString()} บาท</p>
                 </div>
+
+
+                {picture.length > 0 ? (
+                    picture.map((items, index) => {
+                        return (
+                            <img key={index} src={'/upload/' + items.image} alt="Image in post" className='w-[100%] my-[1rem] ' />)
+                    }))
+                    : null
+
+                }
             </div>
 
 
 
+            {/* Review */}
+            <div className="review-wrapper flex flex-col items-center gap-[1.5rem] mt-[3rem] ">
+                <h2>คะแนนและความคิดเห็น</h2>
+
+                
+                <div className="reviwe-rating flex items-center gap-[0.7rem] ">
+                    <img src={starLG} alt="star rating icon" />
+                    <h2 className='text-secondary' > {avgRating(review)} </h2>
+                </div>
+            </div>
 
         </div>
     )

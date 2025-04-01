@@ -12,7 +12,7 @@ router.get('/getInPosts/:id', async (req, res) => {
     try {
       const { data, error } = await supabase
         .from('workPost')
-        .select('*, members!posterID(fname, lname), category!categoryID(name), review(rating), picture(image)')
+        .select('*, members!posterID(fname, lname, phone_number), category!categoryID(name), review(rating), picture(image)')
         .eq('postID', req.params.id)
         .single()
   
