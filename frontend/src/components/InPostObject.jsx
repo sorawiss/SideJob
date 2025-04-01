@@ -99,7 +99,7 @@ function PostObject({ postDate, title, details, salary, location, review, pictur
                     ) : null}
                 </div>
 
-                
+
                 <div className="price bg-primarydark w-[10rem] rounded-[16px] px-[1rem] py-[4px] flex items-center mt-[0.9rem] ">
                     <p className='text-accent '>{salary.toLocaleString()} บาท</p>
                 </div>
@@ -118,14 +118,17 @@ function PostObject({ postDate, title, details, salary, location, review, pictur
 
 
             {/* Review */}
-            <div className="review-wrapper flex flex-col items-center gap-[1.5rem] mt-[3rem] ">
-                <h2>คะแนนและความคิดเห็น</h2>
+            <div className="review-wrapper flex flex-col items-center gap-[0.5rem] ">
+                <div className="review-point flex flex-col items-center gap-[1.5rem] mt-[3rem] ">
+                    <h2>คะแนนและความคิดเห็น</h2>
 
-                
-                <div className="reviwe-rating flex items-center gap-[0.7rem] ">
-                    <img src={starLG} alt="star rating icon" />
-                    <h2 className='text-secondary' > {avgRating(review)} </h2>
+                    <div className="reviwe-rating flex items-center gap-[0.7rem] ">
+                        <img src={starLG} alt="star rating icon" />
+                        <h2 className='text-secondary' > {avgRating(review)} </h2>
+                    </div>
                 </div>
+
+                <p className='text-secondary' >ผู้รีวิว {review.length} คน</p>
             </div>
 
         </div>
