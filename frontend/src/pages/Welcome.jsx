@@ -7,7 +7,7 @@ function Welcome() {
 
 
     return (
-        <div className='bg-accent h-screen p-[3.5rem] pt-[3.6rem] flex flex-col gap-[4.75rem] items-center '>
+        <div className='bg-accent min-h-screen p-[3.5rem] pt-[3.6rem] flex flex-col gap-[4.75rem] items-center '>
 
             {/* Welcome-SECTION */}
             <div className='welcome-container'>
