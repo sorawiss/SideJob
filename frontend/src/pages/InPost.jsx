@@ -2,6 +2,8 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 
+import InPostObject from '../components/InPostObject'
+
 
 
 function InPost() {
@@ -26,7 +28,9 @@ function InPost() {
 
 
   return (
-    <div>{data.title}</div>
+    <div className='inPost-container flex flex-col items-center bg-primarylight min-h-screen '>
+      <InPostObject {...data} />
+    </div>
   )
 }
 
