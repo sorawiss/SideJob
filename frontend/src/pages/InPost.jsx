@@ -4,14 +4,14 @@ import { useQuery } from '@tanstack/react-query'
 
 import InPostObject from '../components/InPostObject'
 
-
-
 function InPost() {
   const { id } = useParams()
-  console.log("PostID = " + id)
 
-
-  const { isPending, error, data } = useQuery({
+  const {
+    isPending: isPostPending,
+    error: postError,
+    data: postData,
+  } = useQuery({
     queryKey: ['inPost', id],
     queryFn: () =>
       fetch('http://localhost:3333/getInPosts/' + id).then((res) =>
@@ -19,19 +19,32 @@ function InPost() {
       ),
   })
 
-  if (isPending) return 'Loading...'
+  const {
+    isPending: isReviewsPending,
+    error: reviewsError,
+    data: reviewsData,
+  } = useQuery({
+    queryKey: ['comment', id],
+    queryFn: () =>
+      fetch('http://localhost:3333/getReviews/' + id).then((res) =>
+        res.json(),
+      ),
+  })
 
-  if (error) return 'An error has occurred: ' + error.message
-
-  console.log(data)
   
+  if (isPostPending || isReviewsPending) return 'Loading...'
 
+  if (postError || reviewsError) return 'An error has occurred: in InPost query '
 
   return (
     <div className='inPost-container flex flex-col items-center bg-primarylight min-h-screen '>
-      <InPostObject {...data} />
+      { postData && reviewsData && <InPostObject {...postData} review={reviewsData} /> }
     </div>
   )
+
 }
+
+
+
 
 export default InPost
