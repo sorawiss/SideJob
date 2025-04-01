@@ -30,6 +30,7 @@ app.use(cors(corsOptions));
 import authRoute from './routes/auth.js'
 import postRoute from './routes/post.js'
 import InPostRoute from './routes/inPost.js'
+import profileRoute from './routes/profile.js'
 
 
 
@@ -37,6 +38,7 @@ import InPostRoute from './routes/inPost.js'
 app.use(authRoute)
 app.use(postRoute)
 app.use(InPostRoute)
+app.use(profileRoute)
 
 
 
