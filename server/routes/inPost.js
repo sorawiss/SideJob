@@ -7,7 +7,7 @@ import supabase from '../db.js';
 const router = express.Router();
 
 
-
+// GetInPost
 router.get('/getInPosts/:id', async (req, res) => {
     try {
       const { data, error } = await supabase
