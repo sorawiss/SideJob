@@ -2,3 +2,15 @@
     width: 2.7rem;
     height: 2.7rem;
 }
+
+.title-text::placeholder, .title-text {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+
+.more-detail-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
