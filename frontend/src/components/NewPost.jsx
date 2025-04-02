@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Select } from "rizzui";
 
 import ProfileOnTop from './ProfileOnTop'
+import PriceButton from './PriceButton';
 
 import arrow from '../assets/svg/arrow.svg'
 import type from '../assets/svg/type.svg'
@@ -21,8 +22,8 @@ function NewPost({ setCreatePost }) {
 
   const [formData, setFormData] = useState(
     {
-      title : '',
-      
+      title: '',
+
     }
   )
 
@@ -62,7 +63,7 @@ function NewPost({ setCreatePost }) {
                   options={options}
                   value={value}
                   onChange={setValue}
-                  selectClassName = "ring-0 focus:ring-0 border-none "
+                  selectClassName="ring-0 focus:ring-0 border-none "
                 />
               </div>
               <div className="more-detail-wrapper">
@@ -73,12 +74,13 @@ function NewPost({ setCreatePost }) {
                 <img src={location} alt="" />
                 <p>สถานที่</p>
               </div>
-
-
             </div>
           </div>
         </div>
 
+        <div className="price-set bg-primarydark rounded-[16px] px-[1rem] py-[4px] mt-[0.9rem] ">
+          <input type="number" placeholder='ราคา..' className='price-text outline-none ' />
+        </div>
       </div>
     </div>
   )
