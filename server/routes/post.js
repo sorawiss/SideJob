@@ -71,7 +71,7 @@ router.post('/createPost', verifyToken, async (req, res) => {
           posterID,
           salary,
           location,
-          isJob,
+          isJob : true,
           postDate: time,
           status: true
         },
