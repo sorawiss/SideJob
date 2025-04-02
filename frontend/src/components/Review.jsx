@@ -1,10 +1,11 @@
 import React from 'react'
-import moment from 'moment'
 import { useState } from 'react'
 
 import cutWords from '../function/WordCuter'
 
 import { Rating } from "@material-tailwind/react";
+
+import ProfileOnTop from './ProfileOnTop';
 
 
 
@@ -18,12 +19,8 @@ function Review({ member, detail, date, rating }) {
 
     return (
         <div className='review-container bg-primarylight w-[100%] rounded-[16px] py-[0.5rem] px-[1rem] flex flex-col gap-[1rem] '>
-            <div className="profile-wrapper flex  gap-[0.5rem] items-center ">
-                <img src="*" alt="profile picture" className='w-[2.6rem] h-[2.6rem] ' />
-                <p>{member.fname} {member.lname}</p>
-                <p className='p2 text-secondary '>{moment(date).fromNow()}</p>
-            </div>
-
+            <ProfileOnTop fname={member.fname} lname={member.lname} date={date} />
+            
             <div className="star-wrapper">
                 <Rating value={rating} readonly ratedColor="amber" />
             </div>
