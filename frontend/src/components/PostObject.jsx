@@ -6,6 +6,8 @@ import starIcon from '../assets/svg/star.svg'
 
 import WordCuter from '../function/WordCuter';
 
+import PriceButton from './PriceButton';
+
 function PostObject({ postDate, title, detail, price, fname, lname, category, location, rating, images, postID, posterID }) {
 
     const dateFormat = new Date(postDate).toLocaleDateString('th-TH');
@@ -74,9 +76,7 @@ function PostObject({ postDate, title, detail, price, fname, lname, category, lo
 
                     {images.length > 0 ? (<img src={'/upload/' + images[0].image} alt="Image in post" className='max-h-[15rem] object-cover w-[100%] ' />) : null}
 
-                    <div className="price bg-primarydark w-[10rem] rounded-[16px] px-[1rem] py-[4px] flex items-center mt-[0.9rem] ">
-                        <p className='text-accent '>{price.toLocaleString()} บาท</p>
-                    </div>
+                    <PriceButton text={`${price.toLocaleString('th-TH')} บาท`} />
                 </div>
             </Link>
 
