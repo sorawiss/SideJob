@@ -3,12 +3,13 @@ import moment from 'moment'
 import { Link } from 'react-router-dom';
 
 import starIcon from '../assets/svg/star.svg'
+import profile from '../assets/svg/profile.svg'
 
 import WordCuter from '../function/WordCuter';
 
 import PriceButton from './PriceButton';
 
-function PostObject({ postDate, title, detail, price, fname, lname, category, location, rating, images, postID, posterID }) {
+function PostObject({ postDate, title, detail, price, fname, lname, category, location, rating, images, postID, posterID, profilePic }) {
 
     const dateFormat = new Date(postDate).toLocaleDateString('th-TH');
 
@@ -33,7 +34,7 @@ function PostObject({ postDate, title, detail, price, fname, lname, category, lo
             <div className="profile flex gap-[0.5rem] ">
                 {/* ProfilePic */}
                 <Link to={'profile/' + posterID} className=''>
-                    <img src="*" alt="" className='w-[2.6rem] h-[2.6rem] ' />
+                    <img src={ profilePic ? profilePic : profile } alt="" className='w-[2.6rem] h-[2.6rem] ' />
                 </Link>
     
 
