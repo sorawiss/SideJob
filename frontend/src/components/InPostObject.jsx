@@ -9,13 +9,15 @@ import phone from '../assets/svg/phone.svg'
 import line from '../assets/svg/line.svg'
 import gmail from '../assets/svg/gmail.svg'
 import starLG from '../assets/svg/star-lg.svg'
+import profile from '../assets/svg/profile.svg'
+
 
 import WordCuter from '../function/WordCuter';
 
 import Review from './Review'
 
 
-function PostObject({ postDate, title, details, salary, location, picture, posterID, category, members, review }) {
+function PostObject({ postDate, title, details, salary, location, picture, posterID, category, members, review, profile_picture }) {
 
     const dateFormat = new Date(postDate).toLocaleDateString('th-TH');
 
@@ -42,7 +44,7 @@ function PostObject({ postDate, title, details, salary, location, picture, poste
                 <div className="profile flex gap-[0.5rem] ">
                     {/* ProfilePic */}
                     <Link to={'profile/' + posterID} className=''>
-                        <img src="*" alt="" className='w-[2.6rem] h-[2.6rem] ' />
+                        <img src={ profile_picture ? profile_picture : profile } alt="" className='w-[2.6rem] h-[2.6rem] ' />
                     </Link>
 
 

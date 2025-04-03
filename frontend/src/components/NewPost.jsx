@@ -34,7 +34,7 @@ function NewPost({ setCreatePost }) {
     }
   )
 
-  console.log()
+  console.log(currentUser)
 
   const handleSelectChange = (select) => {
     setValue(select);

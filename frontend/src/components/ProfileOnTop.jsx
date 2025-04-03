@@ -1,11 +1,15 @@
 import React from 'react'
 import moment from 'moment'
 
-function ProfileOnTop( { fname="Sorwiss", lname="Boonnee", date=new Date() } ) {
+import profile from '../assets/svg/profile.svg'
+
+
+
+function ProfileOnTop( { fname="Sorwiss", lname="Boonnee", date=new Date(), profilePic } ) {
     return (
         <div>
             <div className="profile-wrapper flex  gap-[0.5rem] items-center ">
-                <img src="*" alt="profile picture" className='w-[2.6rem] h-[2.6rem] ' />
+                <img src={ profilePic ? profilePic : profile } alt="" className='w-[2.6rem] h-[2.6rem] ' />
                 <p>{fname} {lname}</p>
                 <p className='p2 text-secondary '>{moment(date).fromNow()}</p>
             </div>
