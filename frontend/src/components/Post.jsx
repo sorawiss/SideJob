@@ -23,7 +23,6 @@ function Post() {
 
     console.log(data)
 
-
     return (
         <div className='post-grid-container bg-primarylight flex flex-col items-center gap-[1rem]  '>
             {data.map((items, index) =>
