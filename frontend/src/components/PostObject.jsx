@@ -3,10 +3,13 @@ import moment from 'moment'
 import { Link } from 'react-router-dom';
 
 import starIcon from '../assets/svg/star.svg'
+import profile from '../assets/svg/profile.svg'
 
 import WordCuter from '../function/WordCuter';
 
-function PostObject({ postDate, title, detail, price, fname, lname, category, location, rating, images, postID, posterID }) {
+import PriceButton from './PriceButton';
+
+function PostObject({ postDate, title, detail, price, fname, lname, category, location, rating, images, postID, posterID, profilePic }) {
 
     const dateFormat = new Date(postDate).toLocaleDateString('th-TH');
 
@@ -31,7 +34,7 @@ function PostObject({ postDate, title, detail, price, fname, lname, category, lo
             <div className="profile flex gap-[0.5rem] ">
                 {/* ProfilePic */}
                 <Link to={'profile/' + posterID} className=''>
-                    <img src="*" alt="" className='w-[2.6rem] h-[2.6rem] ' />
+                    <img src={ profilePic ? profilePic : profile } alt="" className='w-[2.6rem] h-[2.6rem] ' />
                 </Link>
     
 
@@ -70,13 +73,11 @@ function PostObject({ postDate, title, detail, price, fname, lname, category, lo
             <Link to={'post/' + postID} >
                 <div className="post-section  ">
                     <h2 className='text-primarydark'>{title}</h2>
-                    <p className='p2 text-secondary'>{detail}</p>
+                    <p className='p2 text-secondary'>{WordCuter(detail, 200)}</p>
 
                     {images.length > 0 ? (<img src={'/upload/' + images[0].image} alt="Image in post" className='max-h-[15rem] object-cover w-[100%] ' />) : null}
 
-                    <div className="price bg-primarydark w-[10rem] rounded-[16px] px-[1rem] py-[4px] flex items-center mt-[0.9rem] ">
-                        <p className='text-accent '>{price.toLocaleString()} บาท</p>
-                    </div>
+                    <PriceButton text={`${price.toLocaleString('th-TH')} บาท`} />
                 </div>
             </Link>
 

@@ -23,6 +23,7 @@ html {
   --color-primarylight: #F1F1F1;
   --color-backgrounddark: #1B1B1B;
   --color-secondary: #616165;
+  --color-secondarylight : #DCDCDC;
 }
 
 
@@ -36,13 +37,18 @@ h2 {
 }
 
 p {
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 500;
+}
+
+.p1_5 {
+  font-size: 1rem;
+  font-weight: 300;
 }
 
 .p2 {
   font-size: 0.8rem;
-  line-height: 15px;
+  line-height: 1.3rem;
 }
 
 .p3 {

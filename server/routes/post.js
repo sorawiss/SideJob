@@ -31,7 +31,7 @@ router.get('/getPosts', verifyToken, async (req, res) => {
   try {
     const { data, error } = await supabase
       .from('workPost')
-      .select('*, members!posterID(fname, lname), category!categoryID(name), review(rating), picture(image)')
+      .select('*, members!posterID(fname, lname, profile_picture), category!categoryID(name), review(rating), picture(image)')
 
     if (error) {
       return res.status(500).json({ message: 'Failed to fetch posts', error: error.message });
@@ -71,7 +71,7 @@ router.post('/createPost', verifyToken, async (req, res) => {
           posterID,
           salary,
           location,
-          isJob,
+          isJob : true,
           postDate: time,
           status: true
         },
