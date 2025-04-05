@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react';
 import { Select } from "rizzui";
 import { useContext } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import ProfileOnTop from './ProfileOnTop'
 
@@ -53,8 +54,37 @@ function NewPost({ setCreatePost }) {
   };
 
 
+  async function createPost(postData) {
+    const response = await fetch('http://localhost:3333/createPost', {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(postData)
+    });
 
-  // API Call
+    if (!response.ok) {
+      const message = `An error has occured: ${response.status}`;
+      throw new Error(message);
+    }
+
+    return await response.json();
+  }
+
+
+  const queryClient = useQueryClient()
+
+  const mutation = useMutation({
+    mutationFn: createPost,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['posts'] })
+    },
+  })
+
+
+
+ 
   async function submitHandle(e) {
     e.preventDefault()
     const postData = {
@@ -66,21 +96,13 @@ function NewPost({ setCreatePost }) {
     }
 
     try {
-      fetch('http://localhost:3333/createPost', {
-        method : 'POST',
-        credentials: 'include',
-        headers: {
-          'content-type': 'application/json'
-        },
-        body: JSON.stringify(postData)
-      })
-
+      mutation.mutate(postData)
       console.log("add post to database success" + postData)
-      setCreatePost()
     }
     catch (error) {
       console.log(error)
     }
+    setCreatePost()
 
   }
 
