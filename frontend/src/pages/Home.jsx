@@ -14,16 +14,22 @@ import { AuthContext } from '../context/AuthContext';
 
 function Home() {
     const [onPost, setOnPost] = useState(false)
+    const [pageFindJob, setPageFindJob] = useState(true)
 
     const setCreatePost = () => {
         setOnPost(!onPost)
     }
 
+    const setPage = (bool) => {
+        setPageFindJob(bool)
+    }
+    
+
     const { currentUser } = useContext(AuthContext)
 
 
     return (
-        <div className='home-container bg-primarylight flex flex-col items-center gap-[1rem] w-screen '>
+        <div className='home-container bg-primarylight flex flex-col items-center gap-[1rem] w-screen min-h-screen '>
             <Input
                 suffix= {<img src={searchIcon} />}
                 placeholder="Search..."
@@ -31,11 +37,11 @@ function Home() {
                 size='lg'
             />
 
-            <Post />
+            <Post pageFindJob={pageFindJob} />
 
-            <Nav setCreatePost={setCreatePost} />
+            <Nav setCreatePost={setCreatePost} setPage={setPage} />
 
-            {onPost ? <NewPost setCreatePost={setCreatePost} profilePic={currentUser.profile_picture} /> : null}
+            {onPost ? <NewPost setCreatePost={setCreatePost} profilePic={currentUser.profile_picture} isJob={pageFindJob} /> : null}
         </div>
     );
 }

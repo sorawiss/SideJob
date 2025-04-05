@@ -14,7 +14,7 @@ import picture from '../assets/svg/picture.svg'
 import location from '../assets/svg/location.svg'
 import phone from '../assets/svg/phone.svg'
 
-function NewPost({ setCreatePost }) {
+function NewPost({ setCreatePost, profilePic, isJob }) {
 
   const { currentUser } = useContext(AuthContext)
 
@@ -35,7 +35,7 @@ function NewPost({ setCreatePost }) {
     }
   )
 
-  console.log(currentUser)
+
 
   const handleSelectChange = (select) => {
     setValue(select);
@@ -54,6 +54,7 @@ function NewPost({ setCreatePost }) {
   };
 
 
+  
   async function createPost(postData) {
     const response = await fetch('http://localhost:3333/createPost', {
       method: 'POST',
@@ -91,7 +92,8 @@ function NewPost({ setCreatePost }) {
       salary: formData.salary,
       details: formData.details,
       categoryID : formData.categoryID,
-      posterID : currentUser.id
+      posterID : currentUser.id,
+      isJob : isJob
     }
 
     try {
@@ -117,7 +119,7 @@ function NewPost({ setCreatePost }) {
 
 
         <div className="main-post-section-wrapper flex flex-col gap-[1rem] ">
-          <ProfileOnTop />
+          <ProfileOnTop profilePic={profilePic} />
 
           <textarea className='title-text h-[4.5rem] outline-none ' placeholder='หัวเรื่อง..' name='title' onInput={(e) => {
             e.target.style.height = 'auto';

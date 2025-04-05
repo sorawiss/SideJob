@@ -5,12 +5,12 @@ import { useQuery } from '@tanstack/react-query'
 import PostObject from './PostObject'
 
 
-function Post() {
+function Post({ pageFindJob, setPage }) {
 
     const { isPending, error, data } = useQuery({
-        queryKey: ['posts'],
+        queryKey: ['posts', pageFindJob],
         queryFn: () =>
-            fetch('http://localhost:3333/getPosts', {
+            fetch(`http://localhost:3333/getPosts?category=${pageFindJob}`, {
                 credentials: 'include',
             }).then((res) =>
                 res.json()

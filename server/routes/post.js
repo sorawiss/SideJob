@@ -28,10 +28,14 @@ const verifyToken = (req, res, next) => {
 
 // Get all posts
 router.get('/getPosts', verifyToken, async (req, res) => {
+  const {category} = req.query
+  
   try {
     const { data, error } = await supabase
       .from('workPost')
       .select('*, members!posterID(fname, lname, profile_picture), category!categoryID(name), review(rating), picture(image)')
+      .eq('isJob', category)
+      .order('postDate', { ascending: false })
 
     if (error) {
       return res.status(500).json({ message: 'Failed to fetch posts', error: error.message });
