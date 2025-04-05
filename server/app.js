@@ -59,10 +59,11 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage })
 
 // Multer Upload
-app.post('/upload', upload.single('image'), async (req, res) => {
+app.post('/upload', upload.array('images', 10), async (req, res) => {
   try {
-    const file = req.file
-    res.status(200).json(file.filename)
+    const files = req.files
+    const fileName = files.map((file) => file.filename)
+    res.status(200).json(fileName)
   }
   catch (err) {
     res.status(500).json({ message: 'Error in /upload', error: err.message })

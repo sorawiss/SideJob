@@ -11,6 +11,7 @@ const SECRET_KEY = process.env.SECRET_KEY;
 
 const verifyToken = (req, res, next) => {
   const token = req.cookies.AccessToken;
+  console.log("verifyToken running")
 
   if (!token) {
     return res.status(401).json({ message: 'No token provided' });
@@ -52,6 +53,7 @@ router.get('/getPosts', verifyToken, async (req, res) => {
 
 // CreatePost
 router.post('/createPost', verifyToken, async (req, res) => {
+  console.log("test3");
   try {
     const {
       title,
@@ -60,12 +62,13 @@ router.post('/createPost', verifyToken, async (req, res) => {
       categoryID,
       location,
       isJob,
+      images,
     } = req.body
 
     const time = moment(Date.now()).format("YYYY-MM-DD HH:mm:ss")
     const posterID = req.user.id
 
-    const { error } = await supabase
+    const { error, data } = await supabase
       .from('workPost')
       .insert(
         {
@@ -80,13 +83,36 @@ router.post('/createPost', verifyToken, async (req, res) => {
           status: true
         },
       )
+      .select('postID')
+      .single()
+
+      console.log("test1")
 
     if ( error) {
       return res.status(500).json({ message: 'Failed to create post in workPost table', error: error.message });
     }
 
-    res.status(201).json({ message: 'Post created successfully' });
+    let pictureToInsert = []
+    console.log("test2")
 
+    if (images && images.length > 0) {
+      pictureToInsert = images.map((items) => (
+        {
+          id: data.postID,
+          image: items
+        }
+      ))
+    }
+
+    const { error: error2 } = await supabase
+      .from('picture')
+      .insert(pictureToInsert)
+
+    if (error2) {
+      return res.status(500).json({ message: 'Failed to create post in picture table', error: error2.message });
+    }
+
+    res.status(201).json({ message: 'Post created successfully' });
   }
   catch (err) {
     res.status(500).json({ message: 'Internal server error', error: err.message })

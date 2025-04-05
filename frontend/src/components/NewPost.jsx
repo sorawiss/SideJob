@@ -25,7 +25,7 @@ function NewPost({ setCreatePost, profilePic, isJob }) {
   ]
 
   const [value, setValue] = useState(null);
-
+  const [selectedFiles, setSelectedFiles] = useState([]);
   const [formData, setFormData] = useState(
     {
       title: '',
@@ -49,12 +49,35 @@ function NewPost({ setCreatePost, profilePic, isJob }) {
     const { name, value } = e.target;
     setFormData(prevState => ({
       ...prevState,
-      [name] : value
+      [name]: value
     }));
   };
 
+  const handleUpload = async () => {
+    const formData = new FormData();
+    selectedFiles.forEach((file) => {
+      formData.append('images', file);
+    });
 
-  
+    try {
+      const response = await fetch('http://localhost:3333/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        const fileNames = await response.json();
+        handleCreatePost(fileNames);
+      } else {
+        console.error('File upload failed');
+      }
+    } catch (error) {
+      console.error('Error uploading files:', error);
+    }
+  };
+
+
+
   async function createPost(postData) {
     const response = await fetch('http://localhost:3333/createPost', {
       method: 'POST',
@@ -74,38 +97,46 @@ function NewPost({ setCreatePost, profilePic, isJob }) {
   }
 
 
-  const queryClient = useQueryClient()
 
+  const queryClient = useQueryClient()
   const mutation = useMutation({
     mutationFn: createPost,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['posts'] })
+      setCreatePost()
     },
   })
 
 
-  
-  async function submitHandle(e) {
-    e.preventDefault()
+
+  const handleCreatePost = async (fileNames) => {
     const postData = {
       title: formData.title,
       salary: formData.salary,
       details: formData.details,
-      categoryID : formData.categoryID,
-      posterID : currentUser.id,
-      isJob : isJob
+      categoryID: formData.categoryID,
+      posterID: currentUser.id,
+      isJob: isJob,
+      images: fileNames, // Include the file names here
     }
 
     try {
       mutation.mutate(postData)
-      console.log("add post to database success" + postData)
+      console.log("add post to database success", postData)
     }
     catch (error) {
       console.log(error)
     }
-    setCreatePost()
-
   }
+
+
+
+  async function submitHandle(e) {
+    e.preventDefault()
+    await handleUpload()
+  }
+
+
 
 
   return (
@@ -151,6 +182,7 @@ function NewPost({ setCreatePost, profilePic, isJob }) {
               </div>
               <div className="more-detail-wrapper">
                 <img src={picture} alt="" />
+                <input type="file" name="images" multiple onChange={(e) => setSelectedFiles([...e.target.files])} />
                 <p>รูปภาพ</p>
               </div>
               <div className="more-detail-wrapper">
@@ -173,7 +205,7 @@ function NewPost({ setCreatePost, profilePic, isJob }) {
         </div>
 
         <div className="price-set bg-primarydark rounded-[16px] px-[1rem] py-[4px] mt-[0.9rem] ">
-          <input type="number" placeholder='ราคา..' className='price-text outline-none ' onChange={handleChange} name='salary'  />
+          <input type="number" placeholder='ราคา..' className='price-text outline-none ' onChange={handleChange} name='salary' />
         </div>
 
         <button onClick={submitHandle} >Post</button>
