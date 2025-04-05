@@ -1,7 +1,5 @@
-import React from 'react'
-import { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Select } from "rizzui";
-import { useContext } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import ProfileOnTop from './ProfileOnTop'
@@ -35,6 +33,22 @@ function NewPost({ setCreatePost, profilePic, isJob }) {
     }
   )
 
+  useEffect(() => {
+    // Push a new state to history when the modal opens
+    window.history.pushState(null, '', window.location.href);
+
+    // Handle the popstate event (back button press)
+    const handlePopstate = () => {
+      setCreatePost(); // Close the modal
+    };
+
+    window.addEventListener('popstate', handlePopstate);
+
+    // Cleanup function to remove the event listener
+    return () => {
+      window.removeEventListener('popstate', handlePopstate);
+    };
+  }, [setCreatePost]);
 
 
   const handleSelectChange = (select) => {
