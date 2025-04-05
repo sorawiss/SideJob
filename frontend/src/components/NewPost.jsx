@@ -83,8 +83,7 @@ function NewPost({ setCreatePost }) {
   })
 
 
-
- 
+  
   async function submitHandle(e) {
     e.preventDefault()
     const postData = {
