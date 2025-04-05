@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query'
 import PostObject from './PostObject'
 
 
-function Post({ pageFindJob, setPage }) {
+function Post({ pageFindJob }) {
 
     const { isPending, error, data } = useQuery({
         queryKey: ['posts', pageFindJob],
@@ -21,7 +21,7 @@ function Post({ pageFindJob, setPage }) {
 
     if (error) return 'An error has occurred: ' + error.message
 
-    console.log(data)
+
 
     return (
         <div className='post-grid-container bg-primarylight flex flex-col items-center gap-[1rem]  '>
