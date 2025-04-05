@@ -53,7 +53,6 @@ router.get('/getPosts', verifyToken, async (req, res) => {
 
 // CreatePost
 router.post('/createPost', verifyToken, async (req, res) => {
-  console.log("test3");
   try {
     const {
       title,
@@ -86,14 +85,11 @@ router.post('/createPost', verifyToken, async (req, res) => {
       .select('postID')
       .single()
 
-      console.log("test1")
-
     if ( error) {
       return res.status(500).json({ message: 'Failed to create post in workPost table', error: error.message });
     }
 
     let pictureToInsert = []
-    console.log("test2")
 
     if (images && images.length > 0) {
       pictureToInsert = images.map((items) => (
