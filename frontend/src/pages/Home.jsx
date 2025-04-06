@@ -29,7 +29,7 @@ function Home() {
 
 
     return (
-        <div className='home-container bg-primarylight flex flex-col items-center gap-[1rem] w-screen min-h-screen '>
+        <div className='home-container bg-primarylight flex flex-col items-center gap-[1rem] max-w-screen min-h-screen pb-[8rem] '>
             <Input
                 suffix= {<img src={searchIcon} />}
                 placeholder="Search..."

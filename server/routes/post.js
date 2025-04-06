@@ -11,7 +11,6 @@ const SECRET_KEY = process.env.SECRET_KEY;
 
 const verifyToken = (req, res, next) => {
   const token = req.cookies.AccessToken;
-  console.log("verifyToken running")
 
   if (!token) {
     return res.status(401).json({ message: 'No token provided' });

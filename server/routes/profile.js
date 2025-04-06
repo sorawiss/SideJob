@@ -7,7 +7,7 @@ import supabase from '../db.js';
 const router = express.Router();
 
 
-
+// Get Individual Profile
 router.get('/getProfile/:id', async (req, res) => {
     try {
         const { data, error } = await supabase

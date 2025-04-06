@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Select } from "rizzui";
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
+import { FileInput } from "rizzui";
+
 import ProfileOnTop from './ProfileOnTop'
 
 import { AuthContext } from '../context/AuthContext';
@@ -172,7 +174,7 @@ function NewPost({ setCreatePost, profilePic, isJob }) {
           }}
             onChange={handleChange} />
 
-          <div className="detail-wrapper w-[100%] flex flex-col gap-[1rem] items-center ">
+          <div className="detail-wrapper w-[100%] flex flex-col gap-[1rem] items-start ">
             <div className="detail-input w-[100%] " >
               <textarea placeholder='รายละเอียด(ไม่บังคับ)...' className='bg-primarylight w-[100%] min-h-[12rem] rounded-[16px] p-[1rem] outline-none ' onInput={(e) => {
                 e.target.style.height = 'auto';
@@ -182,7 +184,7 @@ function NewPost({ setCreatePost, profilePic, isJob }) {
                 onChange={handleChange} />
             </div>
 
-            <div className="add-more-detail flex gap-[2.5rem] ">
+            <div className="add-more-detail-section flex flex-col gap-[1.5rem] ">
               <div className="more-detail-wrapper">
                 <img src={type} alt="" />
                 <Select
@@ -196,8 +198,12 @@ function NewPost({ setCreatePost, profilePic, isJob }) {
               </div>
               <div className="more-detail-wrapper">
                 <img src={picture} alt="" />
-                <input type="file" name="images" multiple onChange={(e) => setSelectedFiles([...e.target.files])} />
-                <p>รูปภาพ</p>
+                <FileInput
+                  name='images'
+                  multiple
+                  inputClassName = "ring-0 border-none "
+                  onChange={(e) => setSelectedFiles([...e.target.files])}
+                />
               </div>
               <div className="more-detail-wrapper">
                 <img src={location} alt="" />
@@ -207,7 +213,7 @@ function NewPost({ setCreatePost, profilePic, isJob }) {
           </div>
         </div>
 
-        <div className="contact-wrapper">
+        <div className="contact-wrapper flex flex-col gap-[1rem]">
           <p className='text-backgrounddark ' >การติดต่อ(ไม่บังคับ)</p>
 
           <div className="contact-input">
