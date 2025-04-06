@@ -73,7 +73,7 @@ function OpenReview({ rating, setRating, postID, posterID }) {
             }
             }
         >
-            <div className="rate-wrapper min-h-[29rem] w-[25rem] bg-white rounded-[16px] py-[16rem] flex flex-col items-center gap-[2rem] ">
+            <div className="rate-wrapper min-h-[29rem] w-[25rem] bg-white rounded-[16px] py-[6rem] flex flex-col items-center gap-[2rem] ">
                 <RateStar rating={rating} setRating={setRating} />
 
                 <div className="detail-input" >
