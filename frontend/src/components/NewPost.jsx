@@ -1,7 +1,8 @@
-import React from 'react'
-import { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Select } from "rizzui";
-import { useContext } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+
+import { FileInput } from "rizzui";
 
 import ProfileOnTop from './ProfileOnTop'
 
@@ -13,7 +14,7 @@ import picture from '../assets/svg/picture.svg'
 import location from '../assets/svg/location.svg'
 import phone from '../assets/svg/phone.svg'
 
-function NewPost({ setCreatePost }) {
+function NewPost({ setCreatePost, isJob }) {
 
   const { currentUser } = useContext(AuthContext)
 
@@ -24,7 +25,7 @@ function NewPost({ setCreatePost }) {
   ]
 
   const [value, setValue] = useState(null);
-
+  const [selectedFiles, setSelectedFiles] = useState([]);
   const [formData, setFormData] = useState(
     {
       title: '',
@@ -34,7 +35,23 @@ function NewPost({ setCreatePost }) {
     }
   )
 
-  console.log(currentUser)
+  useEffect(() => {
+    // Push a new state to history when the modal opens
+    window.history.pushState(null, '', window.location.href);
+
+    // Handle the popstate event (back button press)
+    const handlePopstate = () => {
+      setCreatePost(); // Close the modal
+    };
+
+    window.addEventListener('popstate', handlePopstate);
+
+    // Cleanup function to remove the event listener
+    return () => {
+      window.removeEventListener('popstate', handlePopstate);
+    };
+  }, [setCreatePost]);
+
 
   const handleSelectChange = (select) => {
     setValue(select);
@@ -48,41 +65,94 @@ function NewPost({ setCreatePost }) {
     const { name, value } = e.target;
     setFormData(prevState => ({
       ...prevState,
-      [name] : value
+      [name]: value
     }));
+  };
+
+  const handleUpload = async () => {
+    const formData = new FormData();
+    selectedFiles.forEach((file) => {
+      formData.append('images', file);
+    });
+
+    try {
+      const response = await fetch('http://localhost:3333/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        const fileNames = await response.json();
+        handleCreatePost(fileNames);
+      } else {
+        console.error('File upload failed');
+      }
+    } catch (error) {
+      console.error('Error uploading files:', error);
+    }
   };
 
 
 
-  // API Call
-  async function submitHandle(e) {
-    e.preventDefault()
+  async function createPost(postData) {
+    const response = await fetch('http://localhost:3333/createPost', {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(postData)
+    });
+
+    if (!response.ok) {
+      const message = `An error has occured: ${response.status}`;
+      throw new Error(message);
+    }
+
+    return await response.json();
+  }
+
+
+
+  const queryClient = useQueryClient()
+  const mutation = useMutation({
+    mutationFn: createPost,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['posts'] })
+      setCreatePost()
+    },
+  })
+
+
+
+  const handleCreatePost = async (fileNames) => {
     const postData = {
       title: formData.title,
       salary: formData.salary,
       details: formData.details,
-      categoryID : formData.categoryID,
-      posterID : currentUser.id
+      categoryID: formData.categoryID,
+      posterID: currentUser.id,
+      isJob: isJob,
+      images: fileNames, // Include the file names here
     }
 
     try {
-      fetch('http://localhost:3333/createPost', {
-        method : 'POST',
-        credentials: 'include',
-        headers: {
-          'content-type': 'application/json'
-        },
-        body: JSON.stringify(postData)
-      })
-
-      console.log("add post to database success" + postData)
-      setCreatePost()
+      mutation.mutate(postData)
+      console.log("add post to database success", postData)
     }
     catch (error) {
       console.log(error)
     }
-
   }
+
+
+
+  async function submitHandle(e) {
+    e.preventDefault()
+    await handleUpload()
+  }
+
+  console.log(currentUser)
 
 
   return (
@@ -96,17 +166,17 @@ function NewPost({ setCreatePost }) {
 
 
         <div className="main-post-section-wrapper flex flex-col gap-[1rem] ">
-          <ProfileOnTop />
+          <ProfileOnTop profilePic={currentUser.profile_picture} fname={currentUser.fname} lname={currentUser.lname} />
 
-          <textarea className='title-text h-[4.5rem] outline-none ' placeholder='หัวเรื่อง..' name='title' onInput={(e) => {
+          <textarea className='title-text h-[4.5rem] outline-none resize-none ' placeholder='หัวเรื่อง..' name='title' onInput={(e) => {
             e.target.style.height = 'auto';
             e.target.style.height = `${e.target.scrollHeight}px`;
           }}
             onChange={handleChange} />
 
-          <div className="detail-wrapper w-[100%] flex flex-col gap-[1rem] items-center ">
+          <div className="detail-wrapper w-[100%] flex flex-col gap-[1rem] items-start ">
             <div className="detail-input w-[100%] " >
-              <textarea placeholder='รายละเอียด(ไม่บังคับ)...' className='bg-primarylight w-[100%] min-h-[12rem] rounded-[16px] p-[1rem] outline-none ' onInput={(e) => {
+              <textarea placeholder='รายละเอียด(ไม่บังคับ)...' className='bg-primarylight resize-none w-[100%] min-h-[12rem] rounded-[16px] p-[1rem] outline-none ' onInput={(e) => {
                 e.target.style.height = 'auto';
                 e.target.style.height = `${e.target.scrollHeight}px`
               }}
@@ -114,7 +184,7 @@ function NewPost({ setCreatePost }) {
                 onChange={handleChange} />
             </div>
 
-            <div className="add-more-detail flex gap-[2.5rem] ">
+            <div className="add-more-detail-section flex flex-col gap-[1.5rem] ">
               <div className="more-detail-wrapper">
                 <img src={type} alt="" />
                 <Select
@@ -128,7 +198,12 @@ function NewPost({ setCreatePost }) {
               </div>
               <div className="more-detail-wrapper">
                 <img src={picture} alt="" />
-                <p>รูปภาพ</p>
+                <FileInput
+                  name='images'
+                  multiple
+                  inputClassName = "ring-0 border-none "
+                  onChange={(e) => setSelectedFiles([...e.target.files])}
+                />
               </div>
               <div className="more-detail-wrapper">
                 <img src={location} alt="" />
@@ -138,7 +213,7 @@ function NewPost({ setCreatePost }) {
           </div>
         </div>
 
-        <div className="contact-wrapper">
+        <div className="contact-wrapper flex flex-col gap-[1rem]">
           <p className='text-backgrounddark ' >การติดต่อ(ไม่บังคับ)</p>
 
           <div className="contact-input">
@@ -150,7 +225,7 @@ function NewPost({ setCreatePost }) {
         </div>
 
         <div className="price-set bg-primarydark rounded-[16px] px-[1rem] py-[4px] mt-[0.9rem] ">
-          <input type="number" placeholder='ราคา..' className='price-text outline-none ' onChange={handleChange} name='salary'  />
+          <input type="number" placeholder='ราคา..' className='price-text outline-none ' onChange={handleChange} name='salary' />
         </div>
 
         <button onClick={submitHandle} >Post</button>

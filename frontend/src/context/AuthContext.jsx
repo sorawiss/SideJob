@@ -22,7 +22,6 @@ export const AuthProvider = (props) => {
     const login = (user) => {
         localStorage.setItem('user', JSON.stringify(user))
         setCurrentUser(user)
-        console.log(user)
     }
 
     

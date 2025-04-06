@@ -9,7 +9,7 @@ import WordCuter from '../function/WordCuter';
 
 import PriceButton from './PriceButton';
 
-function PostObject({ postDate, title, detail, price, fname, lname, category, location, rating, images, postID, posterID, profilePic }) {
+function PostObject({ postDate, title, detail, price, fname, lname, category, location, rating, images, postID, posterID, profilePic, isJob }) {
 
     const dateFormat = new Date(postDate).toLocaleDateString('th-TH');
 
@@ -27,14 +27,14 @@ function PostObject({ postDate, title, detail, price, fname, lname, category, lo
 
 
     return (
-        <div className='post-object-container w-[30rem] bg-white p-[1rem] rounded-[16px] flex flex-col gap-[1rem] p-1rem '>
+        <div className={`${isJob ? "bg-white" : "bg-secondarylight "} post-object-container w-[30rem] p-[1rem] rounded-[16px] flex flex-col gap-[1rem]`} >
 
             {/* ProfileSection (Header) */}
 
             <div className="profile flex gap-[0.5rem] ">
                 {/* ProfilePic */}
                 <Link to={'profile/' + posterID} className=''>
-                    <img src={ profilePic ? profilePic : profile } alt="" className='w-[2.6rem] h-[2.6rem] ' />
+                    <img src={ profilePic ? "/upload/" + profilePic : profile } alt="" className='w-[2.6rem] h-[2.6rem] rounded-full object-cover ' />
                 </Link>
     
 
@@ -77,7 +77,7 @@ function PostObject({ postDate, title, detail, price, fname, lname, category, lo
 
                     {images.length > 0 ? (<img src={'/upload/' + images[0].image} alt="Image in post" className='max-h-[15rem] object-cover w-[100%] ' />) : null}
 
-                    <PriceButton text={`${price.toLocaleString('th-TH')} บาท`} />
+                    <PriceButton isJob={isJob} text={`${price.toLocaleString('th-TH')} บาท`} />
                 </div>
             </Link>
 

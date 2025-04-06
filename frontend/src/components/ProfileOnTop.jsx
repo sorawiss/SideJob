@@ -5,13 +5,13 @@ import profile from '../assets/svg/profile.svg'
 
 
 
-function ProfileOnTop( { fname="Sorwiss", lname="Boonnee", date=new Date(), profilePic } ) {
+function ProfileOnTop( { fname="Sorwiss", lname="Boonnee", profilePic } ) {
     return (
         <div>
-            <div className="profile-wrapper flex  gap-[0.5rem] items-center ">
-                <img src={ profilePic ? profilePic : profile } alt="" className='w-[2.6rem] h-[2.6rem] ' />
+            <div className="profile-wrapper flex  gap-[0.5rem] items-center content-center ">
+                <img src={ profilePic ? "/upload/" + profilePic : profile } alt="" className='w-[3rem] h-[3rem] rounded-full object-cover ' />
                 <p>{fname} {lname}</p>
-                <p className='p2 text-secondary '>{moment(date).fromNow()}</p>
+                <p className='p2 text-secondary mt-[0.3rem] '>{moment().format('DD-MM-YY h:mm')}</p>
             </div>
         </div>
     )

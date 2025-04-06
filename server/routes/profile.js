@@ -7,12 +7,12 @@ import supabase from '../db.js';
 const router = express.Router();
 
 
-
+// Get Individual Profile
 router.get('/getProfile/:id', async (req, res) => {
     try {
         const { data, error } = await supabase
           .from('members')
-          .select('phone_number, fname, lname, birthDate, detail, workPost!posterID(title, salary, status, postDate, details, categoryID)')
+          .select('phone_number, fname, lname, birthDate, detail, profile_picture, workPost!posterID(title, salary, status, postDate, details, categoryID)')
           .eq('id', req.params.id)
           .single()
     
