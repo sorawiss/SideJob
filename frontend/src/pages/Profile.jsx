@@ -9,6 +9,7 @@ import mail from '../assets/svg/gmail.svg'
 import linepic from '../assets/svg/line.svg'
 
 import PostObject from '../components/PostObject'
+import ShowRating from '../components/ShowRating'
 
 
 
@@ -62,27 +63,29 @@ function Profile() {
         </div>
       </div>
 
+      <ShowRating review={data.workPost.review} />
+
       <div className='post-grid-container bg-primarylight flex flex-col items-center gap-[1rem]  '>
         {data.workPost.length > 0 ? (
-          data.workPost.map((items, index) => (
-              <PostObject
-                key={items.postID}
-                posterID={items.id}
-                postDate={items.postDate}
-                title={items.title}
-                detail={items.details}
-                price={items.salary}
-                profilePic={items.profile_picture}
-                fname={items.fname}
-                lname={items.lname}
-                category={items.category.name}
-                location={items.location}
-                rating={items.review}
-                images={items.picture}
-                postID={items.postID}
-                isJob={items.isJob}
-              />
-            
+          data.workPost.map((items) => (
+            <PostObject
+              key={items.postID}
+              posterID={items.id}
+              postDate={items.postDate}
+              title={items.title}
+              detail={items.details}
+              price={items.salary}
+              profilePic={items.profile_picture}
+              fname={items.fname}
+              lname={items.lname}
+              category={items.category.name}
+              location={items.location}
+              rating={items.review}
+              images={items.picture}
+              postID={items.postID}
+              isJob={items.isJob}
+            />
+
           ))
         ) : (
           <p className="text-secondary ">ยังไม่มีโพสต์</p>
