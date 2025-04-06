@@ -8,7 +8,7 @@ import {
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 
-export default function DialogDefault( {id} ) {
+export default function DialogDefault({ id }) {
   const queryClient = useQueryClient()
   const mutation = useMutation({
     mutationFn: deleteReview,
@@ -39,7 +39,7 @@ export default function DialogDefault( {id} ) {
       console.log(error);
     }
   }
-  
+
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(!open);
@@ -53,7 +53,7 @@ export default function DialogDefault( {id} ) {
       </Button>
       <Dialog open={open} handler={handleOpen} className="flex flex-col gap-[1rem] items-center " >
         <DialogHeader>ต้องการลบรีวิวไหม?</DialogHeader>
-        
+
         <DialogFooter>
           <Button
             variant="text"
@@ -62,7 +62,7 @@ export default function DialogDefault( {id} ) {
           >
             <span className="text-2xl " >ไม่</span>
           </Button>
-          <Button variant="gradient"  onClick={handleDelete}>
+          <Button variant="gradient" onClick={handleDelete}>
             <span className="text-2xl ">ใช่</span>
           </Button>
         </DialogFooter>

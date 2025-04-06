@@ -8,6 +8,7 @@ import pen from '../assets/svg/pen.svg'
 import mail from '../assets/svg/gmail.svg'
 import linepic from '../assets/svg/line.svg'
 
+import PostObject from '../components/PostObject'
 
 
 
@@ -45,8 +46,6 @@ function Profile() {
           </div>
         </div>
 
-        <div className="space-wrapper" style={{ marginTop: '1rem' }}></div>
-
         <div className="contact-wrapper flex flex-col items-center gap-[0.5rem] ">
           <div className="phone-wrapper flex items-center gap-[0.5rem] ">
             <img src={phone} alt="Phone Icon" className='inline ' />
@@ -61,6 +60,33 @@ function Profile() {
             <p className='' > {data.fname}@gmail.com </p>
           </div>
         </div>
+      </div>
+
+      <div className='post-grid-container bg-primarylight flex flex-col items-center gap-[1rem]  '>
+        {data.workPost.length > 0 ? (
+          data.workPost.map((items, index) => (
+              <PostObject
+                key={items.postID}
+                posterID={items.id}
+                postDate={items.postDate}
+                title={items.title}
+                detail={items.details}
+                price={items.salary}
+                profilePic={items.profile_picture}
+                fname={items.fname}
+                lname={items.lname}
+                category={items.category.name}
+                location={items.location}
+                rating={items.review}
+                images={items.picture}
+                postID={items.postID}
+                isJob={items.isJob}
+              />
+            
+          ))
+        ) : (
+          <p className="text-secondary ">ยังไม่มีโพสต์</p>
+        )}
       </div>
     </div>
   )

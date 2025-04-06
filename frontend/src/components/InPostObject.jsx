@@ -12,7 +12,7 @@ import profile from '../assets/svg/profile.svg'
 
 
 import WordCuter from '../function/WordCuter';
-import avgRating from '../function/AvgRating';
+import avgRating from '../function/avgRating';
 
 import Review from './Review'
 import OpenReview from './OpenReview';
