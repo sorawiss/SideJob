@@ -7,7 +7,7 @@
 }
 
 .right-text {
-    display: inline;
+    display: none;
     color: var(--color-primarylight);
     position: absolute ;
     right: 1rem;
@@ -69,6 +69,10 @@
     .right-container img {
         display: flex;
         width: 25rem;
+    }
+
+    .right-text {
+        display: inline;
     }
 
   }
