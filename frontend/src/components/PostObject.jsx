@@ -6,6 +6,7 @@ import starIcon from '../assets/svg/star.svg'
 import profile from '../assets/svg/profile.svg'
 
 import WordCuter from '../function/WordCuter';
+import avgRating from '../function/avgRating';
 
 import PriceButton from './PriceButton';
 
@@ -13,17 +14,6 @@ function PostObject({ postDate, title, detail, price, fname, lname, category, lo
 
     const dateFormat = new Date(postDate).toLocaleDateString('th-TH');
 
-
-
-    // avgRating FUNCTION
-    function avgRating(rating) {
-        if (rating.length === 0) return null
-        let sum = 0
-        for (let i = 0; i < rating.length; i++) {
-            sum += rating[i].rating
-        }
-        return (sum / rating.length).toFixed(2)
-    }
 
 
     return (

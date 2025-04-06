@@ -12,6 +12,7 @@ import profile from '../assets/svg/profile.svg'
 
 
 import WordCuter from '../function/WordCuter';
+import avgRating from '../function/AvgRating';
 
 import Review from './Review'
 import OpenReview from './OpenReview';
@@ -23,20 +24,6 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
     const dateFormat = new Date(postDate).toLocaleDateString('th-TH');
 
     const [rating, setRating] = useState(0);
-
-
-
-
-    // avgRating FUNCTION
-    const avgRating = () => {
-        if (review.length === 0) return null
-        let sum = 0
-        for (let i = 0; i < review.length; i++) {
-            sum += review[i].rating
-        }
-        return (sum / review.length).toFixed(2)
-    }
-
 
 
     return (
@@ -67,7 +54,7 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
                                 {review.length > 0 ? (
                                     <>
                                         <img src={starIcon} alt="" className='w-[1.2rem] h-[1.2rem] ' />
-                                        <p className='text-primarydark mt-[4px] p2 inline '> {avgRating()} </p> <p className='inline mt-[4px] p2 text-secondary '>({review.length})</p>
+                                        <p className='text-primarydark mt-[4px] p2 inline '> {avgRating(review)} </p> <p className='inline mt-[4px] p2 text-secondary '>({review.length})</p>
                                     </>)
                                     : null}
                             </div>
@@ -145,7 +132,7 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
                 <div className="review-point flex flex-col items-center gap-[1.5rem]">
                     <div className="reviwe-rating flex items-center gap-[0.7rem] ">
                         <img src={starLG} alt="star rating icon" />
-                        <h2 className='text-secondary' > {avgRating()} </h2>
+                        <h2 className='text-secondary' > {avgRating(review)} </h2>
                     </div>
 
                     <p className='text-secondary' >ผู้รีวิว {review.length} คน</p>
