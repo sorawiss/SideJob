@@ -71,4 +71,28 @@ router.get('/getReviews/:id', async (req, res) => {
 
 
 
+// Delete Review
+router.delete('/deleteReview/:id', async (req, res) => {
+    try {
+        const { id } = req.params
+
+        const { error } = await supabase
+            .from('review')
+            .delete()
+            .eq('id', id)
+        if (error) {
+            return res.status(500).json({ message: 'Failed to delete review', error: error.message });
+        }
+        else {
+            res.status(200).json({ message: 'Review deleted successfully' });
+        }
+    }
+    catch (error) {
+        res.status(500).json({ message: 'Internal server error', error: error.message });
+        
+    }
+})
+
+
+
 export default router;
