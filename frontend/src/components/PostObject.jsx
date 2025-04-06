@@ -34,7 +34,7 @@ function PostObject({ postDate, title, detail, price, fname, lname, category, lo
             <div className="profile flex gap-[0.5rem] ">
                 {/* ProfilePic */}
                 <Link to={'profile/' + posterID} className=''>
-                    <img src={ profilePic ? profilePic : profile } alt="" className='w-[2.6rem] h-[2.6rem] ' />
+                    <img src={ profilePic ? "/upload/" + profilePic : profile } alt="" className='w-[2.6rem] h-[2.6rem] rounded-full object-cover ' />
                 </Link>
     
 
