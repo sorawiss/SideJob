@@ -31,7 +31,6 @@ function OpenReview({ rating, setRating, postID, posterID }) {
             throw new Error(message)
         }
 
-        console.log("fect api success", response)
         return await response.json()
 
     }
