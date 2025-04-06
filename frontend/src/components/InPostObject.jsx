@@ -1,8 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
-import { Rating } from "@material-tailwind/react";
-
+import { useState } from 'react';
 
 import starIcon from '../assets/svg/star.svg'
 import phone from '../assets/svg/phone.svg'
@@ -15,12 +14,15 @@ import profile from '../assets/svg/profile.svg'
 import WordCuter from '../function/WordCuter';
 
 import Review from './Review'
+import OpenReview from './OpenReview';
+import RateStar from './RateStar';
 
 
-function PostObject({ postDate, title, details, salary, location, picture, posterID, category, members, review, profile_picture }) {
+function InPostObject({ postDate, title, details, salary, location, picture, posterID, category, members, review, profile_picture, postID }) {
 
     const dateFormat = new Date(postDate).toLocaleDateString('th-TH');
 
+    const [rating, setRating] = useState(0);
 
 
 
@@ -34,6 +36,8 @@ function PostObject({ postDate, title, details, salary, location, picture, poste
         }
         return (sum / review.length).toFixed(2)
     }
+
+    console.log(rating)
 
 
     return (
@@ -130,10 +134,7 @@ function PostObject({ postDate, title, details, salary, location, picture, poste
 
 
             {/* Rate */}
-            <div className="rate-wrapper flex flex-col items-center gap[1rem] ">
-                <h2 className='text-primarydark' >ให้คะแนน</h2>
-                <Rating unratedColor="amber" ratedColor="amber" className='custom-rating' />
-            </div>
+            <RateStar rating={rating} setRating={setRating} />
 
 
 
@@ -156,7 +157,6 @@ function PostObject({ postDate, title, details, salary, location, picture, poste
                 {/* ReviewSection */}
                 <div className="review-wrapper flex flex-col items-center gap-[1rem] w-[100%] ">
                     {review.length > 0 ? (
-                        console.log(review),
                         review.map((items, index) => {
                             return (
                                 <Review key={index} member={items.members} detail={items.reviewDetails} date={items.reviewDate} rating={items.rating} />
@@ -165,8 +165,9 @@ function PostObject({ postDate, title, details, salary, location, picture, poste
                     ) : null}
                 </div>
             </div>
+            {rating > 0 ? <OpenReview rating={rating} setRating={setRating} postID={postID} posterID={posterID} /> : null }
         </div>
     )
 }
 
-export default PostObject
+export default InPostObject
