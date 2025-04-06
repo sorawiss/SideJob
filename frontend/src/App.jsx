@@ -33,7 +33,7 @@ function App() {
             <Route path='register' element={<Register />} />
             <Route element={<ProtectedRoute />}>
               <Route path='/home' element={<Home />} />
-              <Route path='/home/post/:id' element={<InPost />} />
+              <Route path='post/:id' element={<InPost />} />
               <Route path='/home/profile/:id' element={<Profile />} />
             </Route>
           </Routes>

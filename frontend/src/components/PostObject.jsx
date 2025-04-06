@@ -60,7 +60,7 @@ function PostObject({ postDate, title, detail, price, fname, lname, category, lo
 
 
             {/* PostSection */}
-            <Link to={'post/' + postID} >
+            <Link to={'/post/' + postID} >
                 <div className="post-section  ">
                     <h2 className='text-primarydark'>{title}</h2>
                     <p className='p2 text-secondary'>{WordCuter(detail, 200)}</p>
