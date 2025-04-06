@@ -14,7 +14,7 @@ import picture from '../assets/svg/picture.svg'
 import location from '../assets/svg/location.svg'
 import phone from '../assets/svg/phone.svg'
 
-function NewPost({ setCreatePost, profilePic, isJob }) {
+function NewPost({ setCreatePost, isJob }) {
 
   const { currentUser } = useContext(AuthContext)
 
@@ -152,7 +152,7 @@ function NewPost({ setCreatePost, profilePic, isJob }) {
     await handleUpload()
   }
 
-
+  console.log(currentUser)
 
 
   return (
@@ -166,9 +166,9 @@ function NewPost({ setCreatePost, profilePic, isJob }) {
 
 
         <div className="main-post-section-wrapper flex flex-col gap-[1rem] ">
-          <ProfileOnTop profilePic={profilePic} />
+          <ProfileOnTop profilePic={currentUser.profile_picture} fname={currentUser.fname} lname={currentUser.lname} />
 
-          <textarea className='title-text h-[4.5rem] outline-none ' placeholder='หัวเรื่อง..' name='title' onInput={(e) => {
+          <textarea className='title-text h-[4.5rem] outline-none resize-none ' placeholder='หัวเรื่อง..' name='title' onInput={(e) => {
             e.target.style.height = 'auto';
             e.target.style.height = `${e.target.scrollHeight}px`;
           }}
@@ -176,7 +176,7 @@ function NewPost({ setCreatePost, profilePic, isJob }) {
 
           <div className="detail-wrapper w-[100%] flex flex-col gap-[1rem] items-start ">
             <div className="detail-input w-[100%] " >
-              <textarea placeholder='รายละเอียด(ไม่บังคับ)...' className='bg-primarylight w-[100%] min-h-[12rem] rounded-[16px] p-[1rem] outline-none ' onInput={(e) => {
+              <textarea placeholder='รายละเอียด(ไม่บังคับ)...' className='bg-primarylight resize-none w-[100%] min-h-[12rem] rounded-[16px] p-[1rem] outline-none ' onInput={(e) => {
                 e.target.style.height = 'auto';
                 e.target.style.height = `${e.target.scrollHeight}px`
               }}
