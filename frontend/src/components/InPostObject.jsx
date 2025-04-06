@@ -37,7 +37,6 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
         return (sum / review.length).toFixed(2)
     }
 
-    console.log(rating)
 
 
     return (
@@ -143,7 +142,6 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
             <div className="review-wrapper flex flex-col items-center gap-[1.5rem] ">
                 <h2>คะแนนและความคิดเห็น</h2>
 
-
                 <div className="review-point flex flex-col items-center gap-[1.5rem]">
                     <div className="reviwe-rating flex items-center gap-[0.7rem] ">
                         <img src={starLG} alt="star rating icon" />
@@ -159,7 +157,7 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
                     {review.length > 0 ? (
                         review.map((items, index) => {
                             return (
-                                <Review key={index} member={items.members} detail={items.reviewDetails} date={items.reviewDate} rating={items.rating} />
+                                <Review key={index} member={items.members} detail={items.reviewDetails} date={items.reviewDate} rating={items.rating} postID={postID} id={items.id} />
                             )
                         })
                     ) : null}

@@ -9,7 +9,8 @@ import ProfileOnTop from './ProfileOnTop';
 
 
 
-function Review({ member, detail, date, rating }) {
+function Review({ member, detail, date, rating, id }) {
+
 
     const [seeMore, setSeeMore] = useState(false)
 
@@ -19,14 +20,14 @@ function Review({ member, detail, date, rating }) {
 
     return (
         <div className='review-container bg-primarylight w-[100%] rounded-[16px] py-[0.5rem] px-[1rem] flex flex-col gap-[1rem] '>
-            <ProfileOnTop fname={member.fname} lname={member.lname} date={date} />
+            <ProfileOnTop fname={member.fname} lname={member.lname} date={date} reviewerID={member.id} id={id} profilePic={member.profile_picture} />
             
             <div className="star-wrapper">
                 <Rating value={rating} readonly ratedColor="amber" />
             </div>
 
-            <div className="detail-wrapper  ">
-                <p onClick={() => { setSeeMore(!seeMore) }} className='text-primarydark p1_5' >{cutWords(detail, showText())}</p>
+            <div className="detail-wrapper w-[100%]  ">
+                <p onClick={() => setSeeMore(!seeMore)} className=' break-words ' > {cutWords(detail, showText())} </p>
             </div>
         </div>
     )
