@@ -15,9 +15,8 @@ import Register from './pages/Register';
 import Home from './pages/Home';
 import InPost from './pages/InPost';
 import Profile from './pages/Profile';
-import Find from './components/Find';
-import Hire from './components/Hire';
 import EditProfile from './pages/EditProfile';
+import Post from './components/Post';
 
 
 
@@ -38,8 +37,8 @@ function App() {
             <Route element={<ProtectedRoute />}>
               <Route path="/home" element={<Home />}>
                 <Route index element={<Navigate to="find" />} />
-                <Route path="find" element={<Find />} />
-                <Route path="hire" element={<Hire />} />
+                <Route path="find" element={<Post isJob={true} />} />
+                <Route path="hire" element={<Post isJob={false} />} />
               </Route>
               <Route path="/home/profile/:id" element={<Profile />} />
               <Route path="post/:id" element={<InPost />} />

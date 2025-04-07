@@ -1,28 +1,15 @@
 import React from 'react'
-import { useQuery } from '@tanstack/react-query'
+import { useOutletContext } from 'react-router-dom'
 
 
 import PostObject from './PostObject'
 
 
-function Post({ isJob }) {
+function Post() {
 
-    const { isPending, error, data } = useQuery({
-        queryKey: ['posts', isJob],
-        queryFn: () =>
-            fetch(`http://localhost:3333/getPosts?category=${isJob}`, {
-                credentials: 'include',
-            }).then((res) =>
-                res.json()
-            ),
-    })
+    const data = useOutletContext()
 
-    if (isPending) return 'Loading...'
-
-    if (error) return 'An error has occurred: ' + error.message
-
-
-
+    
     return (
         <div className='post-grid-container bg-primarylight flex flex-col items-center gap-[1rem]  '>
             {data.map((items, index) =>
