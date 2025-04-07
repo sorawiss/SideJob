@@ -34,9 +34,11 @@ export default function DialogDefault({ id }) {
 
   async function handleDelete() {
     try {
-      mutation.mutate(id)
-    } catch (error) {
-      console.log(error);
+      await mutation.mutateAsync(id)
+    } 
+    catch (error) {
+      console.error(error);
+      setErrorMessage("Failed to delete review. Please try again.");
     }
   }
 
@@ -51,7 +53,7 @@ export default function DialogDefault({ id }) {
           <path d="M14 1.5H10.5L9.5 0.5H4.5L3.5 1.5H0V3.5H14M1 16.5C1 17.0304 1.21071 17.5391 1.58579 17.9142C1.96086 18.2893 2.46957 18.5 3 18.5H11C11.5304 18.5 12.0391 18.2893 12.4142 17.9142C12.7893 17.5391 13 17.0304 13 16.5V4.5H1V16.5Z" fill="#616165" />
         </svg>
       </Button>
-      <Dialog open={open} handler={handleOpen} className="flex flex-col gap-[1rem] items-center " >
+      <Dialog open={open} handler={handleOpen} className="flex flex-col items-center " >
         <DialogHeader>ต้องการลบรีวิวไหม?</DialogHeader>
 
         <DialogFooter>
@@ -62,7 +64,7 @@ export default function DialogDefault({ id }) {
           >
             <span className="text-2xl " >ไม่</span>
           </Button>
-          <Button variant="gradient" onClick={handleDelete}>
+          <Button variant="gradient" onClick={() => {handleDelete(), handleOpen()}}>
             <span className="text-2xl ">ใช่</span>
           </Button>
         </DialogFooter>
