@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 
 import InPostObject from '../components/InPostObject'
+import Arrow from '../components/Arrow'
 
 function InPost() {
   const { id } = useParams()
@@ -31,15 +32,21 @@ function InPost() {
       ),
   })
 
-  
+
   if (isPostPending || isReviewsPending) return 'Loading...'
 
   if (postError || reviewsError) return 'An error has occurred: in InPost query '
 
   return (
-    <div className='inPost-container flex flex-col items-center bg-primarylight min-h-screen '>
-      { postData && reviewsData && <InPostObject {...postData} review={reviewsData} /> }
+    <div className="inpost-container ">
+      <div className='inPost-container flex flex-col items-center bg-primarylight min-h-screen '>
+        <div className="arrow-wrapper w-[30rem] py-[1rem] ">
+          <Arrow />
+        </div>
+        {postData && reviewsData && <InPostObject {...postData} review={reviewsData} />}
+      </div>
     </div>
+
   )
 
 }

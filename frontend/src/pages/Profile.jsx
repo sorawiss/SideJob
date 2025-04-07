@@ -9,6 +9,7 @@ import linepic from '../assets/svg/line.svg'
 
 import PostObject from '../components/PostObject'
 import ShowRating from '../components/ShowRating'
+import Arrow from '../components/Arrow'
 
 
 
@@ -33,13 +34,6 @@ function findAvg(data) {
 
 function Profile() {
 
-  // Navigate back
-  const navigate = useNavigate();
-  const handleGoBack = () => {
-    navigate(-1);
-  };
-
-
   // Get Profile
   const { id } = useParams()
   const { isPending, error, data } = useQuery({
@@ -63,9 +57,7 @@ function Profile() {
 
       <div className="top-wrapper w-[28rem] flex flex-col items-center gap-[2rem]  ">
         <div className="menu-wrapper w-full flex justify-between items-center ">
-          <svg className='arrow size-[2rem] cursor-pointer' viewBox="0 0 49 30" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={handleGoBack}>
-            <path d="M47 15L2 15M2 15L17.5 28M2 15L17.5 2" stroke="#1B1B1B" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
+          <Arrow />
 
           <Link to={'/editProfile/' + id} >
             <svg className='pencil stroke-primarydark size-[2rem] ' viewBox="0 0 71 71" fill="none" xmlns="http://www.w3.org/2000/svg">
