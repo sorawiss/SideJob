@@ -8,7 +8,7 @@ import DialogDefault from '../components/DialogDefault'
 
 
 
-function ProfileOnTop({ fname = "Sorwiss", lname = "Boonnee", profilePic, id, reviewerID }) {
+function ProfileOnTop({ fname = "Sorwiss", lname = "Boonnee", profilePic, id, reviewerID, date }) {
 
     const { currentUser } = useContext(AuthContext)
     
@@ -18,7 +18,7 @@ function ProfileOnTop({ fname = "Sorwiss", lname = "Boonnee", profilePic, id, re
                 <div className="profile-wrapper flex  gap-[0.5rem] items-center content-center ">
                     <img src={profilePic ? "/upload/" + profilePic : profile} alt="" className='w-[3rem] h-[3rem] rounded-full object-cover ' />
                     <p>{fname} {lname}</p>
-                    <p className='p2 text-secondary mt-[0.3rem] '>{moment().format('DD-MM-YY h:mm')}</p>
+                    <p className='p2 text-secondary mt-[0.3rem] '>{moment(date).format('DD-MM-YY h:mm')}</p>
                 </div>
             </div>
 

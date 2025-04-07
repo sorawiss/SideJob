@@ -11,7 +11,6 @@ import ProfileOnTop from './ProfileOnTop';
 
 function Review({ member, detail, date, rating, id }) {
 
-
     const [seeMore, setSeeMore] = useState(false)
 
     const showText = () => {
