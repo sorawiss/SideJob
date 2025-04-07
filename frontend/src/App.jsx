@@ -1,5 +1,5 @@
 import './App.css'
-import { BrowserRouter as Router, Route, Routes, BrowserRouter } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider, } from '@tanstack/react-query'
 
 
@@ -15,6 +15,10 @@ import Register from './pages/Register';
 import Home from './pages/Home';
 import InPost from './pages/InPost';
 import Profile from './pages/Profile';
+import Find from './components/Find';
+import Hire from './components/Hire';
+
+
 
 
 
@@ -29,18 +33,22 @@ function App() {
         <Router>
           <Routes>
             <Route path="/" element={<Welcome />} />
-            <Route path='/login' element={<Login />} />
-            <Route path='register' element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
             <Route element={<ProtectedRoute />}>
-              <Route path='/home' element={<Home />} />
-              <Route path='post/:id' element={<InPost />} />
-              <Route path='/home/profile/:id' element={<Profile />} />
+              <Route path="/home" element={<Home />}>
+                <Route index element={<Navigate to="find" />} />
+                <Route path="find" element={<Find />} />
+                <Route path="hire" element={<Hire />} />
+              </Route>
+              <Route path="/home/profile/:id" element={<Profile />} />
+              <Route path="post/:id" element={<InPost />} />
             </Route>
           </Routes>
         </Router>
       </AuthProvider>
     </QueryClientProvider>
-      )
+  )
 }
 
-      export default App
+export default App
