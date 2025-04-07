@@ -3,8 +3,6 @@ import React from 'react'
 import starLG from '../assets/svg/star-lg.svg'
 
 function ShowRating({avgRating, numberOfRating}) {
-
-    console.log(avgRating)
     
     return (
         <div>

@@ -60,7 +60,7 @@ function Profile() {
       <div className="top-wrapper">
         <div className="profile-desc-wrapper flex flex-col items-center gap-[2rem] ">
           <div className="profile-wrapper  " style={{ marginTop: '6rem' }}>
-            <img className='w-[13rem] h-[13rem] rounded-full object-cover ' src={data.profile_picture ? "/upload/" + data.profile_picture : profilePlaceHolder} alt="" />
+            <img className='w-[13rem] h-[13rem] rounded-full object-cover object-center ' src={data.profile_picture ? "/upload/" + data.profile_picture : profilePlaceHolder} alt="" />
           </div>
 
           <div className="name-desc-wrapper">

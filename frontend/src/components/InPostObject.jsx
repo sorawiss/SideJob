@@ -7,7 +7,6 @@ import starIcon from '../assets/svg/star.svg'
 import phone from '../assets/svg/phone.svg'
 import line from '../assets/svg/line.svg'
 import gmail from '../assets/svg/gmail.svg'
-import starLG from '../assets/svg/star-lg.svg'
 import profile from '../assets/svg/profile.svg'
 
 
@@ -18,6 +17,7 @@ import ShowRating from './ShowRating';
 import Review from './Review'
 import OpenReview from './OpenReview';
 import RateStar from './RateStar';
+import ImageDialog from './ImageDialog';
 
 
 function InPostObject({ postDate, title, details, salary, location, picture, posterID, category, members, review, profile_picture, postID }) {
@@ -109,7 +109,7 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
                         {picture.length > 0 ? (
                             picture.map((items, index) => {
                                 return (
-                                    <img key={index} src={'/upload/' + items.image} alt="Image in post" className='w-[100%] my-[1rem] ' />)
+                                    <ImageDialog key={index} imgLink={'/upload/' + items.image} />)
                             }))
                             : null
 
