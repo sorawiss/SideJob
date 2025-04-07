@@ -1,6 +1,6 @@
 import React from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, Link } from 'react-router-dom'
 
 import profilePlaceHolder from '../assets/svg/profile_placeholder.svg'
 import phone from '../assets/svg/phone.svg'
@@ -36,7 +36,7 @@ function Profile() {
   // Navigate back
   const navigate = useNavigate();
   const handleGoBack = () => {
-    navigate(-1); 
+    navigate(-1);
   };
 
 
@@ -67,9 +67,11 @@ function Profile() {
             <path d="M47 15L2 15M2 15L17.5 28M2 15L17.5 2" stroke="#1B1B1B" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
 
-          <svg className='pencil stroke-primarydark size-[2rem] ' viewBox="0 0 71 71" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M44.393 12.8342L7.07371 50.1483C5.96411 51.2575 5.24209 52.6952 5.01499 54.2477L3 68L16.7552 65.9849C18.308 65.7568 19.7457 65.0334 20.8544 63.9224L58.1664 26.6083M44.393 12.8342L52.5149 4.70813C53.0563 4.1666 53.6991 3.73702 54.4065 3.44394C55.1139 3.15085 55.8721 3 56.6378 3C57.4036 3 58.1618 3.15085 58.8692 3.44394C59.5766 3.73702 60.2194 4.1666 60.7607 4.70813L66.292 10.2397C66.8335 10.7811 67.263 11.4239 67.5561 12.1313C67.8492 12.8388 68 13.597 68 14.3628C68 15.1286 67.8492 15.8868 67.5561 16.5943C67.263 17.3017 66.8335 17.9445 66.292 18.4859L58.1664 26.6083M44.393 12.8342L58.1664 26.6083" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
+          <Link to={'/editProfile/' + id} >
+            <svg className='pencil stroke-primarydark size-[2rem] ' viewBox="0 0 71 71" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M44.393 12.8342L7.07371 50.1483C5.96411 51.2575 5.24209 52.6952 5.01499 54.2477L3 68L16.7552 65.9849C18.308 65.7568 19.7457 65.0334 20.8544 63.9224L58.1664 26.6083M44.393 12.8342L52.5149 4.70813C53.0563 4.1666 53.6991 3.73702 54.4065 3.44394C55.1139 3.15085 55.8721 3 56.6378 3C57.4036 3 58.1618 3.15085 58.8692 3.44394C59.5766 3.73702 60.2194 4.1666 60.7607 4.70813L66.292 10.2397C66.8335 10.7811 67.263 11.4239 67.5561 12.1313C67.8492 12.8388 68 13.597 68 14.3628C68 15.1286 67.8492 15.8868 67.5561 16.5943C67.263 17.3017 66.8335 17.9445 66.292 18.4859L58.1664 26.6083M44.393 12.8342L58.1664 26.6083" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </Link>
 
         </div>
         <div className="profile-desc-wrapper flex flex-col items-center gap-[2rem] ">

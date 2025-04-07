@@ -17,7 +17,7 @@ import InPost from './pages/InPost';
 import Profile from './pages/Profile';
 import Find from './components/Find';
 import Hire from './components/Hire';
-
+import EditProfile from './pages/EditProfile';
 
 
 
@@ -43,6 +43,8 @@ function App() {
               </Route>
               <Route path="/home/profile/:id" element={<Profile />} />
               <Route path="post/:id" element={<InPost />} />
+              <Route path="editProfile/:id" element={<EditProfile />} />
+            "
             </Route>
           </Routes>
         </Router>
