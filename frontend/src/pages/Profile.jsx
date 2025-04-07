@@ -34,6 +34,7 @@ function findAvg(data) {
 
 function Profile() {
 
+
   // Get Profile
   const { id } = useParams()
   const { isPending, error, data } = useQuery({
@@ -45,11 +46,9 @@ function Profile() {
   })
 
   if (isPending) return 'Loading...'
-
   if (error) return 'An error has occurred: ' + error.message
 
   const resultOfAvgRating = findAvg(data)
-
 
 
   return (

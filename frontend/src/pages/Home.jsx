@@ -52,11 +52,14 @@ function Home() {
     }
     else {
         filterData = data.filter((items) => {
-            return items.title.toLowerCase().includes(search.toLowerCase())
+            return items.title.toLowerCase().includes(search.toLowerCase()) ||
+                    items.details.toLowerCase().includes(search.toLowerCase()) || 
+                    items.members.fname.toLowerCase().includes(search.toLowerCase()) || 
+                    items.members.lname.toLowerCase().includes(search.toLowerCase())
         })
     }
 
-    
+
 
     return (
         <div className='search-bar home-container bg-primarylight flex flex-col items-center gap-[1rem] max-w-screen min-h-screen pb-[8rem] '>
