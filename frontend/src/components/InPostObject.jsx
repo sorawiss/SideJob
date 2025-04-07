@@ -13,6 +13,7 @@ import profile from '../assets/svg/profile.svg'
 
 import WordCuter from '../function/WordCuter';
 import avgRating from '../function/avgRating';
+import ShowRating from './ShowRating';
 
 import Review from './Review'
 import OpenReview from './OpenReview';
@@ -127,16 +128,7 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
 
             {/* ReviewRating */}
             <div className="review-wrapper flex flex-col items-center gap-[1.5rem] ">
-                <h2>คะแนนและความคิดเห็น</h2>
-
-                <div className="review-point flex flex-col items-center gap-[1.5rem]">
-                    <div className="reviwe-rating flex items-center gap-[0.7rem] ">
-                        <img src={starLG} alt="star rating icon" />
-                        <h2 className='text-secondary' > {avgRating(review)} </h2>
-                    </div>
-
-                    <p className='text-secondary' >ผู้รีวิว {review.length} คน</p>
-                </div>
+                <ShowRating avgRating={avgRating(review)} numberOfRating={review.length} />
 
 
                 {/* ReviewSection */}

@@ -39,7 +39,7 @@ function Home() {
 
             <Post pageFindJob={pageFindJob} />
 
-            <Nav setCreatePost={setCreatePost} setPage={setPage} />
+            <Nav setCreatePost={setCreatePost} setPage={setPage} pageFindJob={pageFindJob} />
 
             {onPost ? <NewPost setCreatePost={setCreatePost} profilePic={currentUser.profile_picture} isJob={pageFindJob} /> : null}
         </div>

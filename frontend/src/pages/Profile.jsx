@@ -13,11 +13,32 @@ import ShowRating from '../components/ShowRating'
 
 
 
+function findAvg(data) {
+  if (data.workPost.length === 0) return 0
+  let sum = 0
+  let count = 0
+  data.workPost.forEach((workPost) => {
+    workPost.review.forEach((review) => {
+      sum += review.rating
+      count++
+    })
+  })
+
+  return {
+    avg: (sum / count).toFixed(1),
+    count: count
+  }
+}
+
+
 
 function Profile() {
 
   const { id } = useParams()
 
+
+
+  // Get Profile
   const { isPending, error, data } = useQuery({
     queryKey: ['inPost', id],
     queryFn: () =>
@@ -26,12 +47,12 @@ function Profile() {
       ),
   })
 
-
   if (isPending) return 'Loading...'
 
   if (error) return 'An error has occurred: ' + error.message
 
-  console.log(data)
+  const resultOfAvgRating = findAvg(data)
+
 
 
   return (
@@ -63,7 +84,8 @@ function Profile() {
         </div>
       </div>
 
-      <ShowRating review={data.workPost.review} />
+      
+      <ShowRating avgRating={resultOfAvgRating.avg} numberOfRating={resultOfAvgRating.count} />
 
       <div className='post-grid-container bg-primarylight flex flex-col items-center gap-[1rem]  '>
         {data.workPost.length > 0 ? (
@@ -75,9 +97,9 @@ function Profile() {
               title={items.title}
               detail={items.details}
               price={items.salary}
-              profilePic={items.profile_picture}
-              fname={items.fname}
-              lname={items.lname}
+              profilePic={data.profile_picture}
+              fname={data.fname}
+              lname={data.lname}
               category={items.category.name}
               location={items.location}
               rating={items.review}
