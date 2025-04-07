@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 
 import InPostObject from '../components/InPostObject'
 import Arrow from '../components/Arrow'
+import Loading from '../components/Loading';
 
 function InPost() {
   const { id } = useParams()
@@ -33,7 +34,7 @@ function InPost() {
   })
 
 
-  if (isPostPending || isReviewsPending) return 'Loading...'
+  if (isPostPending || isReviewsPending) return <Loading />
 
   if (postError || reviewsError) return 'An error has occurred: in InPost query '
 

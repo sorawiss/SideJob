@@ -34,16 +34,19 @@ function App() {
             <Route path="/" element={<Welcome />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+
             <Route element={<ProtectedRoute />}>
+
               <Route path="/home" element={<Home />}>
                 <Route index element={<Navigate to="find" />} />
                 <Route path="find" element={<Post isJob={true} />} />
                 <Route path="hire" element={<Post isJob={false} />} />
               </Route>
-              <Route path="/home/profile/:id" element={<Profile />} />
+
+              <Route path="/profile/:id" element={<Profile />} />
               <Route path="post/:id" element={<InPost />} />
               <Route path="editProfile/:id" element={<EditProfile />} />
-            "
+              "
             </Route>
           </Routes>
         </Router>

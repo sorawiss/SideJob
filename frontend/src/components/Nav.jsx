@@ -29,7 +29,7 @@ export default function Nav({ setCreatePost }) {
         </Link>
         <img src={plus} alt="" className='cursor-pointer' onClick={setCreatePost} />
         <img src={notification} alt="" className='cursor-pointer' />
-        <Link to={'/home/profile/' + currentUser.id} ><img src={profile} alt="" className='cursor-pointer' /></Link>
+        <Link to={'/profile/' + currentUser.id} ><img src={profile} alt="" className='cursor-pointer' /></Link>
       </div>
 
     </div>

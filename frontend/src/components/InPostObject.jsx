@@ -34,7 +34,7 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
                 {/* ProfileSection (Header) */}
                 <div className="profile flex gap-[0.5rem] ">
                     {/* ProfilePic */}
-                    <Link to={'profile/' + posterID} className=''>
+                    <Link to={'/profile/' + posterID} className=''>
                         <img src={ profile_picture ? profile_picture : profile } alt="" className='w-[2.6rem] h-[2.6rem] ' />
                     </Link>
 

@@ -10,6 +10,7 @@ import linepic from '../assets/svg/line.svg'
 import PostObject from '../components/PostObject'
 import ShowRating from '../components/ShowRating'
 import Arrow from '../components/Arrow'
+import Loading from '../components/Loading'
 
 
 
@@ -45,7 +46,7 @@ function Profile() {
       ),
   })
 
-  if (isPending) return 'Loading...'
+  if (isPending) return <Loading />
   if (error) return 'An error has occurred: ' + error.message
 
   const resultOfAvgRating = findAvg(data)

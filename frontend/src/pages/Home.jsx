@@ -1,16 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Input } from "rizzui";
 import { Outlet, useLocation } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-
-
 
 import searchIcon from '../assets/svg/search-icon.svg';
 import './Style/Home.css'
 
 import Nav from '../components/Nav';
 import NewPost from '../components/NewPost';
+import Loading from '../components/Loading';
 import { AuthContext } from '../context/AuthContext';
+
 
 
 function Home() {
@@ -41,7 +41,7 @@ function Home() {
         enabled: isFindPage || isHirePage
     })
 
-    if (isPending) return 'Loading...'
+    if (isPending) return <Loading />
     if (error) return 'An error has occurred: ' + error.message
 
 
@@ -53,9 +53,9 @@ function Home() {
     else {
         filterData = data.filter((items) => {
             return items.title.toLowerCase().includes(search.toLowerCase()) ||
-                    items.details.toLowerCase().includes(search.toLowerCase()) || 
-                    items.members.fname.toLowerCase().includes(search.toLowerCase()) || 
-                    items.members.lname.toLowerCase().includes(search.toLowerCase())
+                items.details.toLowerCase().includes(search.toLowerCase()) ||
+                items.members.fname.toLowerCase().includes(search.toLowerCase()) ||
+                items.members.lname.toLowerCase().includes(search.toLowerCase())
         })
     }
 
