@@ -29,11 +29,11 @@ function ImageDialog( { imgLink }) {
         />
       </Card>
 
-       <Dialog size="xl" open={open} handler={handleOpen}>
-        <DialogBody className="p-0 "  >
+       <Dialog open={open} handler={handleOpen} className="dialog " >
+        <DialogBody className="dialog-body p-0 "  >
           <img
-            alt="nature"
-            className="h-full w-full object-center"
+            alt="post picture "
+            className="post-img object-center max-h-[90vh] "
             src={imgLink}
           />
         </DialogBody>

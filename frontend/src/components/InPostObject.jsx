@@ -36,7 +36,7 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
                 <div className="profile flex gap-[0.5rem] ">
                     {/* ProfilePic */}
                     <Link to={'/profile/' + posterID} className=''>
-                        <img src={ profile_picture ? profile_picture : profile } alt="" className='w-[2.6rem] h-[2.6rem] ' />
+                        <img src={profile_picture ? profile_picture : profile} alt="" className='w-[2.6rem] h-[2.6rem] ' />
                     </Link>
 
 
@@ -106,14 +106,15 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
                             <p className='text-accent '>{salary.toLocaleString()} บาท</p>
                         </div>
 
+                        <PriceButton text={salary.toLocaleString()} isJob={isJob} />
 
                         {picture.length > 0 ? (
-                            <PriceButton text={salary.toLocaleString()} isJob={isJob} />    
-                        
-                        )
-                            : null
+                            picture.map((items, index) => {
+                                return (
+                                    <ImageDialog key={index} imgLink={'/upload/' + items.image} />)
+                            }))
+                            : null}
 
-                        }
                     </div>
                 </div>
             </div>
@@ -142,7 +143,7 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
                     ) : null}
                 </div>
             </div>
-            {rating > 0 ? <OpenReview rating={rating} setRating={setRating} postID={postID} posterID={posterID} /> : null }
+            {rating > 0 ? <OpenReview rating={rating} setRating={setRating} postID={postID} posterID={posterID} /> : null}
         </div>
     )
 }
