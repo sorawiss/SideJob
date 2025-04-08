@@ -24,3 +24,12 @@
     background-color: (var(--color-secondary));
     filter: blur(0px);
 }
+
+
+.edit-profile-form .rizzui-input-container {
+    background-color: var(--color-secondarylight);
+    border: none!important;
+    box-shadow: none!important;
+    border-radius: 16px;
+    width: 20rem;
+}
