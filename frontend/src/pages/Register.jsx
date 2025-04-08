@@ -77,7 +77,7 @@ function Register() {
                 <h1 className='text-primarylight '>สมัครใช้งาน</h1>
             </div>
 
-            <div className="form-container flex flex-col items-center bg-accent w-full h-full rounded-tl-[90px] gap-[2.5rem] py-[4.375rem] ">
+            <div className="loging-form form-container flex flex-col items-center bg-accent w-full h-full rounded-tl-[90px] gap-[2.5rem] py-[4.375rem] ">
                 <form onSubmit={submitHandle} className='flex flex-col items-center gap-[2.5rem] border-none '>
                     <Input
                         className='w-[22.5rem] h-[3.125rem] rounded-[16px]'

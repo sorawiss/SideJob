@@ -5,6 +5,10 @@ import Loading from '../components/Loading';
 
 import profilePlaceHolder from '../assets/svg/profile_placeholder.svg'
 
+import { Input } from "rizzui";
+
+
+
 function EditProfile() {
   const { id } = useParams();
 
@@ -25,8 +29,12 @@ function EditProfile() {
       <div className="profile-wrapper  " >
         <img className='w-[13rem] h-[13rem] rounded-full object-cover object-center ' src={data.profile_picture ? "/upload/" + data.profile_picture : profilePlaceHolder} alt="" />
       </div>
-      <h1>Edit Profile</h1>
-      <p>First Name: {data.fname}</p>
+
+      <Input
+        label="Name"
+        placeholder="Enter your name"
+      />
+      
     </div>
   );
 }
