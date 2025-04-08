@@ -49,7 +49,7 @@ function Profile() {
   if (isPending) return <Loading />
   if (error) return 'An error has occurred: ' + error.message
 
-  // const resultOfAvgRating = findAvg(data)
+  const resultOfAvgRating = findAvg(data)
 
 
   return (
@@ -92,11 +92,14 @@ function Profile() {
         </div>
       </div>
 
+      {data.workPost.length > 0 && data.workPost.review ? (
+        <ShowRating avgRating={resultOfAvgRating.avg} numberOfRating={resultOfAvgRating.count} />
+      ) : null }
 
-      {/* <ShowRating avgRating={resultOfAvgRating.avg} numberOfRating={resultOfAvgRating.count} /> */}
+
 
       <div className='post-grid-container bg-primarylight flex flex-col items-center gap-[1rem]  '>
-        {data.workPost ? (
+        {data.workPost.length > 0 ? (
           data.workPost.map((items) => (
             <PostObject
               key={items.postID}
