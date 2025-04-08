@@ -7,15 +7,17 @@ import starIcon from '../assets/svg/star.svg'
 import phone from '../assets/svg/phone.svg'
 import line from '../assets/svg/line.svg'
 import gmail from '../assets/svg/gmail.svg'
-import starLG from '../assets/svg/star-lg.svg'
 import profile from '../assets/svg/profile.svg'
 
 
 import WordCuter from '../function/WordCuter';
+import avgRating from '../function/avgRating';
+import ShowRating from './ShowRating';
 
 import Review from './Review'
 import OpenReview from './OpenReview';
 import RateStar from './RateStar';
+import ImageDialog from './ImageDialog';
 
 
 function InPostObject({ postDate, title, details, salary, location, picture, posterID, category, members, review, profile_picture, postID }) {
@@ -25,21 +27,6 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
     const [rating, setRating] = useState(0);
 
 
-
-
-    // avgRating FUNCTION
-    const avgRating = () => {
-        if (review.length === 0) return null
-        let sum = 0
-        for (let i = 0; i < review.length; i++) {
-            sum += review[i].rating
-        }
-        return (sum / review.length).toFixed(2)
-    }
-
-    console.log(rating)
-
-
     return (
         <div className='Inpost-object-container w-[30rem] bg-white p-[1rem] rounded-[16px] flex flex-col gap-[5rem] p-1rem min-h-screen '>
             {/* AllOfPostWrapper */}
@@ -47,7 +34,7 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
                 {/* ProfileSection (Header) */}
                 <div className="profile flex gap-[0.5rem] ">
                     {/* ProfilePic */}
-                    <Link to={'profile/' + posterID} className=''>
+                    <Link to={'/profile/' + posterID} className=''>
                         <img src={ profile_picture ? profile_picture : profile } alt="" className='w-[2.6rem] h-[2.6rem] ' />
                     </Link>
 
@@ -68,7 +55,7 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
                                 {review.length > 0 ? (
                                     <>
                                         <img src={starIcon} alt="" className='w-[1.2rem] h-[1.2rem] ' />
-                                        <p className='text-primarydark mt-[4px] p2 inline '> {avgRating()} </p> <p className='inline mt-[4px] p2 text-secondary '>({review.length})</p>
+                                        <p className='text-primarydark mt-[4px] p2 inline '> {avgRating(review)} </p> <p className='inline mt-[4px] p2 text-secondary '>({review.length})</p>
                                     </>)
                                     : null}
                             </div>
@@ -122,7 +109,7 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
                         {picture.length > 0 ? (
                             picture.map((items, index) => {
                                 return (
-                                    <img key={index} src={'/upload/' + items.image} alt="Image in post" className='w-[100%] my-[1rem] ' />)
+                                    <ImageDialog key={index} imgLink={'/upload/' + items.image} />)
                             }))
                             : null
 
@@ -141,17 +128,7 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
 
             {/* ReviewRating */}
             <div className="review-wrapper flex flex-col items-center gap-[1.5rem] ">
-                <h2>คะแนนและความคิดเห็น</h2>
-
-
-                <div className="review-point flex flex-col items-center gap-[1.5rem]">
-                    <div className="reviwe-rating flex items-center gap-[0.7rem] ">
-                        <img src={starLG} alt="star rating icon" />
-                        <h2 className='text-secondary' > {avgRating()} </h2>
-                    </div>
-
-                    <p className='text-secondary' >ผู้รีวิว {review.length} คน</p>
-                </div>
+                <ShowRating avgRating={avgRating(review)} numberOfRating={review.length} />
 
 
                 {/* ReviewSection */}
@@ -159,7 +136,7 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
                     {review.length > 0 ? (
                         review.map((items, index) => {
                             return (
-                                <Review key={index} member={items.members} detail={items.reviewDetails} date={items.reviewDate} rating={items.rating} />
+                                <Review key={index} member={items.members} detail={items.reviewDetails} date={items.reviewDate} rating={items.rating} postID={postID} id={items.id} />
                             )
                         })
                     ) : null}

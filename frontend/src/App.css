@@ -19,3 +19,8 @@
     align-items: center;
     gap: 0.5rem;
 }
+
+.backdrop-blur-sm {
+    background-color: (var(--color-secondary));
+    filter: blur(0px);
+}

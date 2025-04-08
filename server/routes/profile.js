@@ -12,7 +12,7 @@ router.get('/getProfile/:id', async (req, res) => {
     try {
         const { data, error } = await supabase
           .from('members')
-          .select('phone_number, fname, lname, birthDate, detail, profile_picture, workPost!posterID(title, salary, status, postDate, details, categoryID)')
+          .select('id, phone_number, fname, lname, birthDate, detail, profile_picture, workPost!posterID(*, category!categoryID(*), review!postID(*), picture!postID(*))')
           .eq('id', req.params.id)
           .single()
     

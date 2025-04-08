@@ -6,6 +6,7 @@ import starIcon from '../assets/svg/star.svg'
 import profile from '../assets/svg/profile.svg'
 
 import WordCuter from '../function/WordCuter';
+import avgRating from '../function/avgRating';
 
 import PriceButton from './PriceButton';
 
@@ -15,17 +16,6 @@ function PostObject({ postDate, title, detail, price, fname, lname, category, lo
 
 
 
-    // avgRating FUNCTION
-    function avgRating(rating) {
-        if (rating.length === 0) return null
-        let sum = 0
-        for (let i = 0; i < rating.length; i++) {
-            sum += rating[i].rating
-        }
-        return (sum / rating.length).toFixed(2)
-    }
-
-
     return (
         <div className={`${isJob ? "bg-white" : "bg-secondarylight "} post-object-container w-[30rem] p-[1rem] rounded-[16px] flex flex-col gap-[1rem]`} >
 
@@ -33,7 +23,7 @@ function PostObject({ postDate, title, detail, price, fname, lname, category, lo
 
             <div className="profile flex gap-[0.5rem] ">
                 {/* ProfilePic */}
-                <Link to={'profile/' + posterID} className=''>
+                <Link to={'/profile/' + posterID} className=''>
                     <img src={ profilePic ? "/upload/" + profilePic : profile } alt="" className='w-[2.6rem] h-[2.6rem] rounded-full object-cover ' />
                 </Link>
     
@@ -70,7 +60,7 @@ function PostObject({ postDate, title, detail, price, fname, lname, category, lo
 
 
             {/* PostSection */}
-            <Link to={'post/' + postID} >
+            <Link to={'/post/' + postID} >
                 <div className="post-section  ">
                     <h2 className='text-primarydark'>{title}</h2>
                     <p className='p2 text-secondary'>{WordCuter(detail, 200)}</p>

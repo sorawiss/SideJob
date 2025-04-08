@@ -35,6 +35,7 @@ router.get('/getPosts', verifyToken, async (req, res) => {
       .from('workPost')
       .select('*, members!posterID(fname, lname, profile_picture), category!categoryID(name), review(rating), picture(image)')
       .eq('isJob', category)
+      .eq('status', true)
       .order('postDate', { ascending: false })
 
     if (error) {

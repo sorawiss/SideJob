@@ -9,7 +9,7 @@ function cutWords (text, maxLength) {
     }
     
     if (text.length > maxLength) {
-        return text.slice(0, maxLength) + '...'
+        return text.slice(0, maxLength) + '...อ่านต่อ'
     }
     
     return text

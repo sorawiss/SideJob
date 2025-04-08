@@ -53,7 +53,7 @@ router.get('/getReviews/:id', async (req, res) => {
     try {
       const { data, error } = await supabase
         .from('review')
-        .select('*, members!reviewerID(fname, lname) ')
+        .select('*, members!reviewerID(fname, lname, id, profile_picture) ')
         .eq( 'postID', req.params.id)
         .order('reviewDate', { ascending: false })
         
