@@ -50,9 +50,9 @@ function Login() {
             
             if (data.message === 'Login Success') {
                 login(data.user)
-                navigate('/home')
+                navigate('/home/find', { replace: true });
             }
-            else if (data.status = 404) {
+            else if (data.status === 404) {
                 setUserFound('*ไม่มีบัญชีผู้ใช้นี้')
             }
             else if (data.message === 'IncorrectPassword') {

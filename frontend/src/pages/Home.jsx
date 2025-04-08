@@ -1,14 +1,12 @@
 import React, { useContext, useState } from 'react';
 import { Input } from "rizzui";
 import { Outlet, useLocation } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
 
 import searchIcon from '../assets/svg/search-icon.svg';
 import './Style/Home.css'
 
 import Nav from '../components/Nav';
 import NewPost from '../components/NewPost';
-import Loading from '../components/Loading';
 import { AuthContext } from '../context/AuthContext';
 
 
@@ -26,39 +24,6 @@ function Home() {
 
     // Set Page
     const isFindPage = location.pathname === '/home/find';
-    const isHirePage = location.pathname === '/home/hire';
-
-
-    // Get Posts
-    const { isPending, error, data } = useQuery({
-        queryKey: ['posts', isFindPage],
-        queryFn: () =>
-            fetch(`http://localhost:3333/getPosts?category=${isFindPage}`, {
-                credentials: 'include',
-            }).then((res) =>
-                res.json()
-            ),
-        enabled: isFindPage || isHirePage
-    })
-
-    if (isPending) return <Loading />
-    if (error) return 'An error has occurred: ' + error.message
-
-
-    // Filter data
-    let filterData = {}
-    if (search == '') {
-        filterData = data
-    }
-    else {
-        filterData = data.filter((items) => {
-            return items.title.toLowerCase().includes(search.toLowerCase()) ||
-                items.details.toLowerCase().includes(search.toLowerCase()) ||
-                items.members.fname.toLowerCase().includes(search.toLowerCase()) ||
-                items.members.lname.toLowerCase().includes(search.toLowerCase())
-        })
-    }
-
 
 
     return (
@@ -72,7 +37,7 @@ function Home() {
                 size='lg'
             />
 
-            <Outlet context={filterData} />
+            <Outlet context={search} />
 
             <Nav setCreatePost={setCreatePost} />
 

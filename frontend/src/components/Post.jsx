@@ -1,15 +1,47 @@
 import React from 'react'
 import { useOutletContext } from 'react-router-dom'
+import { useQuery } from '@tanstack/react-query';
+
+import Loading from './Loading';
 
 
 import PostObject from './PostObject'
 
 
-function Post() {
-
-    const data = useOutletContext()
-
+function Post( { isJob } ) {
+    const search = useOutletContext()
     
+    // Get Posts
+    const { isPending, error, data } = useQuery({
+        queryKey: ['posts', isJob],
+        queryFn: () =>
+            fetch(`http://localhost:3333/getPosts?category=${isJob}`, {
+                credentials: 'include',
+            }).then((res) =>
+                res.json()
+            )
+    })
+
+    if (isPending) return <Loading />
+    if (error) return 'An error has occurred: ' + error.message
+
+
+    // Filter data
+    let filterData = {}
+    if (search == '') {
+        filterData = data
+    }
+    else {
+        filterData = data.filter((items) => {
+            return items.title.toLowerCase().includes(search.toLowerCase()) ||
+                items.details.toLowerCase().includes(search.toLowerCase()) ||
+                items.members.fname.toLowerCase().includes(search.toLowerCase()) ||
+                items.members.lname.toLowerCase().includes(search.toLowerCase())
+        })
+    }
+
+
+
     return (
         <div className='post-grid-container bg-primarylight flex flex-col items-center gap-[1rem]  '>
             {data.map((items, index) =>
