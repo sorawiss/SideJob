@@ -28,4 +28,32 @@ router.get('/getProfile/:id', async (req, res) => {
 })
 
 
+// Adjust profile
+router.put('/adjustProfile/:id', async (req, res) => {
+  try { 
+    const { id } =req.params.id
+    const update = req.body
+
+    if (Object.keys(update).length === 0) {
+      return res.status(400).json({ message: 'No data to update' }); 
+    }
+
+    const { error } = await supabase
+      .from('members')
+      .update(update)
+      .eq('id', id)
+
+    if (error) {
+      return res.status(500).json({ message: 'Failed to update profile', error: error.message });
+    }
+
+    res.status(200).json({ message: 'Profile updated successfully' })
+
+  }
+  catch {
+    res.status(500).json({ message: 'Internal server error', error: err.message });
+  }
+})
+
+
 export default router
