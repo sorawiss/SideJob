@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useContext } from 'react';
-import { Link } from 'react-router-dom'
+import { Link, replace } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 
 import { Input, Password } from "rizzui";
@@ -62,7 +62,7 @@ function Register() {
             if (data.message == "RegisterSuccess") {
                 const { password, ...rest } = registerData
                 login(rest) 
-                navigate('/home')
+                navigate('/home/find', { replace : true });
             }
         }
         catch (error) {

@@ -18,9 +18,10 @@ import Review from './Review'
 import OpenReview from './OpenReview';
 import RateStar from './RateStar';
 import ImageDialog from './ImageDialog';
+import PriceButton from './PriceButton';
 
 
-function InPostObject({ postDate, title, details, salary, location, picture, posterID, category, members, review, profile_picture, postID }) {
+function InPostObject({ postDate, title, details, salary, location, picture, posterID, category, members, review, profile_picture, postID, isJob }) {
 
     const dateFormat = new Date(postDate).toLocaleDateString('th-TH');
 
@@ -107,10 +108,9 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
 
 
                         {picture.length > 0 ? (
-                            picture.map((items, index) => {
-                                return (
-                                    <ImageDialog key={index} imgLink={'/upload/' + items.image} />)
-                            }))
+                            <PriceButton text={salary.toLocaleString()} isJob={isJob} />    
+                        
+                        )
                             : null
 
                         }
