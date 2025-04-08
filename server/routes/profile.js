@@ -31,7 +31,7 @@ router.get('/getProfile/:id', async (req, res) => {
 // Adjust profile
 router.put('/adjustProfile/:id', async (req, res) => {
   try { 
-    const { id } =req.params.id
+    const { id } =req.params
     const update = req.body
 
     if (Object.keys(update).length === 0) {

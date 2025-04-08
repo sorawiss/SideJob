@@ -1,6 +1,6 @@
 import React from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { useParams, useNavigate, Link } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 
 import profilePlaceHolder from '../assets/svg/profile_placeholder.svg'
 import phone from '../assets/svg/phone.svg'
@@ -39,7 +39,7 @@ function Profile() {
   // Get Profile
   const { id } = useParams()
   const { isPending, error, data } = useQuery({
-    queryKey: ['inPost', id],
+    queryKey: ['profile', id],
     queryFn: () =>
       fetch('http://localhost:3333/getProfile/' + id).then((res) =>
         res.json(),

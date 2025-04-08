@@ -1,13 +1,7 @@
 import React from "react";
 import {
-  Button,
   Dialog,
-  DialogHeader,
   DialogBody,
-  DialogFooter,
-  Avatar,
-  IconButton,
-  Typography,
   Card,
 } from "@material-tailwind/react";
  
@@ -23,20 +17,21 @@ function ImageDialog( { imgLink }) {
         onClick={handleOpen}
       >
         <img
-          alt="nature"
+          alt="post picture"
           className="h-full w-full object-cover object-center "
           src={imgLink}
         />
       </Card>
 
-       <Dialog open={open} handler={handleOpen} className="dialog " >
-        <DialogBody className="dialog-body p-0 "  >
+      <Dialog className="dialog !w-fit !min-w-0  " open={open} handler={handleOpen}>
+        <DialogBody className="dialog-body p-0 ">
           <img
-            alt="post picture "
-            className="post-img object-center max-h-[90vh] "
+            alt="nature"
+            className="image max-h-[90vh] object-cover object-center"
             src={imgLink}
           />
         </DialogBody>
+        
       </Dialog>
     </>
   );
