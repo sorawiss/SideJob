@@ -92,9 +92,9 @@ function Profile() {
         </div>
       </div>
 
-      {data.workPost.length > 0 && data.workPost.review ? (
+      {data.workPost.length > 0 && resultOfAvgRating.avg &&  (
         <ShowRating avgRating={resultOfAvgRating.avg} numberOfRating={resultOfAvgRating.count} />
-      ) : null }
+      ) }
 
 
 

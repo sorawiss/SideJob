@@ -30,11 +30,30 @@ function EditProfile() {
         <img className='w-[13rem] h-[13rem] rounded-full object-cover object-center ' src={data.profile_picture ? "/upload/" + data.profile_picture : profilePlaceHolder} alt="" />
       </div>
 
-      <Input
-        label="Name"
-        placeholder="Enter your name"
-      />
-      
+      <form action="">
+        <Input
+          label="ชื่อ"
+          placeholder={data.fname}
+        />
+        <Input
+          label="นามสกุล"
+          placeholder={data.lname}
+        />
+        <Input
+          label="Line"
+          placeholder={data.line}
+        />
+        <Input
+          label="Email"
+          placeholder={data.email}
+        />
+        <Input
+          label="คำอธิบาย"
+          placeholder={data.detail}
+        />
+      </form>
+
+
     </div>
   );
 }

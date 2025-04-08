@@ -27,15 +27,18 @@ function Home() {
 
 
     return (
-        <div className='search-bar home-container bg-primarylight flex flex-col items-center gap-[1rem] max-w-screen min-h-screen pb-[8rem] '>
-            <Input
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                suffix={<img src={searchIcon} />}
-                placeholder="Search..."
-                className=' w-[30rem] mt-[1.5rem] '
-                size='lg'
-            />
+        <div className='home-container bg-primarylight flex flex-col items-center gap-[1rem] max-w-screen min-h-screen pb-[8rem] '>
+            <div className="search-bar">
+                <Input
+                    inputClassName='!border-none !ring-0 rounded-[16px]  '
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    suffix={<img src={searchIcon} />}
+                    placeholder="Search..."
+                    className=' w-[30rem] mt-[1.5rem] '
+                    size='lg'
+                />
+            </div>
 
             <Outlet context={search} />
 
