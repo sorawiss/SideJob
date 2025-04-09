@@ -1,6 +1,9 @@
 import express from "express";
 
 import supabase from '../db.js';
+import verifyToken from "../verifyToken.js";
+
+
 
 
 
@@ -29,10 +32,20 @@ router.get('/getProfile/:id', async (req, res) => {
 
 
 // Edit profile
-router.put('/editProfile/:id', async (req, res) => {
+router.put('/editProfile/:id', verifyToken, async (req, res) => {
   try { 
     const { id } =req.params
     const update = req.body
+
+    
+    console.log(req.user.id)
+    console.log(id)
+
+    
+    if (req.user.id !== parseInt(id)) {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
+
 
     if (Object.keys(update).length === 0) {
       return res.status(400).json({ message: 'No data to update' }); 
