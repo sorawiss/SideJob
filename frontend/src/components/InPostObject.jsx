@@ -21,7 +21,7 @@ import ImageDialog from './ImageDialog';
 import PriceButton from './PriceButton';
 
 
-function InPostObject({ postDate, title, details, salary, location, picture, posterID, category, members, review, profile_picture, postID, isJob }) {
+function InPostObject({ postDate, title, details, salary, location, picture, posterID, category, members, review, postID, isJob }) {
 
     const dateFormat = new Date(postDate).toLocaleDateString('th-TH');
 
@@ -36,7 +36,7 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
                 <div className="profile flex gap-[0.5rem] ">
                     {/* ProfilePic */}
                     <Link to={'/profile/' + posterID} className=''>
-                        <img src={profile_picture ? profile_picture : profile} alt="" className='w-[2.6rem] h-[2.6rem] ' />
+                        <img src={members.profile_picture ? '/upload/' + members.profile_picture : profile} alt="" className='w-[3rem] h-[3rem] rounded-full object-cover ' />
                     </Link>
 
 
@@ -87,17 +87,17 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
                             </div>
                         ) : null}
 
-                        {members.phone_number ? (
+                        {members.line ? (
                             <div className="phone-wrapper flex items-center gap-[0.5rem] p2 ">
                                 <img src={line} alt="Phone Icoon" className='inline ' />
-                                <p className='inline ' > {members.phone_number} </p>
+                                <p className='inline ' > {members.line} </p>
                             </div>
                         ) : null}
 
-                        {members.phone_number ? (
+                        {members.email ? (
                             <div className="phone-wrapper flex items-center gap-[0.5rem]  ">
                                 <img src={gmail} alt="Phone Icoon" className='inline ' />
-                                <p className='inline ' > {members.phone_number} </p>
+                                <p className='inline ' > {members.email} </p>
                             </div>
                         ) : null}
 
