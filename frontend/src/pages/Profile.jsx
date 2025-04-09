@@ -81,23 +81,28 @@ function Profile() {
             <img src={phone} alt="Phone Icon" className='inline ' />
             <p className='' > {data.phone_number} </p>
           </div>
-          <div className="line-wrapper flex items-center gap-[0.5rem] ">
-            <img src={linepic} alt="Line Icon" className='inline ' />
-            <p className='' > {data.line} </p>
-          </div>
-          <div className="email-wrapper flex items-center gap-[0.5rem] ">
-            <img src={mail} alt="Email Icon" className='inline ' />
-            <p className='' > {data.email} </p>
-          </div>
-         
-            <p className='' > {data.detail} </p>
-          
+          {data.line && (
+            <div className="line-wrapper flex items-center gap-[0.5rem] ">
+              <img src={linepic} alt="Line Icon" className='inline ' />
+              <p className='' > {data.line} </p>
+            </div>
+          )}
+          {data.email && (
+            <div className="email-wrapper flex items-center gap-[0.5rem] ">
+              <img src={mail} alt="Email Icon" className='inline ' />
+              <p className='' > {data.email} </p>
+            </div>
+          )}
+
+
+          <p className='' > {data.detail} </p>
+
         </div>
       </div>
 
-      {data.workPost.length > 0 && resultOfAvgRating.avg &&  (
+      {data.workPost.length > 0 && resultOfAvgRating.avg && resultOfAvgRating.avg > 0 && (
         <ShowRating avgRating={resultOfAvgRating.avg} numberOfRating={resultOfAvgRating.count} />
-      ) }
+      )}
 
 
 

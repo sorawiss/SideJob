@@ -101,11 +101,6 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
                             </div>
                         ) : null}
 
-
-                        <div className="price bg-primarydark w-[10rem] rounded-[16px] px-[1rem] py-[4px] flex items-center mt-[0.9rem] ">
-                            <p className='text-accent '>{salary.toLocaleString()} บาท</p>
-                        </div>
-
                         <PriceButton text={salary.toLocaleString()} isJob={isJob} />
 
                         {picture.length > 0 ? (

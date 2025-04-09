@@ -12,6 +12,7 @@ import { Input } from "rizzui";
 import { Button } from "rizzui";
 
 import Arrow from '../components/Arrow';
+import EditProfilePicModal from '../components/EditProfilePicModal';
 
 
 
@@ -123,37 +124,37 @@ function EditProfile() {
       </div>
 
       <div className="profile-wrapper  " >
-        <img className='w-[13rem] h-[13rem] rounded-full object-cover object-center ' src={data.profile_picture ? "/upload/" + data.profile_picture : profilePlaceHolder} alt="" />
+        <EditProfilePicModal profile_picture={data.profile_picture} />
       </div>
 
       <form className='edit-profile-form w-[18rem] flex flex-col gap-[1rem] items-center ' onSubmit={(e) => {e.preventDefault(); handleSubmit();}}>
         <Input
+          value={form.fname}
           label="ชื่อ"
-          placeholder={data.fname}
           name='fname'
           onChange={handleChange}
         />
         <Input
+          value={form.lname}
           label="นามสกุล"
-          placeholder={data.lname}
           name='lname'
           onChange={handleChange}
         />
         <Input
+          value={form.line}
           label="Line"
-          placeholder={data.line}
           name='line'
           onChange={handleChange}
         />
         <Input
+          value={form.email}
           label="Email"
-          placeholder={data.email}
           name='email'
           onChange={handleChange}
         />
         <Input
+          value={form.detail}
           label="คำอธิบาย"
-          placeholder={data.detail}
           name='detail'
           onChange={handleChange}
         />
