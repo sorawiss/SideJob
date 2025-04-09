@@ -50,9 +50,9 @@ function Login() {
             
             if (data.message === 'Login Success') {
                 login(data.user)
-                navigate('/home')
+                navigate('/home/find', { replace : true });
             }
-            else if (data.status = 404) {
+            else if (data.status === 404) {
                 setUserFound('*ไม่มีบัญชีผู้ใช้นี้')
             }
             else if (data.message === 'IncorrectPassword') {
@@ -81,7 +81,7 @@ function Login() {
             <div className="form-container flex flex-col items-center bg-accent w-full h-[42rem] rounded-tl-[90px] gap-[2.5rem] py-[4.375rem] ">
                 <h1 className='text-primarydark'>เข้าสู่ระบบ</h1>
                 {/* Form */}
-                <form action="" onSubmit={handleSubmit} className='flex flex-col items-center gap-[2.5rem] border-none '>
+                <form action="" onSubmit={handleSubmit} className='loging-form flex flex-col items-center gap-[2.5rem] border-none '>
                     <Input className='w-[22.5rem] h-[3.125rem] rounded-[16px]'
                         label= {
                             <p>หมายเลขโทรศัพท์ <span className='error'>{userFound}</span></p>

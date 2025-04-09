@@ -33,20 +33,21 @@ router.post('/register',
     const { data, error } = await supabase
       .from('members')
       .insert({ phone_number, password : hashedPassword,  fname, lname })
-      .select('id')
+      .select('*')
       .single()
       
 
-
+    
     if (error) {
       return res.status(500).json({ message: 'Failed to create user', error: error.message });
     }
 
+    const rest = {...data}
     const token = generateToken(phone_number, data.id)
     res.cookie("AccessToken", token, {
       httpOnly: true,
     })
-    res.status(201).json({ message: 'RegisterSuccess'});
+    res.status(201).json({ message: 'RegisterSuccess', rest});
   }
 )
 

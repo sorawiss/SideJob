@@ -12,7 +12,7 @@ router.get('/getProfile/:id', async (req, res) => {
     try {
         const { data, error } = await supabase
           .from('members')
-          .select('id, phone_number, fname, lname, birthDate, detail, profile_picture, workPost!posterID(*, category!categoryID(*), review!postID(*), picture!postID(*))')
+          .select('id, phone_number, fname, lname, birthDate, detail, profile_picture, line, email, workPost!posterID(*, category!categoryID(*), review!postID(*), picture!postID(*))')
           .eq('id', req.params.id)
           .single()
     
@@ -28,10 +28,10 @@ router.get('/getProfile/:id', async (req, res) => {
 })
 
 
-// Adjust profile
-router.put('/adjustProfile/:id', async (req, res) => {
+// Edit profile
+router.put('/editProfile/:id', async (req, res) => {
   try { 
-    const { id } =req.params.id
+    const { id } =req.params
     const update = req.body
 
     if (Object.keys(update).length === 0) {
@@ -50,7 +50,7 @@ router.put('/adjustProfile/:id', async (req, res) => {
     res.status(200).json({ message: 'Profile updated successfully' })
 
   }
-  catch {
+  catch(err) {
     res.status(500).json({ message: 'Internal server error', error: err.message });
   }
 })
