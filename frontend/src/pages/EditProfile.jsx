@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import Loading from '../components/Loading';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import profilePlaceHolder from '../assets/svg/profile_placeholder.svg'
 
@@ -17,8 +17,15 @@ import Arrow from '../components/Arrow';
 
 function EditProfile() {
   const { id } = useParams();
+  const { isPending, error, data } = useQuery({
+    queryKey: ['getIneditProfile', id],
+    queryFn: () =>
+      fetch(`http://localhost:3333/getProfile/${id}`).then((res) => res.json()),
+  });
 
-  const [formData, setFormData] = useState({
+
+  const queryClient = useQueryClient();
+  const [form, setForm] = useState({
     fname: '',
     lname: '',
     line: '',
@@ -27,20 +34,38 @@ function EditProfile() {
   });
 
 
-  const { isPending, error, data } = useQuery({
-    queryKey: ['getIneditProfile', id],
-    queryFn: () =>
-      fetch(`http://localhost:3333/getProfile/${id}`).then((res) => res.json()),
-  });
+  // useEffect
+  useEffect(() => {
+    if (data) {
+      setForm({
+        fname: data.fname || '',
+        lname: data.lname || '',
+        line: data.line || '',
+        email: data.email || '',
+        detail: data.detail || ''
+      });
+    }
+  }, [data]);
 
-  if (isPending) return <Loading />;
-  if (error) return 'An error has occurred: ' + error.message;
 
-  console.log(data)
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+  };
 
+
+  const getUpdatedFields = (original, updated) => {
+    const diff = {};
+    for (const key in updated) {
+      if (updated[key] !== original[key]) {
+        diff[key] = updated[key];
+      }
+    }
+    return diff;
+  };
 
   async function updateData(updateData) {
-    const response = await fetch('http://localhost:3333/adjustProfile/:id', {
+    const response = await fetch(`http://localhost:3333/editProfile/${id}`, {
       method: 'PUT',
       credentials: 'include',
       headers: {
@@ -58,14 +83,35 @@ function EditProfile() {
   }
 
 
-  const queryClient = useQueryClient();
   const mutation = useMutation({
-    mutationFn: updatD,
+    mutationFn: updateData,
     onSuccess: () => {
-      // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ['profile'] })
+      console.log("Profile updated successfully");
     },
-  })
+    onError: (error) => {
+      alert("Error: " + error.message);
+    }
+  });
+
+
+  const handleSubmit = async () => {
+    const updates = getUpdatedFields(data, form);
+
+    if (Object.keys(updates).length === 0) {
+      console.log("No changes to save");
+      return;
+    }
+
+    mutation.mutate(updates);
+
+  }
+
+
+
+
+
+  if (isPending) return <Loading />;
+  if (error) return 'An error has occurred: ' + error.message;
 
   return (
     <div className="edit-profile-container flex flex-col items-center content-center py-[4rem] bg-primarylight min-h-screen px-[3rem] w-screen gap-[5rem] ">
@@ -77,30 +123,40 @@ function EditProfile() {
         <img className='w-[13rem] h-[13rem] rounded-full object-cover object-center ' src={data.profile_picture ? "/upload/" + data.profile_picture : profilePlaceHolder} alt="" />
       </div>
 
-      <form className='edit-profile-form w-[18rem] flex flex-col gap-[1rem] items-center ' action="">
+      <form className='edit-profile-form w-[18rem] flex flex-col gap-[1rem] items-center ' onSubmit={(e) => {e.preventDefault(); handleSubmit();}}>
         <Input
           label="ชื่อ"
           placeholder={data.fname}
+          name='fname'
+          onChange={handleChange}
         />
         <Input
           label="นามสกุล"
           placeholder={data.lname}
+          name='lname'
+          onChange={handleChange}
         />
         <Input
           label="Line"
           placeholder={data.line}
+          name='line'
+          onChange={handleChange}
         />
         <Input
           label="Email"
           placeholder={data.email}
+          name='email'
+          onChange={handleChange}
         />
         <Input
           label="คำอธิบาย"
           placeholder={data.detail}
+          name='detail'
+          onChange={handleChange}
         />
       </form>
 
-      <Button className='bg-primarydark text-white rounded-[16px] ' >Button</Button>
+      <Button onClick={handleSubmit} className='bg-primarydark text-white rounded-[16px] ' >Button</Button>
 
     </div>
   );

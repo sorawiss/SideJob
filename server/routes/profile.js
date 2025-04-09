@@ -28,8 +28,8 @@ router.get('/getProfile/:id', async (req, res) => {
 })
 
 
-// Adjust profile
-router.put('/adjustProfile/:id', async (req, res) => {
+// Edit profile
+router.put('/editProfile/:id', async (req, res) => {
   try { 
     const { id } =req.params
     const update = req.body
@@ -50,7 +50,7 @@ router.put('/adjustProfile/:id', async (req, res) => {
     res.status(200).json({ message: 'Profile updated successfully' })
 
   }
-  catch {
+  catch(err) {
     res.status(500).json({ message: 'Internal server error', error: err.message });
   }
 })
