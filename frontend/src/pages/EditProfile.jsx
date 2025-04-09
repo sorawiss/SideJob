@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import Loading from '../components/Loading';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import profilePlaceHolder from '../assets/svg/profile_placeholder.svg'
 
@@ -16,6 +17,7 @@ import Arrow from '../components/Arrow';
 
 
 function EditProfile() {
+  const navigate = useNavigate();
   const { id } = useParams();
   const { isPending, error, data } = useQuery({
     queryKey: ['getIneditProfile', id],
@@ -87,6 +89,7 @@ function EditProfile() {
     mutationFn: updateData,
     onSuccess: () => {
       console.log("Profile updated successfully");
+      navigate(-1)
     },
     onError: (error) => {
       alert("Error: " + error.message);

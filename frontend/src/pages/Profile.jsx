@@ -83,12 +83,15 @@ function Profile() {
           </div>
           <div className="line-wrapper flex items-center gap-[0.5rem] ">
             <img src={linepic} alt="Line Icon" className='inline ' />
-            <p className='' > {data.fname}{data.phone_number}Line </p>
+            <p className='' > {data.line} </p>
           </div>
           <div className="email-wrapper flex items-center gap-[0.5rem] ">
             <img src={mail} alt="Email Icon" className='inline ' />
-            <p className='' > {data.fname}@gmail.com </p>
+            <p className='' > {data.email} </p>
           </div>
+         
+            <p className='' > {data.detail} </p>
+          
         </div>
       </div>
 
