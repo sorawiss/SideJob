@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { useContext } from 'react'
 import { AuthContext } from '../context/AuthContext'
+import { useLocation } from 'react-router-dom'
 
 import plus from '../assets/svg/plus.svg'
 import hire from '../assets/svg/nav/hire.svg'
@@ -13,6 +14,10 @@ import profile from '../assets/svg/nav/profile.svg'
 
 export default function Nav({ setCreatePost }) {
   const { currentUser } = useContext(AuthContext)
+
+  const newPostPath = location.pathname.includes('/home/find')
+    ? '/home/find/new'
+    : '/home/hire/new';
 
 
   return (
@@ -27,7 +32,10 @@ export default function Nav({ setCreatePost }) {
         <Link to={'hire'}>
           <img src={hire} alt="" className='cursor-pointer' />
         </Link>
-        <img src={plus} alt="" className='cursor-pointer' onClick={setCreatePost} />
+
+        <Link to={newPostPath} >
+          <img src={plus} alt="" className='cursor-pointer' onClick={setCreatePost} />
+        </Link>
         <img src={notification} alt="" className='cursor-pointer' />
         <Link to={'/profile/' + currentUser.id} ><img src={profile} alt="" className='cursor-pointer' /></Link>
       </div>

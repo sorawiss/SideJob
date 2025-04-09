@@ -43,8 +43,6 @@ function Home() {
             <Outlet context={search} />
 
             <Nav setCreatePost={setCreatePost} />
-
-            {onPost ? <NewPost setCreatePost={setCreatePost} profilePic={currentUser.profile_picture} isJob={isFindPage} /> : null}
         </div>
     );
 }

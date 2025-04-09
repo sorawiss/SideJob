@@ -17,6 +17,7 @@ import InPost from './pages/InPost';
 import Profile from './pages/Profile';
 import EditProfile from './pages/EditProfile';
 import Post from './components/Post';
+import NewPost from './components/NewPost';
 
 
 
@@ -46,7 +47,9 @@ function App() {
               <Route path="/profile/:id" element={<Profile />} />
               <Route path="post/:id" element={<InPost />} />
               <Route path="editProfile/:id" element={<EditProfile />} />
-              "
+              <Route path='/home/hire/new' element={<NewPost isJob={false} />} />
+              <Route path='/home/find/new' element={<NewPost isJob={true} />} />
+
             </Route>
           </Routes>
         </Router>
