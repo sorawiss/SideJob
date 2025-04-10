@@ -21,6 +21,7 @@ import OpenReview from './OpenReview';
 import RateStar from './RateStar';
 import ImageDialog from './ImageDialog';
 import PriceButton from './PriceButton';
+import SwitchBtn from './SwitchBtn';
 
 
 function InPostObject({ postDate, title, details, salary, location, picture, posterID, category, members, review, postID, isJob }) {
@@ -105,6 +106,10 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
                         ) : null}
 
                         <PriceButton text={salary.toLocaleString()} isJob={isJob} />
+
+                        {currentUser && currentUser.id === posterID ? (
+                            <SwitchBtn />
+                        ) : null}
 
                         {picture.length > 0 ? (
                             picture.map((items, index) => {
