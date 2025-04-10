@@ -8,7 +8,7 @@ import {
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 
-export default function DialogDefault({ id }) {
+export default function DialogDefault({ reviewId }) {
   const queryClient = useQueryClient()
   const mutation = useMutation({
     mutationFn: deleteReview,
@@ -19,7 +19,7 @@ export default function DialogDefault({ id }) {
 
   async function deleteReview(id) {
     const response = await fetch(
-      `http://localhost:3333/deleteReview/${id}`,
+      `http://localhost:3333/deleteReview/${reviewId}`,
       {
         method: "DELETE",
         credentials: "include",

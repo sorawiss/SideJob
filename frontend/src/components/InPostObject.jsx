@@ -2,6 +2,8 @@ import React from 'react'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
 import { useState } from 'react';
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 
 import starIcon from '../assets/svg/star.svg'
 import phone from '../assets/svg/phone.svg'
@@ -26,6 +28,7 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
     const dateFormat = new Date(postDate).toLocaleDateString('th-TH');
 
     const [rating, setRating] = useState(0);
+    const { currentUser } = useContext(AuthContext)
 
 
     return (
@@ -117,7 +120,9 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
 
 
             {/* Rate */}
-            <RateStar rating={rating} setRating={setRating} />
+            {currentUser && (
+                <RateStar rating={rating} setRating={setRating} />
+            )}
 
 
 
@@ -132,13 +137,13 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
                     {review.length > 0 ? (
                         review.map((items, index) => {
                             return (
-                                <Review key={index} member={items.members} detail={items.reviewDetails} date={items.reviewDate} rating={items.rating} postID={postID} id={items.id} />
+                                <Review key={index} member={items.members} detail={items.reviewDetails} date={items.reviewDate} rating={items.rating} postID={postID} reviewId={items.id} />
                             )
                         })
                     ) : null}
                 </div>
             </div>
-            {rating > 0 ? <OpenReview rating={rating} setRating={setRating} postID={postID} posterID={posterID} /> : null}
+            {rating > 0 ? <OpenReview reviewerID={currentUser.id} rating={rating} setRating={setRating} postID={postID} posterID={posterID} /> : null}
         </div>
     )
 }

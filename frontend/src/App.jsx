@@ -32,25 +32,26 @@ function App() {
       <AuthProvider>
         <Router>
           <Routes>
+            {/* Public Routes */}
             <Route path="/" element={<Welcome />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
 
+            <Route path="/home" element={<Home />}>
+              <Route index element={<Navigate to="find" />} />
+              <Route path="find" element={<Post isJob={true} />} />
+              <Route path="hire" element={<Post isJob={false} />} />
+            </Route>
+            <Route path="post/:id" element={<InPost />} />
+
+            {/* Protected Routes */}
             <Route element={<ProtectedRoute />}>
-
-              <Route path="/home" element={<Home />}>
-                <Route index element={<Navigate to="find" />} />
-                <Route path="find" element={<Post isJob={true} />} />
-                <Route path="hire" element={<Post isJob={false} />} />
-              </Route>
-
               <Route path="/profile/:id" element={<Profile />} />
-              <Route path="post/:id" element={<InPost />} />
               <Route path="editProfile/:id" element={<EditProfile />} />
               <Route path='/home/hire/new' element={<NewPost isJob={false} />} />
               <Route path='/home/find/new' element={<NewPost isJob={true} />} />
-
             </Route>
+
           </Routes>
         </Router>
       </AuthProvider>

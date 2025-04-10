@@ -1,16 +1,12 @@
 import React from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
-import { AuthContext } from '../context/AuthContext'
-import { useContext } from 'react'
 
 
 
 import RateStar from './RateStar'
 
-function OpenReview({ rating, setRating, postID, posterID }) {
-
-    const { currentUser } = useContext(AuthContext)
+function OpenReview({ rating, setRating, postID, posterID, reviewerID }) {
     
     const [detail, setDetail] = useState('')
     
@@ -50,7 +46,7 @@ function OpenReview({ rating, setRating, postID, posterID }) {
         const createReviewData = {
             postID : postID,
             reviewedID : posterID,
-            reviewerID : currentUser.id,
+            reviewerID : reviewerID,
             rating : rating,
             reviewDetails : detail, 
         }

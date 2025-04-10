@@ -3,6 +3,8 @@ import moment from "moment";
 
 
 import supabase from '../db.js';
+import verifyToken from "../verifyToken.js";
+
 
 
 
@@ -10,8 +12,11 @@ const router = express.Router();
 
 
 // Create Review
-router.post('/createReview', async (req, res) => {
+router.post('/createReview', verifyToken, async (req, res) => {
     try {
+        if (req.user.id === req.body.reviewerId) {
+            return res.status(401).json({ message: 'Unauthorized' })
+        }
         const {
             postID,
             reviewDetails,
@@ -34,7 +39,7 @@ router.post('/createReview', async (req, res) => {
                     reviewDate: time
                 },
             )
-        
+
         if (error) {
             return res.status(500).json({ message: 'Failed to create comment', error: error.message });
         }
@@ -51,23 +56,23 @@ router.post('/createReview', async (req, res) => {
 // GetReviews
 router.get('/getReviews/:id', async (req, res) => {
     try {
-      const { data, error } = await supabase
-        .from('review')
-        .select('*, members!reviewerID(fname, lname, id, profile_picture) ')
-        .eq( 'postID', req.params.id)
-        .order('reviewDate', { ascending: false })
-        
+        const { data, error } = await supabase
+            .from('review')
+            .select('*, members!reviewerID(fname, lname, id, profile_picture) ')
+            .eq('postID', req.params.id)
+            .order('reviewDate', { ascending: false })
+
         if (error) {
-          res.status(500).json({ message: 'Failed to fetch reviews', error: error.message });
+            res.status(500).json({ message: 'Failed to fetch reviews', error: error.message });
         }
-  
+
         res.status(200).json(data);
-      
+
     }
     catch {
-      res.status(500).json({ message: 'Internal server error', error: err.message });
+        res.status(500).json({ message: 'Internal server error', error: err.message });
     }
-  })
+})
 
 
 
@@ -89,7 +94,7 @@ router.delete('/deleteReview/:id', async (req, res) => {
     }
     catch (error) {
         res.status(500).json({ message: 'Internal server error', error: error.message });
-        
+
     }
 })
 
