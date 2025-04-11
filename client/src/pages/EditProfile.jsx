@@ -1,12 +1,10 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'react-router-dom';
+import { Meta, useParams } from 'react-router-dom';
 import Loading from '../components/Loading';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-import profilePlaceHolder from '../assets/svg/profile_placeholder.svg'
 
 import { Input } from "rizzui";
 import { Button } from "rizzui";
@@ -16,6 +14,7 @@ import EditProfilePicModal from '../components/EditProfilePicModal';
 
 
 
+const baseUrl = import.meta.env.VITE_BASE_URL
 
 function EditProfile() {
   const navigate = useNavigate();
@@ -23,7 +22,7 @@ function EditProfile() {
   const { isPending, error, data } = useQuery({
     queryKey: ['getIneditProfile', id],
     queryFn: () =>
-      fetch(`http://localhost:3333/getProfile/${id}`).then((res) => res.json()),
+      fetch(`${baseUrl}/getProfile/${id}`).then((res) => res.json()),
   });
 
 

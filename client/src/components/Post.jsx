@@ -4,10 +4,11 @@ import { useQuery } from '@tanstack/react-query';
 
 import Loading from './Loading';
 
-
 import PostObject from './PostObject'
 
 
+
+const baseUrl = import.meta.env.VITE_BASE_URL
 function Post( { isJob } ) {
     const search = useOutletContext()
     
@@ -15,7 +16,7 @@ function Post( { isJob } ) {
     const { isPending, error, data } = useQuery({
         queryKey: ['posts', isJob],
         queryFn: () =>
-            fetch(`http://localhost:3333/getPosts?category=${isJob}`, {
+            fetch(`${baseUrl}/getPosts?category=${isJob}`, {
                 credentials: 'include',
             }).then((res) =>
                 res.json()

@@ -9,7 +9,7 @@ import notification from '../assets/svg/nav/notification.svg'
 
 
 
-export default function Nav({ setCreatePost }) {
+export default function Nav() {
   const { currentUser } = useContext(AuthContext)
   const location = useLocation();
 

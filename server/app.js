@@ -73,6 +73,6 @@ app.post('/upload', upload.array('images', 10), async (req, res) => {
 
 
 
-app.listen(3333, function () {
-  console.log('CORS-enabled web server listening on port 3333')
+app.listen(8080, function () {
+  console.log('CORS-enabled web server listening on port 8080')
 })

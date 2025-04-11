@@ -8,6 +8,8 @@ import {
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 
+
+const baseUrl = import.meta.env.VITE_BASE_URL
 export default function DialogDefault({ reviewId }) {
   const queryClient = useQueryClient()
   const mutation = useMutation({
@@ -19,7 +21,7 @@ export default function DialogDefault({ reviewId }) {
 
   async function deleteReview(id) {
     const response = await fetch(
-      `http://localhost:3333/deleteReview/${reviewId}`,
+      `${baseUrl}/deleteReview/${reviewId}`,
       {
         method: "DELETE",
         credentials: "include",
