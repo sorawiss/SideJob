@@ -30,6 +30,8 @@ function Welcome() {
                     <Link to={'register'}><p className='text-[1.25rem] '>สมัครใช้งาน</p></Link>
                 </div>
 
+                <Link to={'home'}><p className='text-[1.25rem] text-secondary '>เข้าใช้งานโดยไม่ใช้บัญชี</p></Link>
+
 
             </div>
 

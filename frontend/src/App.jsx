@@ -43,10 +43,10 @@ function App() {
               <Route path="hire" element={<Post isJob={false} />} />
             </Route>
             <Route path="post/:id" element={<InPost />} />
+            <Route path="/profile/:id" element={<Profile />} />
 
             {/* Protected Routes */}
             <Route element={<ProtectedRoute />}>
-              <Route path="/profile/:id" element={<Profile />} />
               <Route path="editProfile/:id" element={<EditProfile />} />
               <Route path='/home/hire/new' element={<NewPost isJob={false} />} />
               <Route path='/home/find/new' element={<NewPost isJob={true} />} />
