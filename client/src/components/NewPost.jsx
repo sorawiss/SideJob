@@ -84,7 +84,7 @@ function NewPost({ isJob }) {
 
 
   async function createPost(postData) {
-    const response = await fetch(`'${baseUrl}/createPost'`, {
+    const response = await fetch(`${baseUrl}/createPost`, {
       method: 'POST',
       credentials: 'include',
       headers: {
