@@ -15,8 +15,9 @@ app.use(cookieParser())
 
 
 // Cors
+const allowedOrigins = process.env.ORIGIN || "http://localhost:5173"
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: allowedOrigins,
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
@@ -74,6 +75,6 @@ app.post('/upload', upload.array('images', 10), async (req, res) => {
 
 const port = process.env.PORT || 8080;
 
-app.listen(port, function () {
-  console.log('CORS-enabled web server listening on port 3333')
+app.listen(8080, function () {
+  console.log('CORS-enabled web server listening on port 8080')
 })

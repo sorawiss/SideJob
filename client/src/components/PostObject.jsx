@@ -6,7 +6,7 @@ import starIcon from '../assets/svg/star.svg'
 import profile from '../assets/svg/profile.svg'
 
 import WordCuter from '../function/WordCuter';
-import avgRating from '../function/avgRating';
+import avgRating from '../function/AvgRating.js';
 
 import PriceButton from './PriceButton';
 

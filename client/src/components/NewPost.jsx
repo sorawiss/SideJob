@@ -15,6 +15,10 @@ import picture from '../assets/svg/picture.svg'
 import location from '../assets/svg/location.svg'
 import phone from '../assets/svg/phone.svg'
 
+
+
+
+const baseUrl = import.meta.env.VITE_BASE_URL
 function NewPost({ isJob }) {
 
   const { currentUser } = useContext(AuthContext)
@@ -61,7 +65,7 @@ function NewPost({ isJob }) {
     });
 
     try {
-      const response = await fetch('http://localhost:3333/upload', {
+      const response = await fetch(`${baseUrl}/upload`, {
         method: 'POST',
         body: formData,
       });
@@ -80,7 +84,7 @@ function NewPost({ isJob }) {
 
 
   async function createPost(postData) {
-    const response = await fetch('http://localhost:3333/createPost', {
+    const response = await fetch(`${baseUrl}/createPost`, {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -123,7 +127,7 @@ function NewPost({ isJob }) {
 
     try {
       mutation.mutate(postData)
-      console.log("add post to database success", postData)
+      console.log("Post Data", postData)
     }
     catch (error) {
       console.log(error)

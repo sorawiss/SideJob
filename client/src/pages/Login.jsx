@@ -9,6 +9,9 @@ import { AuthContext } from '../context/AuthContext';
 
 import './Style/LoginAndReg.css'
 
+
+
+const baseUrl = import.meta.env.VITE_BASE_URL
 function Login() {
 
     const { login } = useContext(AuthContext)
@@ -37,7 +40,7 @@ function Login() {
 
         // API Connection
         try {
-            const response = await fetch('http://localhost:3333/login', {
+            const response = await fetch(`${baseUrl}/login`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {

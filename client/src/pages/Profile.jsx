@@ -16,6 +16,7 @@ import Loading from '../components/Loading'
 
 
 
+const baseUrl = import.meta.env.VITE_BASE_URL
 function findAvg(data) {
   if (data.workPost.length === 0) return 0
   let sum = 0
@@ -44,7 +45,7 @@ function Profile() {
   const { isPending, error, data } = useQuery({
     queryKey: ['profile', id],
     queryFn: () =>
-      fetch('http://localhost:3333/getProfile/' + id).then((res) =>
+      fetch(`${baseUrl}/getProfile/${id}`).then((res) =>
         res.json(),
       ),
   })
