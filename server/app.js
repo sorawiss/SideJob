@@ -72,7 +72,8 @@ app.post('/upload', upload.array('images', 10), async (req, res) => {
 
 
 
+const port = process.env.PORT || 8080;
 
-app.listen(3333, function () {
+app.listen(port, function () {
   console.log('CORS-enabled web server listening on port 3333')
 })
