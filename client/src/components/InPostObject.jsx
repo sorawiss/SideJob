@@ -13,7 +13,7 @@ import profile from '../assets/svg/profile.svg'
 
 
 import WordCuter from '../function/WordCuter';
-import avgRating from '../function/avgRating';
+import avgRating from '../function/AvgRating.js';
 import ShowRating from './ShowRating';
 
 import Review from './Review'
