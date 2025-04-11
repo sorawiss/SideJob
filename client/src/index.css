@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+
+
+
+
+* {
+  border: red 1px soli;
+}
+body {
+  font-family: "Noto Sans Thai", sans-serif;
+  font-weight: normal;
+  font-style: normal;
+}
+html {
+  font-size: 14px;
+}
+
+
+@theme {
+  --color-accent: #E5F066;
+  --color-primarydark: #2E2E38;
+  --color-primarylight: #F1F1F1;
+  --color-backgrounddark: #1B1B1B;
+  --color-secondary: #616165;
+  --color-secondarylight : #DCDCDC;
+}
+
+
+h1 {
+  @apply text-[4rem] font-extrabold 
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+p {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.p1_5 {
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+.p2 {
+  font-size: 0.8rem;
+  line-height: 1.3rem;
+}
+
+.p3 {
+  font-size: 0.6rem;
+  line-height: 0.7rem;
+}
+
+.error {
+  @apply text-red-500
+}
+
+.highlight {
+  font-weight: 600;
+}
+
+a {
+  border: none;
+  text-decoration: none;
+}

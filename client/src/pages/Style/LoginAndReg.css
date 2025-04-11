@@ -1,0 +1,10 @@
+.loging-form .rizzui-input-container, .rizzui-password-container  {
+    background-color: #F2F8AF;
+    border: none!important;
+    box-shadow: none!important;
+    border-radius: 16px;
+}
+
+.loging-form .rizzui-password-toggle-icon {
+    cursor: pointer;
+}

@@ -1,15 +1,25 @@
 import express from "express";
+import moment from "moment";
+
 import supabase from '../db.js';
+import verifyToken from "../verifyToken.js";
+
 
 const router = express.Router();
 
 
+
 // Get all posts
-router.get('/posts', async (req, res) => {
+router.get('/getPosts', async (req, res) => {
+  const {category} = req.query
+  
   try {
     const { data, error } = await supabase
       .from('workPost')
-      .select('*, members!posterID(fname, lname), category!categoryID(name), job(workPlaceAddress), review(rating)')
+      .select('*, members!posterID(fname, lname, profile_picture), category!categoryID(name), review(rating), picture(image)')
+      .eq('isJob', category)
+      .eq('status', true)
+      .order('postDate', { ascending: false })
 
     if (error) {
       return res.status(500).json({ message: 'Failed to fetch posts', error: error.message });
@@ -20,6 +30,76 @@ router.get('/posts', async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: 'Internal server error', error: err.message });
   }
-});
+})
+
+
+
+// CreatePost
+router.post('/createPost', verifyToken, async (req, res) => {
+  try {
+    const {
+      title,
+      salary,
+      details,
+      categoryID,
+      location,
+      isJob,
+      images,
+    } = req.body
+
+    const time = moment(Date.now()).format("YYYY-MM-DD HH:mm:ss")
+    const posterID = req.user.id
+
+    const { error, data } = await supabase
+      .from('workPost')
+      .insert(
+        {
+          title,
+          details,
+          categoryID,
+          posterID,
+          salary,
+          location,
+          isJob,
+          postDate: time,
+          status: true
+        },
+      )
+      .select('postID')
+      .single()
+
+    if ( error) {
+      return res.status(500).json({ message: 'Failed to create post in workPost table', error: error.message });
+    }
+
+    let pictureToInsert = []
+
+    if (images && images.length > 0) {
+      pictureToInsert = images.map((items) => (
+        {
+          id: data.postID,
+          image: items
+        }
+      ))
+    }
+
+    const { error: error2 } = await supabase
+      .from('picture')
+      .insert(pictureToInsert)
+
+    if (error2) {
+      return res.status(500).json({ message: 'Failed to create post in picture table', error: error2.message });
+    }
+
+    res.status(201).json({ message: 'Post created successfully' });
+  }
+  catch (err) {
+    res.status(500).json({ message: 'Internal server error', error: err.message })
+  }
+})
+
+
+
+
 
 export default router;

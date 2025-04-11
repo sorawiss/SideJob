@@ -1,0 +1,78 @@
+/* * {
+    border: 1px red solid;
+} */
+
+.text-secondarydark {
+    color: var(--color-secondary);
+}
+
+.right-text {
+    display: none;
+    color: var(--color-primarylight);
+    position: absolute ;
+    right: 1rem;
+    top: 1rem;
+}
+
+@media (max-width: 779px) {
+    .right-container img {
+        display: none;
+    }
+    .text-secondarydark {
+        display: none;
+    }
+}
+
+/*responsive for computer*/
+@media (min-width: 780px) {
+
+    .deeped-bg-container {
+        background-color: var(--color-backgrounddark) ;
+        display: flex;
+        
+    }
+
+    .welcome-container {
+        border-top-right-radius: 5rem; 
+        width: 50%; 
+        display: flex;
+        justify-content: center;
+        align-items: start;
+    }
+
+    .welcome-container img {
+        display: none;
+    }
+
+    
+
+    .input-container {
+        display: flex;
+        flex-direction: row; 
+        align-items: center;
+        
+    }
+
+    .rizzui-button {
+        width: 10rem;
+        font-size: 1rem;
+    }
+
+    .right-container {
+        background-color: var(--color-backgrounddark) ;
+        width: 50%; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .right-container img {
+        display: flex;
+        width: 25rem;
+    }
+
+    .right-text {
+        display: inline;
+    }
+
+  }

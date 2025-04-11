@@ -1,0 +1,103 @@
+import express from "express";
+import moment from "moment";
+
+
+import supabase from '../db.js';
+import verifyToken from "../verifyToken.js";
+
+
+
+
+const router = express.Router();
+
+
+// Create Review
+router.post('/createReview', verifyToken, async (req, res) => {
+    try {
+        if (req.user.id === req.body.reviewerId) {
+            return res.status(401).json({ message: 'Unauthorized' })
+        }
+        const {
+            postID,
+            reviewDetails,
+            rating,
+            reviewerID,
+            reviewedID,
+        } = req.body
+
+        const time = moment(Date.now()).format("YYYY-MM-DD HH:mm:ss")
+
+        const { error } = await supabase
+            .from('review')
+            .insert(
+                {
+                    postID,
+                    reviewDetails,
+                    rating,
+                    reviewerID,
+                    reviewedID,
+                    reviewDate: time
+                },
+            )
+
+        if (error) {
+            return res.status(500).json({ message: 'Failed to create comment', error: error.message });
+        }
+
+        res.status(201).json({ message: 'Revies created successfully' })
+
+    } catch (err) {
+        res.status(500).json({ message: 'Internal server error', error: err.message })
+    }
+})
+
+
+
+// GetReviews
+router.get('/getReviews/:id', async (req, res) => {
+    try {
+        const { data, error } = await supabase
+            .from('review')
+            .select('*, members!reviewerID(fname, lname, id, profile_picture) ')
+            .eq('postID', req.params.id)
+            .order('reviewDate', { ascending: false })
+
+        if (error) {
+            res.status(500).json({ message: 'Failed to fetch reviews', error: error.message });
+        }
+
+        res.status(200).json(data);
+
+    }
+    catch {
+        res.status(500).json({ message: 'Internal server error', error: err.message });
+    }
+})
+
+
+
+// Delete Review
+router.delete('/deleteReview/:id', async (req, res) => {
+    try {
+        const { id } = req.params
+
+        const { error } = await supabase
+            .from('review')
+            .delete()
+            .eq('id', id)
+        if (error) {
+            return res.status(500).json({ message: 'Failed to delete review', error: error.message });
+        }
+        else {
+            res.status(200).json({ message: 'Review deleted successfully' });
+        }
+    }
+    catch (error) {
+        res.status(500).json({ message: 'Internal server error', error: error.message });
+
+    }
+})
+
+
+
+export default router;

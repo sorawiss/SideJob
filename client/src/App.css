@@ -1,0 +1,35 @@
+.custom-rating svg {
+    width: 2.7rem;
+    height: 2.7rem;
+}
+
+.title-text::placeholder, .title-text {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.price-text::placeholder, .price-text {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color : var(--color-accent)
+}
+
+.more-detail-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.backdrop-blur-sm {
+    background-color: (var(--color-secondary));
+    filter: blur(0px);
+}
+
+
+.edit-profile-form .rizzui-input-container {
+    background-color: var(--color-secondarylight);
+    border: none!important;
+    box-shadow: none!important;
+    border-radius: 16px;
+    width: 20rem;
+}

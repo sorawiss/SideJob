@@ -1,0 +1,169 @@
+import React from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useParams } from 'react-router-dom';
+import Loading from '../components/Loading';
+import { useQueryClient, useMutation } from '@tanstack/react-query';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import profilePlaceHolder from '../assets/svg/profile_placeholder.svg'
+
+import { Input } from "rizzui";
+import { Button } from "rizzui";
+
+import Arrow from '../components/Arrow';
+import EditProfilePicModal from '../components/EditProfilePicModal';
+
+
+
+
+function EditProfile() {
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const { isPending, error, data } = useQuery({
+    queryKey: ['getIneditProfile', id],
+    queryFn: () =>
+      fetch(`http://localhost:3333/getProfile/${id}`).then((res) => res.json()),
+  });
+
+
+  const queryClient = useQueryClient();
+  const [form, setForm] = useState({
+    fname: '',
+    lname: '',
+    line: '',
+    email: '',
+    detail: ''
+  });
+
+
+  // useEffect
+  useEffect(() => {
+    if (data) {
+      setForm({
+        fname: data.fname || '',
+        lname: data.lname || '',
+        line: data.line || '',
+        email: data.email || '',
+        detail: data.detail || ''
+      });
+    }
+  }, [data]);
+
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+  };
+
+
+  const getUpdatedFields = (original, updated) => {
+    const diff = {};
+    for (const key in updated) {
+      if (updated[key] !== original[key]) {
+        diff[key] = updated[key];
+      }
+    }
+    return diff;
+  };
+
+  async function updateData(updateData) {
+    const response = await fetch(`http://localhost:3333/editProfile/${id}`, {
+      method: 'PUT',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updateData)
+    })
+
+    if (!response.ok) {
+      const message = `An error has occured: ${response.status}`;
+      throw new Error(message);
+    }
+
+    return await response.json();
+  }
+
+
+  const mutation = useMutation({
+    mutationFn: updateData,
+    onSuccess: () => {
+      console.log("Profile updated successfully");
+      navigate(-1)
+    },
+    onError: (error) => {
+      alert("Error: " + error.message);
+    }
+  });
+
+
+  const handleSubmit = async () => {
+    const updates = getUpdatedFields(data, form);
+
+    if (Object.keys(updates).length === 0) {
+      console.log("No changes to save");
+      return;
+    }
+
+    mutation.mutate(updates);
+
+  }
+
+
+
+
+
+  if (isPending) return <Loading />;
+  if (error) return 'An error has occurred: ' + error.message;
+
+  return (
+    <div className="edit-profile-container flex flex-col items-center content-center py-[4rem] bg-primarylight min-h-screen px-[3rem] w-screen gap-[5rem] ">
+      <div className="menu-wrapper w-[28rem] flex justify-between items-center ">
+        <Arrow />
+      </div>
+
+      <div className="profile-wrapper  " >
+        <EditProfilePicModal profile_picture={data.profile_picture} />
+      </div>
+
+      <form className='edit-profile-form w-[18rem] flex flex-col gap-[1rem] items-center ' onSubmit={(e) => {e.preventDefault(); handleSubmit();}}>
+        <Input
+          value={form.fname}
+          label="ชื่อ"
+          name='fname'
+          onChange={handleChange}
+        />
+        <Input
+          value={form.lname}
+          label="นามสกุล"
+          name='lname'
+          onChange={handleChange}
+        />
+        <Input
+          value={form.line}
+          label="Line"
+          name='line'
+          onChange={handleChange}
+        />
+        <Input
+          value={form.email}
+          label="Email"
+          name='email'
+          onChange={handleChange}
+        />
+        <Input
+          value={form.detail}
+          label="คำอธิบาย"
+          name='detail'
+          onChange={handleChange}
+        />
+      </form>
+
+      <Button onClick={handleSubmit} className='bg-primarydark text-white rounded-[16px] ' >Button</Button>
+
+    </div>
+  );
+}
+
+export default EditProfile;
