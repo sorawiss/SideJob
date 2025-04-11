@@ -127,7 +127,7 @@ function NewPost({ isJob }) {
 
     try {
       mutation.mutate(postData)
-      console.log("add post to database success", postData)
+      console.log("Post Data", postData)
     }
     catch (error) {
       console.log(error)
