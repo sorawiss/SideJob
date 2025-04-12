@@ -6,23 +6,18 @@ import searchIcon from '../assets/svg/search-icon.svg';
 import './Style/Home.css'
 
 import Nav from '../components/Nav';
-import { AuthContext } from '../context/AuthContext';
 
 
 
 function Home() {
     const [onPost, setOnPost] = useState(false)
     const [search, setSearch] = useState('')
-    const location = useLocation()
-    const { currentUser } = useContext(AuthContext)
 
     const setCreatePost = () => {
         setOnPost(!onPost)
     }
 
 
-    // Set Page
-    const isFindPage = location.pathname === '/home/find';
 
 
     return (
