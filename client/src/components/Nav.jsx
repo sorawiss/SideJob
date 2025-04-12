@@ -21,7 +21,7 @@ export default function Nav() {
 
 
   return (
-    <div className='nav-container fixed bottom-0 w-screen h-[5rem] bg-primarydark ' >
+    <div className='nav-container fixed bottom-0 min-w-screen h-[5rem] bg-primarydark ' >
       <div className="nav-items-container flex gap-[3rem] justify-center items-center ">
         <Link to={'find'}>
           <svg className={`cursor-pointe ${isActive('find') ? 'fill-accent ' : 'fill-white '} `} width="33" height="29" viewBox="0 0 33 29" xmlns="http://www.w3.org/2000/svg">
