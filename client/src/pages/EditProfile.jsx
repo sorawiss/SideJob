@@ -67,7 +67,7 @@ function EditProfile() {
   };
 
   async function updateData(updateData) {
-    const response = await fetch(`http://localhost:3333/editProfile/${id}`, {
+    const response = await fetch(`${baseUrl}/editProfile/${id}`, {
       method: 'PUT',
       credentials: 'include',
       headers: {
