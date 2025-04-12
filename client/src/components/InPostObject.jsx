@@ -2,6 +2,8 @@ import React from 'react'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
 import { useState } from 'react';
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 
 import starIcon from '../assets/svg/star.svg'
 import phone from '../assets/svg/phone.svg'
@@ -11,7 +13,7 @@ import profile from '../assets/svg/profile.svg'
 
 
 import WordCuter from '../function/WordCuter';
-import avgRating from '../function/avgRating';
+import avgRating from '../function/AvgRating.js';
 import ShowRating from './ShowRating';
 
 import Review from './Review'
@@ -19,13 +21,16 @@ import OpenReview from './OpenReview';
 import RateStar from './RateStar';
 import ImageDialog from './ImageDialog';
 import PriceButton from './PriceButton';
+import SwitchBtn from './SwitchBtn';
 
 
-function InPostObject({ postDate, title, details, salary, location, picture, posterID, category, members, review, profile_picture, postID, isJob }) {
+const baseUrl = import.meta.env.VITE_BASE_URL
+function InPostObject({ postDate, title, details, salary, location, picture, posterID, category, members, review, postID, isJob }) {
 
     const dateFormat = new Date(postDate).toLocaleDateString('th-TH');
 
     const [rating, setRating] = useState(0);
+    const { currentUser } = useContext(AuthContext)
 
 
     return (
@@ -36,7 +41,7 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
                 <div className="profile flex gap-[0.5rem] ">
                     {/* ProfilePic */}
                     <Link to={'/profile/' + posterID} className=''>
-                        <img src={profile_picture ? profile_picture : profile} alt="" className='w-[2.6rem] h-[2.6rem] ' />
+                        <img src={members.profile_picture ? '/upload/' + members.profile_picture : profile} alt="" className='w-[3rem] h-[3rem] rounded-full object-cover ' />
                     </Link>
 
 
@@ -87,26 +92,30 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
                             </div>
                         ) : null}
 
-                        {members.phone_number ? (
+                        {members.line ? (
                             <div className="phone-wrapper flex items-center gap-[0.5rem] p2 ">
                                 <img src={line} alt="Phone Icoon" className='inline ' />
-                                <p className='inline ' > {members.phone_number} </p>
+                                <p className='inline ' > {members.line} </p>
                             </div>
                         ) : null}
 
-                        {members.phone_number ? (
+                        {members.email ? (
                             <div className="phone-wrapper flex items-center gap-[0.5rem]  ">
                                 <img src={gmail} alt="Phone Icoon" className='inline ' />
-                                <p className='inline ' > {members.phone_number} </p>
+                                <p className='inline ' > {members.email} </p>
                             </div>
                         ) : null}
 
                         <PriceButton text={salary.toLocaleString()} isJob={isJob} />
 
+                        {currentUser && currentUser.id === posterID ? (
+                            <SwitchBtn />
+                        ) : null}
+
                         {picture.length > 0 ? (
                             picture.map((items, index) => {
                                 return (
-                                    <ImageDialog key={index} imgLink={'/upload/' + items.image} />)
+                                    <ImageDialog key={index} imgLink={`${baseUrl}/upload/${items.image}`} />)
                             }))
                             : null}
 
@@ -117,7 +126,9 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
 
 
             {/* Rate */}
-            <RateStar rating={rating} setRating={setRating} />
+            {currentUser && (
+                <RateStar rating={rating} setRating={setRating} />
+            )}
 
 
 
@@ -132,13 +143,13 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
                     {review.length > 0 ? (
                         review.map((items, index) => {
                             return (
-                                <Review key={index} member={items.members} detail={items.reviewDetails} date={items.reviewDate} rating={items.rating} postID={postID} id={items.id} />
+                                <Review key={index} member={items.members} detail={items.reviewDetails} date={items.reviewDate} rating={items.rating} postID={postID} reviewId={items.id} />
                             )
                         })
                     ) : null}
                 </div>
             </div>
-            {rating > 0 ? <OpenReview rating={rating} setRating={setRating} postID={postID} posterID={posterID} /> : null}
+            {rating > 0 ? <OpenReview reviewerID={currentUser.id} rating={rating} setRating={setRating} postID={postID} posterID={posterID} /> : null}
         </div>
     )
 }

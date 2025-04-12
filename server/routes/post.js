@@ -10,7 +10,7 @@ const router = express.Router();
 
 
 // Get all posts
-router.get('/getPosts', verifyToken, async (req, res) => {
+router.get('/getPosts', async (req, res) => {
   const {category} = req.query
   
   try {

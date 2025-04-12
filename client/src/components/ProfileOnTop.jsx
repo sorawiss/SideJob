@@ -8,7 +8,7 @@ import DialogDefault from '../components/DialogDefault'
 
 
 
-function ProfileOnTop({ fname = "Sorwiss", lname = "Boonnee", profilePic, id, reviewerID, date }) {
+function ProfileOnTop({ fname = "Sorwiss", lname = "Boonnee", profilePic, reviewId, reviewerID, date }) {
 
     const { currentUser } = useContext(AuthContext)
     
@@ -22,7 +22,7 @@ function ProfileOnTop({ fname = "Sorwiss", lname = "Boonnee", profilePic, id, re
                 </div>
             </div>
 
-            {currentUser.id === reviewerID ? <DialogDefault id={id} /> : null}
+            {currentUser && currentUser.id === reviewerID ? <DialogDefault reviewId={reviewId} /> : null}
 
 
         </div>

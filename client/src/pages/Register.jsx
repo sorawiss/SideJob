@@ -13,6 +13,7 @@ import './Style/LoginAndReg.css'
 
 
 
+const baseUrl = import.meta.env.VITE_BASE_URL
 function Register() {
     const { login } = useContext(AuthContext)
     const navigate = useNavigate()
@@ -49,7 +50,7 @@ function Register() {
         }
 
         try {
-            const response = await fetch('http://localhost:3333/register', {
+            const response = await fetch(`${baseUrl}/register`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {

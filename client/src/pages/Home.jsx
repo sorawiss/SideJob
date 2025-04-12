@@ -6,7 +6,6 @@ import searchIcon from '../assets/svg/search-icon.svg';
 import './Style/Home.css'
 
 import Nav from '../components/Nav';
-import NewPost from '../components/NewPost';
 import { AuthContext } from '../context/AuthContext';
 
 
@@ -43,8 +42,6 @@ function Home() {
             <Outlet context={search} />
 
             <Nav setCreatePost={setCreatePost} />
-
-            {onPost ? <NewPost setCreatePost={setCreatePost} profilePic={currentUser.profile_picture} isJob={isFindPage} /> : null}
         </div>
     );
 }

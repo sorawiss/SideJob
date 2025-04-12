@@ -4,7 +4,7 @@ import "dotenv/config"
 import cors from "cors"
 import cookieParser from "cookie-parser"
 import multer from "multer"
-
+import path from 'path'
 
 
 
@@ -15,14 +15,16 @@ app.use(cookieParser())
 
 
 // Cors
+const allowedOrigins = process.env.ORIGIN || "http://localhost:5173"
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: allowedOrigins,
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
 
 app.use(cors(corsOptions));
+app.use('/upload', express.static(path.resolve('./upload')))
 
 
 
@@ -49,7 +51,7 @@ app.use(reviewRoute)
 // Multer
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, '../frontend/public/upload')
+    cb(null, './upload')
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + file.originalname)
@@ -72,7 +74,8 @@ app.post('/upload', upload.array('images', 10), async (req, res) => {
 
 
 
+const port = process.env.PORT || 8080;
 
-app.listen(3333, function () {
-  console.log('CORS-enabled web server listening on port 3333')
+app.listen(8080, function () {
+  console.log('CORS-enabled web server listening on port 8080')
 })

@@ -46,6 +46,8 @@ router.post('/register',
     const token = generateToken(phone_number, data.id)
     res.cookie("AccessToken", token, {
       httpOnly: true,
+      sameSite: 'None',
+      secure : true
     })
     res.status(201).json({ message: 'RegisterSuccess', rest});
   }
@@ -79,6 +81,8 @@ router.post('/login',
 
           res.cookie("AccessToken", token, {
             httpOnly: true,
+            sameSite: 'None',
+            secure : true
           })
           res.json({ message: 'Login Success', user : rest })
         }

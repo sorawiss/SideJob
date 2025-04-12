@@ -6,6 +6,9 @@ import InPostObject from '../components/InPostObject'
 import Arrow from '../components/Arrow'
 import Loading from '../components/Loading';
 
+
+
+const baseUrl = import.meta.env.VITE_BASE_URL
 function InPost() {
   const { id } = useParams()
 
@@ -16,7 +19,7 @@ function InPost() {
   } = useQuery({
     queryKey: ['inPost', id],
     queryFn: () =>
-      fetch('http://localhost:3333/getInPosts/' + id).then((res) =>
+      fetch(`${baseUrl}/getInPosts/${id}`).then((res) =>
         res.json(),
       ),
   })
@@ -28,7 +31,7 @@ function InPost() {
   } = useQuery({
     queryKey: ['comment', id],
     queryFn: () =>
-      fetch('http://localhost:3333/getReviews/' + id).then((res) =>
+      fetch(`${baseUrl}/getReviews/${id}`).then((res) =>
         res.json(),
       ),
   })

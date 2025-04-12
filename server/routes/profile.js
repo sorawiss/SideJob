@@ -36,11 +36,7 @@ router.put('/editProfile/:id', verifyToken, async (req, res) => {
   try { 
     const { id } =req.params
     const update = req.body
-
     
-    console.log(req.user.id)
-    console.log(id)
-
     
     if (req.user.id !== parseInt(id)) {
       return res.status(401).json({ message: 'Unauthorized' });

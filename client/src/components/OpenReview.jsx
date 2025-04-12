@@ -1,22 +1,21 @@
 import React from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
-import { AuthContext } from '../context/AuthContext'
-import { useContext } from 'react'
 
 
 
 import RateStar from './RateStar'
 
-function OpenReview({ rating, setRating, postID, posterID }) {
 
-    const { currentUser } = useContext(AuthContext)
+
+const baseUrl = import.meta.env.VITE_BASE_URL
+function OpenReview({ rating, setRating, postID, posterID, reviewerID }) {
     
     const [detail, setDetail] = useState('')
     
 
     async function createReview(reviewData) {
-        const response = await fetch('http://localhost:3333/createReview', {
+        const response = await fetch(`${baseUrl}/createReview`, {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -50,7 +49,7 @@ function OpenReview({ rating, setRating, postID, posterID }) {
         const createReviewData = {
             postID : postID,
             reviewedID : posterID,
-            reviewerID : currentUser.id,
+            reviewerID : reviewerID,
             rating : rating,
             reviewDetails : detail, 
         }

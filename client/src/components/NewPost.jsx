@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { Select } from "rizzui";
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 
 import { FileInput } from "rizzui";
 
@@ -14,14 +15,19 @@ import picture from '../assets/svg/picture.svg'
 import location from '../assets/svg/location.svg'
 import phone from '../assets/svg/phone.svg'
 
-function NewPost({ setCreatePost, isJob }) {
+
+
+
+const baseUrl = import.meta.env.VITE_BASE_URL
+function NewPost({ isJob }) {
 
   const { currentUser } = useContext(AuthContext)
+  const navigate = useNavigate()
 
   const options = [
-    { label: 'บันเทิง', value: '1' },
-    { label: 'การเรียน', value: '2' },
-    { label: 'ทำความสะอาด', value: '3' },
+    { label: '✨ บันเทิง', value: '1' },
+    { label: '🎓 การเรียน', value: '2' },
+    { label: '🧹 ทำความสะอาด', value: '3' },
   ]
 
   const [value, setValue] = useState(null);
@@ -34,23 +40,6 @@ function NewPost({ setCreatePost, isJob }) {
       categoryID: null
     }
   )
-
-  useEffect(() => {
-    // Push a new state to history when the modal opens
-    window.history.pushState(null, '', window.location.href);
-
-    // Handle the popstate event (back button press)
-    const handlePopstate = () => {
-      setCreatePost(); // Close the modal
-    };
-
-    window.addEventListener('popstate', handlePopstate);
-
-    // Cleanup function to remove the event listener
-    return () => {
-      window.removeEventListener('popstate', handlePopstate);
-    };
-  }, [setCreatePost]);
 
 
   const handleSelectChange = (select) => {
@@ -76,7 +65,7 @@ function NewPost({ setCreatePost, isJob }) {
     });
 
     try {
-      const response = await fetch('http://localhost:3333/upload', {
+      const response = await fetch(`${baseUrl}/upload`, {
         method: 'POST',
         body: formData,
       });
@@ -95,7 +84,7 @@ function NewPost({ setCreatePost, isJob }) {
 
 
   async function createPost(postData) {
-    const response = await fetch('http://localhost:3333/createPost', {
+    const response = await fetch(`${baseUrl}/createPost`, {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -119,7 +108,7 @@ function NewPost({ setCreatePost, isJob }) {
     mutationFn: createPost,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['posts'] })
-      setCreatePost()
+      navigate(-1)
     },
   })
 
@@ -138,7 +127,7 @@ function NewPost({ setCreatePost, isJob }) {
 
     try {
       mutation.mutate(postData)
-      console.log("add post to database success", postData)
+      console.log("Post Data", postData)
     }
     catch (error) {
       console.log(error)
@@ -152,8 +141,6 @@ function NewPost({ setCreatePost, isJob }) {
     await handleUpload()
   }
 
-  console.log(currentUser)
-
 
   return (
     <div className='new-post-container w-screen h-screen bg-secondary/55 fixed flex justify-center ' >
@@ -161,7 +148,7 @@ function NewPost({ setCreatePost, isJob }) {
 
 
         <div className="arrow-wrapper">
-          <img src={arrow} alt="" onClick={() => setCreatePost()} />
+          <img src={arrow} alt="" onClick={() => navigate(-1)} />
         </div>
 
 
@@ -201,7 +188,7 @@ function NewPost({ setCreatePost, isJob }) {
                 <FileInput
                   name='images'
                   multiple
-                  inputClassName = "ring-0 border-none "
+                  inputClassName="ring-0 border-none "
                   onChange={(e) => setSelectedFiles([...e.target.files])}
                 />
               </div>

@@ -2,6 +2,8 @@ import { createContext, useState, useEffect } from "react";
 
 export const AuthContext = createContext();
 
+
+const baseUrl = import.meta.env.VITE_BASE_URL
 export const AuthProvider = (props) => {
 
     const getUserFromStorage = () => {
@@ -28,7 +30,7 @@ export const AuthProvider = (props) => {
     const logout = async () => {
         localStorage.removeItem('user')
         setCurrentUser(null)
-        await fetch('http://localhost:3333/logout', {
+        await fetch(`${baseUrl}/logout`, {
             method: 'POST',
             credentials: 'include',
         }) 
@@ -40,7 +42,7 @@ export const AuthProvider = (props) => {
         async function checkToken() {
             console.log('Checking token...');
             try {
-                const res = await fetch('http://localhost:3333/authentication', {
+                const res = await fetch(`${baseUrl}/authentication`, {
                     method: 'POST',
                     credentials: 'include',
                 });
