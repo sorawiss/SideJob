@@ -4,7 +4,7 @@ import "dotenv/config"
 import cors from "cors"
 import cookieParser from "cookie-parser"
 import multer from "multer"
-
+import path from 'path'
 
 
 
@@ -24,6 +24,7 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+app.use('/upload', express.static(path.resolve('./upload')))
 
 
 
