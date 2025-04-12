@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { use } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Meta, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Loading from '../components/Loading';
-import { useQueryClient, useMutation } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
+import { useContext } from 'react';
 
 import { Input } from "rizzui";
 import { Button } from "rizzui";
@@ -19,6 +21,7 @@ const baseUrl = import.meta.env.VITE_BASE_URL
 function EditProfile() {
   const navigate = useNavigate();
   const { id } = useParams();
+  const { login } = useContext(AuthContext);
   const { isPending, error, data } = useQuery({
     queryKey: ['getIneditProfile', id],
     queryFn: () =>
@@ -26,7 +29,6 @@ function EditProfile() {
   });
 
 
-  const queryClient = useQueryClient();
   const [form, setForm] = useState({
     fname: '',
     lname: '',
@@ -81,6 +83,16 @@ function EditProfile() {
       throw new Error(message);
     }
 
+    try {
+      const localData = JSON.parse(localStorage.getItem('user'));
+      const newData = { ...localData, ...updateData }
+      console.log(newData);
+      login(newData)
+    } 
+    catch (error) {
+      console.log("error while set new local storage" + error);
+    }
+
     return await response.json();
   }
 
@@ -126,7 +138,7 @@ function EditProfile() {
         <EditProfilePicModal profile_picture={data.profile_picture} />
       </div>
 
-      <form className='edit-profile-form w-[18rem] flex flex-col gap-[1rem] items-center ' onSubmit={(e) => {e.preventDefault(); handleSubmit();}}>
+      <form className='edit-profile-form w-[18rem] flex flex-col gap-[1rem] items-center ' onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
         <Input
           value={form.fname}
           label="ชื่อ"

@@ -25,9 +25,9 @@ function NewPost({ isJob }) {
   const navigate = useNavigate()
 
   const options = [
-    { label: 'บันเทิง', value: '1' },
-    { label: 'การเรียน', value: '2' },
-    { label: 'ทำความสะอาด', value: '3' },
+    { label: '✨ บันเทิง', value: '1' },
+    { label: '🎓 การเรียน', value: '2' },
+    { label: '🧹 ทำความสะอาด', value: '3' },
   ]
 
   const [value, setValue] = useState(null);
