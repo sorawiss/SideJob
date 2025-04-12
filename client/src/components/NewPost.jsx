@@ -4,6 +4,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 import { FileInput } from "rizzui";
+import { Button } from "rizzui";
 
 import ProfileOnTop from './ProfileOnTop'
 
@@ -31,6 +32,7 @@ function NewPost({ isJob }) {
   ]
 
   const [value, setValue] = useState(null);
+  const [isUploading, setIsUploading] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [formData, setFormData] = useState(
     {
@@ -59,6 +61,8 @@ function NewPost({ isJob }) {
   };
 
   const handleUpload = async () => {
+    setIsUploading(true);
+    
     const formData = new FormData();
     selectedFiles.forEach((file) => {
       formData.append('images', file);
@@ -76,7 +80,8 @@ function NewPost({ isJob }) {
       } else {
         console.error('File upload failed');
       }
-    } catch (error) {
+    } 
+    catch (error) {
       console.error('Error uploading files:', error);
     }
   };
@@ -108,6 +113,7 @@ function NewPost({ isJob }) {
     mutationFn: createPost,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['posts'] })
+      setIsUploading(false)
       navigate(-1)
     },
   })
@@ -138,6 +144,7 @@ function NewPost({ isJob }) {
 
   async function submitHandle(e) {
     e.preventDefault()
+    setIsUploading(true)
     await handleUpload()
   }
 
@@ -215,7 +222,7 @@ function NewPost({ isJob }) {
           <input type="number" placeholder='ราคา..' className='price-text outline-none ' onChange={handleChange} name='salary' />
         </div>
 
-        <button onClick={submitHandle} >Post</button>
+        <Button isLoading={isUploading}  onClick={submitHandle} className='text-3xl text-accent bg-primarydark rounded-[16px] p-[2rem] ' >ยืนยัน</Button>
       </div>
     </div>
   )
