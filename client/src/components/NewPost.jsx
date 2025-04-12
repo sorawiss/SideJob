@@ -163,7 +163,7 @@ function NewPost({ isJob }) {
 
           <div className="detail-wrapper w-[100%] flex flex-col gap-[1rem] items-start ">
             <div className="detail-input w-[100%] " >
-              <textarea placeholder='รายละเอียด(ไม่บังคับ)...' className='bg-primarylight resize-none w-[100%] min-h-[12rem] rounded-[16px] p-[1rem] outline-none ' onInput={(e) => {
+              <textarea placeholder='รายละเอียด(ไม่บังคับ)...' className='detail-placeholder bg-primarylight resize-none w-[100%] min-h-[5rem] rounded-[16px] p-[1rem] outline-none ' onInput={(e) => {
                 e.target.style.height = 'auto';
                 e.target.style.height = `${e.target.scrollHeight}px`
               }}
