@@ -3,7 +3,6 @@ import express from "express"
 import "dotenv/config"
 import cors from "cors"
 import cookieParser from "cookie-parser"
-import multer from "multer"
 import path from 'path'
 
 
@@ -34,7 +33,7 @@ import postRoute from './routes/post.js'
 import InPostRoute from './routes/inPost.js'
 import profileRoute from './routes/profile.js'
 import reviewRoute from './routes/review.js'
-
+import multerRoute from './routes/multer.js'
 
 
 
@@ -45,37 +44,13 @@ app.use(postRoute)
 app.use(InPostRoute)
 app.use(profileRoute)
 app.use(reviewRoute)
+app.use(multerRoute)
 
-
-
-// Multer
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, './upload')
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + file.originalname)
-  }
-})
-
-const upload = multer({ storage: storage })
-
-// Multer Upload
-app.post('/upload', upload.array('images', 10), async (req, res) => {
-  try {
-    const files = req.files
-    const fileName = files.map((file) => file.filename)
-    res.status(200).json(fileName)
-  }
-  catch (err) {
-    res.status(500).json({ message: 'Error in /upload', error: err.message })
-  }
-})
 
 
 
 const port = process.env.PORT || 8080;
 
-app.listen(8080, function () {
+app.listen(port, function () {
   console.log('CORS-enabled web server listening on port 8080')
 })
