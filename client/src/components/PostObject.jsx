@@ -16,6 +16,7 @@ function PostObject({ postDate, title, detail, price, fname, lname, category, lo
 
 
 
+    const baseUrl = import.meta.env.VITE_BASE_URL
     return (
         <div className={`${isJob ? "bg-white" : "bg-secondarylight "} post-object-container w-[30rem] p-[1rem] rounded-[16px] flex flex-col gap-[1rem]`} >
 
@@ -65,7 +66,7 @@ function PostObject({ postDate, title, detail, price, fname, lname, category, lo
                     <h2 className='text-primarydark'>{title}</h2>
                     <p className='p2 text-secondary'>{WordCuter(detail, 200)}</p>
 
-                    {images.length > 0 ? (<img src={'http://localhost:8080/upload/' + images[0].image} alt="Image in post" className='max-h-[20rem] object-cover w-[100%] ' />) : null}
+                    {images.length > 0 ? (<img src={`${baseUrl}/upload/${images[0].image}`} alt="Image in post" className='max-h-[20rem] object-cover w-[100%] ' />) : null}
 
                     <PriceButton isJob={isJob} text={`${price.toLocaleString('th-TH')} บาท`} />
                 </div>
