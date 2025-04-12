@@ -10,6 +10,7 @@ function ImageDialog( { imgLink }) {
  
   const handleOpen = () => setOpen((cur) => !cur);
  
+
   return (
     <>
       <Card

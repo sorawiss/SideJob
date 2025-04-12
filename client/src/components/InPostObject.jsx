@@ -24,6 +24,7 @@ import PriceButton from './PriceButton';
 import SwitchBtn from './SwitchBtn';
 
 
+const baseUrl = import.meta.env.VITE_BASE_URL
 function InPostObject({ postDate, title, details, salary, location, picture, posterID, category, members, review, postID, isJob }) {
 
     const dateFormat = new Date(postDate).toLocaleDateString('th-TH');
@@ -114,7 +115,7 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
                         {picture.length > 0 ? (
                             picture.map((items, index) => {
                                 return (
-                                    <ImageDialog key={index} imgLink={'/upload/' + items.image} />)
+                                    <ImageDialog key={index} imgLink={`${items.image}`} />)
                             }))
                             : null}
 
