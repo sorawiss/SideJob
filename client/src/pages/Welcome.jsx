@@ -9,7 +9,7 @@ function Welcome() {
 
 
     return (
-        <div className='deeped-bg-container'>
+        <div className='deeped-bg-container min-h-screen '>
             
             <div className='welcome-container bg-accent min-h-screen p-[3.5rem] pt-[3.6rem] flex flex-col gap-[4.75rem] items-center '>
 

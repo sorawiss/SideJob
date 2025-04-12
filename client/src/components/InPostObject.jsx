@@ -115,7 +115,7 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
                         {picture.length > 0 ? (
                             picture.map((items, index) => {
                                 return (
-                                    <ImageDialog key={index} imgLink={`${baseUrl}/upload/${items.image}`} />)
+                                    <ImageDialog key={index} imgLink={`${items.image}`} />)
                             }))
                             : null}
 

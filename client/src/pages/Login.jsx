@@ -76,12 +76,12 @@ function Login() {
 
     // Frontend
     return (
-        <div className='login-page-container bg-primarydark h-screen flex flex-col items-center pt-[6.5rem] gap-[7.5rem] '>
+        <div className='login-page-container bg-primarydark min-h-screen h-screen flex flex-col items-center pt-[6.5rem] gap-[7.5rem] '>
             <div className="logo-container">
                 <h1 className='text-primarylight '>LOGO</h1>
             </div>
 
-            <div className="form-container flex flex-col items-center bg-accent min-h-screen w-full h-[42rem] rounded-tl-[90px] gap-[2.5rem] py-[4.375rem] ">
+            <div className="form-container flex flex-col items-center bg-accent h-full w-full rounded-tl-[90px] gap-[2.5rem] py-[4.375rem] ">
                 <h1 className='text-primarydark'>เข้าสู่ระบบ</h1>
                 {/* Form */}
                 <form action="" onSubmit={handleSubmit} className='loging-form flex flex-col items-center gap-[2.5rem] border-none '>

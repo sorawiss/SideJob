@@ -6,6 +6,7 @@
 
 * {
   border: red 1px soli;
+  box-sizing: border-box;
 }
 body {
   font-family: "Noto Sans Thai", sans-serif;
