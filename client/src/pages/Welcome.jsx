@@ -11,7 +11,7 @@ function Welcome() {
     return (
         <div className='deeped-bg-container'>
             
-            <div className='welcome-container bg-accent h-screen p-[3.5rem] pt-[3.6rem] flex flex-col gap-[4.75rem] items-center '>
+            <div className='welcome-container bg-accent min-h-screen p-[3.5rem] pt-[3.6rem] flex flex-col gap-[4.75rem] items-center '>
 
                 {/* Welcome-SECTION */}
                 <div className='text-container'>
