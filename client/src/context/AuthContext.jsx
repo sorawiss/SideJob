@@ -60,7 +60,7 @@ export const AuthProvider = (props) => {
             }
         }
         checkToken();
-    }, [currentUser]); 
+    }, []); 
 
     return (
         <AuthContext.Provider value={{ currentUser, loading, login, logout }}>
