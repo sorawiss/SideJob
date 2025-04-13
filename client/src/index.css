@@ -14,7 +14,7 @@ body {
   font-style: normal;
 }
 html {
-  font-size: 3vw;
+  font-size: clamp(12px, 3vw, 14px);
 }
 
 

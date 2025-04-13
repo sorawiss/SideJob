@@ -21,7 +21,7 @@ const baseUrl = import.meta.env.VITE_BASE_URL
 function EditProfile() {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { login } = useContext(AuthContext);
+  const { login, logout } = useContext(AuthContext);
   const { isPending, error, data } = useQuery({
     queryKey: ['getIneditProfile', id],
     queryFn: () =>
@@ -94,6 +94,13 @@ function EditProfile() {
     }
 
     return await response.json();
+  }
+
+
+  // Logout function
+  const handleLogout = () => { 
+    logout();
+    navigate('/');
   }
 
 
@@ -172,6 +179,8 @@ function EditProfile() {
       </form>
 
       <Button onClick={handleSubmit} className='bg-primarydark text-white rounded-[16px] ' >Button</Button>
+
+      <Button onClick={handleLogout} >ออกจากระบบ</Button>
 
     </div>
   );
