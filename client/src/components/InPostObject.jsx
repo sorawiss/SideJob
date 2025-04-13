@@ -141,9 +141,9 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
                 {/* ReviewSection */}
                 <div className="review-wrapper flex flex-col items-center gap-[1rem] w-[100%] ">
                     {review.length > 0 ? (
-                        review.map((items, index) => {
+                        review.map((items) => {
                             return (
-                                <Review key={index} member={items.members} detail={items.reviewDetails} date={items.reviewDate} rating={items.rating} postID={postID} reviewId={items.id} />
+                                <Review key={items.id} member={items.members} detail={items.reviewDetails} date={items.reviewDate} rating={items.rating} postID={postID} reviewId={items.id} />
                             )
                         })
                     ) : null}
