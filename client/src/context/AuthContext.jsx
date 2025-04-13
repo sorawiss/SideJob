@@ -8,6 +8,7 @@ export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+
   // Graceful localStorage checker
   const isStorageAvailable = () => {
     try {
@@ -21,6 +22,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+
   // Safe load from localStorage
   const loadUserFromStorage = () => {
     if (!isStorageAvailable()) return null;
@@ -33,6 +35,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+
   // Set user to both localStorage and state
   const login = (user) => {
     if (isStorageAvailable()) {
@@ -44,6 +47,7 @@ export const AuthProvider = ({ children }) => {
     }
     setCurrentUser(user);
   };
+
 
   const logout = async () => {
     if (isStorageAvailable()) {
@@ -60,13 +64,14 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+
   useEffect(() => {
     const initAuth = async () => {
       console.log("Checking auth token...");
       try {
         const res = await fetch(`${baseUrl}/authentication`, {
           method: "POST",
-          credentials: "include", // rely on secure cookie
+          credentials: "include",
         });
         const data = await res.json();
         if (data.message === "TokenConfirm") {
