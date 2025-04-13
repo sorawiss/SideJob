@@ -47,7 +47,8 @@ router.post('/register',
     res.cookie("AccessToken", token, {
       httpOnly: true,
       sameSite: 'None',
-      secure : true
+      secure : true,
+      maxAge: 7 * 24 * 60 * 60 * 1000,
     })
     res.status(201).json({ message: 'RegisterSuccess', rest});
   }
@@ -82,7 +83,8 @@ router.post('/login',
           res.cookie("AccessToken", token, {
             httpOnly: true,
             sameSite: 'None',
-            secure : true
+            secure : true,
+            maxAge: 7 * 24 * 60 * 60 * 1000,
           })
           res.json({ message: 'Login Success', user : rest })
         }
