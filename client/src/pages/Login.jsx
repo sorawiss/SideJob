@@ -1,9 +1,9 @@
-import React, { useContext } from 'react'
+import React, { use, useContext } from 'react'
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'
 
 import { Input, Password } from "rizzui";
-import ButtonXL from '../components/ButtonXL';
+import { Button } from "rizzui";
 
 import { AuthContext } from '../context/AuthContext';
 
@@ -21,6 +21,8 @@ function Login() {
     const [phoneNumber, setPhoneNumber] = useState('')
     const [userFound, setUserFound] = useState(null)
     const [checkPassword, setCheckPassword] = useState(null)
+    const [isLogin, setIsLogin] = useState(false)
+
 
 
     // onSubmit Function
@@ -31,8 +33,8 @@ function Login() {
 
         setUserFound(null)
         setCheckPassword(null)
-        
-        if (password.length == 0 || phoneNumber.length == 0) { 
+
+        if (password.length == 0 || phoneNumber.length == 0) {
             setUserFound('*กรุณากรอกข้อมูลให้ครบถ้วน')
             return
         }
@@ -40,20 +42,21 @@ function Login() {
 
         // API Connection
         try {
+            setIsLogin(true)
             const response = await fetch(`${baseUrl}/login`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(loginData) 
+                body: JSON.stringify(loginData)
             })
 
             const data = await response.json();
-            
+
             if (data.message === 'Login Success') {
                 login(data.user)
-                navigate('/home/find', { replace : true });
+                navigate('/home/find', { replace: true });
             }
             else if (data.status === 404) {
                 setUserFound('*ไม่มีบัญชีผู้ใช้นี้')
@@ -68,6 +71,9 @@ function Login() {
         }
         catch (error) {
             console.error("API Error in login API Connection:", error);
+        }
+        finally {
+            setIsLogin(false)
         }
 
     }
@@ -86,7 +92,7 @@ function Login() {
                 {/* Form */}
                 <form action="" onSubmit={handleSubmit} className='loging-form flex flex-col items-center gap-[2.5rem] border-none '>
                     <Input className='w-[22.5rem] h-[3.125rem] rounded-[16px]'
-                        label= {
+                        label={
                             <p>หมายเลขโทรศัพท์ <span className='error'>{userFound}</span></p>
                         }
                         placeholder="Enter your phone number"
@@ -94,13 +100,15 @@ function Login() {
                         onChange={(e) => { setPhoneNumber(e.target.value) }}
                     />
                     <Password className='w-[22.5rem] h-[3.125rem] rounded-[32px]'
-                        label= {
+                        label={
                             <p>รหัสผ่าน <span className='error'>{checkPassword}</span></p>
                         }
                         placeholder="Enter your password"
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    <ButtonXL text='เข้าสู่ระบบ' />
+
+                    <Button isLoading={isLogin} type='submit' variant="solid" className='w-[22.5rem] bg-backgrounddark text-primarylight text-[2.25rem] h-[3.5rem] rounded-[0.75rem] cursor-pointer '>เข้าสู่ระบบ</Button>
+
 
                     <p>ยังไม่มีบัญขี <Link to={'/register'}><span className='highlight'>สมัคร</span></Link></p>
                 </form>

@@ -10,7 +10,7 @@ import avgRating from '../function/AvgRating.js';
 
 import PriceButton from './PriceButton';
 
-function PostObject({ postDate, title, detail, price, fname, lname, category, location, rating, images, postID, posterID, profilePic, isJob }) {
+function PostObject({ postDate, title, detail, price, fname, lname, category, location, rating, images, postID : postID, posterID, profilePic, isJob }) {
 
     const dateFormat = new Date(postDate).toLocaleDateString('th-TH');
 
