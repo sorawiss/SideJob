@@ -29,6 +29,7 @@ function EditProfile() {
   });
 
 
+  const [isLogingout, setIsLogingout] = useState(false);
   const [form, setForm] = useState({
     fname: '',
     lname: '',
@@ -98,8 +99,10 @@ function EditProfile() {
 
 
   // Logout function
-  const handleLogout = () => { 
-    logout();
+  const handleLogout = async () => { 
+    setIsLogingout(true);
+    await logout();
+    setIsLogingout(false);
     navigate('/');
   }
 
@@ -180,7 +183,7 @@ function EditProfile() {
 
       <Button onClick={handleSubmit} className='bg-primarydark text-white rounded-[16px] ' >Button</Button>
 
-      <Button onClick={handleLogout} >ออกจากระบบ</Button>
+      <Button isLoading={isLogingout} onClick={handleLogout} >ออกจากระบบ</Button>
 
     </div>
   );
