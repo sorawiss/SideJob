@@ -12,7 +12,6 @@ const ProtectedRoute = () => {
     }
 
     if (currentUser === null) {
-        logout()
         return <Navigate to="/" replace={true} />;
     }
     return <Outlet />;
