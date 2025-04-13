@@ -1,11 +1,48 @@
-import {Link} from 'react-router-dom'
+import {Link, useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
 
 import WelcomeSVG from '../assets/svg/welcome1.svg'
 import ButtonXL from '../components/ButtonXL'
 
 import './Style/Welcome.css'
 
+
+const baseUrl = import.meta.env.VITE_BASE_URL
 function Welcome() {
+
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        let isMounted = true;
+
+        const auth = async () => {
+            try {
+                const res = await fetch(`${baseUrl}/authentication`, {
+                    method: "POST",
+                    credentials: "include"
+                })
+
+                if (res.ok && isMounted) {
+                    navigate('/home/find')
+                    console.log("Authenticated")
+                    return
+                } 
+                else {
+                    console.log("No Authentication")
+                    return
+                }
+                       
+            }
+            catch(err) {
+                console.error("Authen Failed" + err )
+            }
+        }
+        auth()
+        return () => {
+            isMounted = false
+        }
+    }, [navigate] )
+
 
 
     return (
