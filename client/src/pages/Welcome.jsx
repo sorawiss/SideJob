@@ -22,12 +22,13 @@ function Welcome() {
                     credentials: "include"
                 })
 
-                if (res.ok && isMounted) {
+                if (res.ok && isMounted && localStorage.getItem('user')) {
                     navigate('/home/find')
                     console.log("Authenticated")
                     return
                 } 
                 else {
+                    localStorage.removeItem('user')
                     console.log("No Authentication")
                     return
                 }
