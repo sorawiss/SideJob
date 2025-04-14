@@ -47,7 +47,7 @@ function App() {
 
             {/* Protected Routes */}
             <Route element={<ProtectedRoute />}>
-              <Route path="editProfile/:id" element={<EditProfile />} />
+              <Route path="editProfile" element={<EditProfile />} />
               <Route path='/home/hire/new' element={<NewPost isJob={false} />} />
               <Route path='/home/find/new' element={<NewPost isJob={true} />} />
             </Route>

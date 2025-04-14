@@ -23,8 +23,8 @@ function EditProfilePicModal({ profile_picture }) {
             <img onClick={handleOpen} className='w-[13rem] h-[13rem] rounded-full object-cover object-center '
                 src={profile_picture ? "/upload/" + profile_picture : profilePlaceHolder} alt="" />
 
-            <Dialog size="sm" open={open} handler={handleOpen} className="p-4">
 
+            <Dialog size="sm" open={open} handler={handleOpen} className="p-4">
                 <DialogBody className="space-y-4 pb-6">
                     <ImageCropper />
 

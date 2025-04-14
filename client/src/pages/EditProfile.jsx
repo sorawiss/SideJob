@@ -1,7 +1,5 @@
 import React, { use } from 'react';
-import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
-import Loading from '../components/Loading';
 import { useMutation } from '@tanstack/react-query';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -10,6 +8,7 @@ import { useContext } from 'react';
 
 import { Input } from "rizzui";
 import { Button } from "rizzui";
+import { Textarea } from "rizzui";
 
 import Arrow from '../components/Arrow';
 import EditProfilePicModal from '../components/EditProfilePicModal';
@@ -21,14 +20,7 @@ const baseUrl = import.meta.env.VITE_BASE_URL
 function EditProfile() {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { login, logout } = useContext(AuthContext);
-  const { isPending, error, data } = useQuery({
-    queryKey: ['getIneditProfile', id],
-    queryFn: () =>
-      fetch(`${baseUrl}/getProfile/${id}`).then((res) => res.json()),
-  });
-
-
+  const { login, logout, currentUser } = useContext(AuthContext);
   const [isLogingout, setIsLogingout] = useState(false);
   const [form, setForm] = useState({
     fname: '',
@@ -41,16 +33,16 @@ function EditProfile() {
 
   // useEffect
   useEffect(() => {
-    if (data) {
+    if (currentUser) {
       setForm({
-        fname: data.fname || '',
-        lname: data.lname || '',
-        line: data.line || '',
-        email: data.email || '',
-        detail: data.detail || ''
+        fname: currentUser.fname || '',
+        lname: currentUser.lname || '',
+        line: currentUser.line || '',
+        email: currentUser.email || '',
+        detail: currentUser.detail || ''
       });
     }
-  }, [data]);
+  }, [currentUser]);
 
 
   const handleChange = (e) => {
@@ -69,8 +61,9 @@ function EditProfile() {
     return diff;
   };
 
+
   async function updateData(updateData) {
-    const response = await fetch(`${baseUrl}/editProfile/${id}`, {
+    const response = await fetch(`${baseUrl}/editProfile`, {
       method: 'PUT',
       credentials: 'include',
       headers: {
@@ -89,7 +82,7 @@ function EditProfile() {
       const newData = { ...localData, ...updateData }
       console.log(newData);
       login(newData)
-    } 
+    }
     catch (error) {
       console.log("error while set new local storage" + error);
     }
@@ -99,7 +92,7 @@ function EditProfile() {
 
 
   // Logout function
-  const handleLogout = async () => { 
+  const handleLogout = async () => {
     setIsLogingout(true);
     await logout();
     setIsLogingout(false);
@@ -120,7 +113,7 @@ function EditProfile() {
 
 
   const handleSubmit = async () => {
-    const updates = getUpdatedFields(data, form);
+    const updates = getUpdatedFields(currentUser, form);
 
     if (Object.keys(updates).length === 0) {
       console.log("No changes to save");
@@ -132,12 +125,6 @@ function EditProfile() {
   }
 
 
-
-
-
-  if (isPending) return <Loading />;
-  if (error) return 'An error has occurred: ' + error.message;
-
   return (
     <div className="edit-profile-container flex flex-col items-center content-center py-[4rem] bg-primarylight min-h-screen px-[3rem] w-screen gap-[5rem] ">
       <div className="menu-wrapper w-[28rem] flex justify-between items-center ">
@@ -145,7 +132,7 @@ function EditProfile() {
       </div>
 
       <div className="profile-wrapper  " >
-        <EditProfilePicModal profile_picture={data.profile_picture} />
+        <EditProfilePicModal profile_picture={currentUser.profile_picture} />
       </div>
 
       <form className='edit-profile-form w-[18rem] flex flex-col gap-[1rem] items-center ' onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
@@ -173,11 +160,13 @@ function EditProfile() {
           name='email'
           onChange={handleChange}
         />
-        <Input
-          value={form.detail}
+        <Textarea
           label="คำอธิบาย"
           name='detail'
+          value={form.detail}
           onChange={handleChange}
+          clearable
+          onClear={() => { setForm((prev) => ({ ...prev, detail: ' '}))}}
         />
       </form>
 

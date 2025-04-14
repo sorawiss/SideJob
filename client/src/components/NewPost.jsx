@@ -197,6 +197,7 @@ function NewPost({ isJob }) {
                   multiple
                   inputClassName="ring-0 border-none "
                   onChange={(e) => setSelectedFiles([...e.target.files])}
+                  accept='image/*'
                 />
               </div>
               <div className="more-detail-wrapper">
