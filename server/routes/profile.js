@@ -17,6 +17,7 @@ router.get('/getProfile/:id', async (req, res) => {
           .from('members')
           .select('id, phone_number, fname, lname, birthDate, detail, profile_picture, line, email, workPost!posterID(*, category!categoryID(*), review!postID(*), picture!postID(*))')
           .eq('id', req.params.id)
+          .order('postDate', { ascending: false, referencedTable: 'workPost' })
           .single()
     
         if (error) {
