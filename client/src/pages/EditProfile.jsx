@@ -63,7 +63,7 @@ function EditProfile() {
 
 
   async function updateData(updateData) {
-    const response = await fetch(`${baseUrl}/editProfile/${id}`, {
+    const response = await fetch(`${baseUrl}/editProfile`, {
       method: 'PUT',
       credentials: 'include',
       headers: {
