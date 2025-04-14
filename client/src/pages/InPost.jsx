@@ -18,10 +18,17 @@ function InPost() {
     data: postData,
   } = useQuery({
     queryKey: ['inPost', id],
-    queryFn: () =>
-      fetch(`${baseUrl}/getInPosts/${id}`).then((res) =>
-        res.json(),
-      ),
+    queryFn: async () => {
+      const res = await fetch(`${baseUrl}/getInPosts/${id}`);
+
+      if (!res.ok) {
+        throw new Error(`Failed to fetch inPost: ${res.status}`);
+      }
+
+      const data = await res.json();
+      console.log("API fetch ", data.status)
+      return data;
+    }
   })
 
   const {

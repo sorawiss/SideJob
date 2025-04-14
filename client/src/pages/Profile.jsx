@@ -44,11 +44,13 @@ function Profile() {
   const { currentUser } = useContext(AuthContext)
   const { isPending, error, data } = useQuery({
     queryKey: ['profile', id],
-    queryFn: () =>
-      fetch(`${baseUrl}/getProfile/${id}`).then((res) =>
-        res.json(),
-      ),
-  })
+    queryFn: async () => {
+      const res = await fetch(`${baseUrl}/getProfile/${id}`)
+      const data = await res.json()
+      return data
+    }
+  },
+)
 
   if (isPending) return <Loading />
   if (error) return 'An error has occurred: ' + error.message
