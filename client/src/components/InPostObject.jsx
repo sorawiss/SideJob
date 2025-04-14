@@ -1,7 +1,6 @@
 import React from 'react'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
-import { useState } from 'react';
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 
@@ -17,11 +16,11 @@ import avgRating from '../function/AvgRating.js';
 import ShowRating from './ShowRating';
 
 import Review from './Review'
-import OpenReview from './OpenReview';
-import RateStar from './RateStar';
 import ImageDialog from './ImageDialog';
 import PriceButton from './PriceButton';
 import SwitchBtn from './SwitchBtn';
+
+import DialogReview from './DialogReview.jsx';
 
 
 const baseUrl = import.meta.env.VITE_BASE_URL
@@ -29,7 +28,6 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
 
     const dateFormat = new Date(postDate).toLocaleDateString('th-TH');
 
-    const [rating, setRating] = useState(0);
     const { currentUser } = useContext(AuthContext)
 
 
@@ -129,7 +127,7 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
 
             {/* Rate */}
             {currentUser && (
-                <RateStar rating={rating} setRating={setRating} />
+                <DialogReview reviewerID={currentUser.id} postID={postID} posterID={posterID} />
             )}
 
 
@@ -143,15 +141,14 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
                 {/* ReviewSection */}
                 <div className="review-wrapper flex flex-col items-center gap-[1rem] w-[100%] ">
                     {review.length > 0 ? (
-                        review.map((items, index) => {
+                        review.map((items) => {
                             return (
-                                <Review key={index} member={items.members} detail={items.reviewDetails} date={items.reviewDate} rating={items.rating} postID={postID} reviewId={items.id} />
+                                <Review key={items.id} member={items.members} detail={items.reviewDetails} date={items.reviewDate} rating={items.rating} postID={postID} reviewId={items.id} />
                             )
                         })
                     ) : null}
                 </div>
             </div>
-            {rating > 0 ? <OpenReview reviewerID={currentUser.id} rating={rating} setRating={setRating} postID={postID} posterID={posterID} /> : null}
         </div>
     )
 }

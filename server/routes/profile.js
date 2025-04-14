@@ -32,9 +32,9 @@ router.get('/getProfile/:id', async (req, res) => {
 
 
 // Edit profile
-router.put('/editProfile/:id', verifyToken, async (req, res) => {
+router.put('/editProfile', verifyToken, async (req, res) => {
   try { 
-    const { id } =req.params
+    const id = req.user.id
     const update = req.body
     
     

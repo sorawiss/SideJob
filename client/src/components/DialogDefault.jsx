@@ -19,7 +19,7 @@ export default function DialogDefault({ reviewId }) {
     },
   })
 
-  async function deleteReview(id) {
+  async function deleteReview() {
     const response = await fetch(
       `${baseUrl}/deleteReview/${reviewId}`,
       {
@@ -36,7 +36,7 @@ export default function DialogDefault({ reviewId }) {
 
   async function handleDelete() {
     try {
-      await mutation.mutateAsync(id)
+      await mutation.mutateAsync()
     } 
     catch (error) {
       console.error(error);

@@ -92,6 +92,7 @@ export const AuthProvider = ({ children }) => {
         setCurrentUser(null);
         if (isStorageAvailable()) localStorage.removeItem("user");
       } finally {
+        console.log("AuthContext check completed.");
         setLoading(false);
       }
     };
