@@ -26,7 +26,6 @@ function InPost() {
       }
 
       const data = await res.json();
-      console.log("API fetch ", data.status)
       return data;
     }
   })

@@ -47,7 +47,8 @@ export default function DialogReview({ reviewerID, postID, posterID, }) {
     const mutation = useMutation({
         mutationFn: createReview,
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['comment'] })
+            queryClient.invalidateQueries({ queryKey: ['comment', String(postID)] })
+            queryClient.invalidateQueries({ queryKey: ['inPost', String(postID)] })
             setRating(0)
             setDetail('')
             handleOpen()
