@@ -26,7 +26,7 @@
 }
 
 
-.edit-profile-form .rizzui-input-container {
+.edit-profile-form .rizzui-input-container, .edit-profile-form .rizzui-textarea-field {
     background-color: var(--color-secondarylight);
     border: none!important;
     box-shadow: none!important;
