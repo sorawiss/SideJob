@@ -73,7 +73,6 @@ export default function DialogReview({ reviewerID, postID, posterID, }) {
         }
     }
 
-    
     return (
         <>
             <div onClick={handleOpen} className="rate-readonly-wrapper">

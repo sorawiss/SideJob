@@ -22,7 +22,7 @@ function Welcome() {
                     credentials: "include"
                 })
 
-                if (res.ok && isMounted && localStorage.getItem('user')) {
+                if (res.ok && localStorage.getItem('user')) {
                     navigate('/home/find')
                     console.log("Authenticated")
                     return

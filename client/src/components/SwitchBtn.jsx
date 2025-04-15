@@ -7,7 +7,6 @@ const baseUrl = import.meta.env.VITE_BASE_URL;
 function SwitchBtn({ PostID, status, posterID }) {
   // Use local state to manage the switch, synced with the status prop
   const [isOn, setIsOn] = useState(status);
-  console.log("status from switch ", isOn);
 
   const queryClient = useQueryClient();
 
@@ -37,35 +36,24 @@ function SwitchBtn({ PostID, status, posterID }) {
   // Mutation
   const mutation = useMutation({
     mutationFn: updateStatus,
-    onMutate: async (newStatus) => {
-      // Optimistic update
-      await queryClient.cancelQueries({ queryKey: ["inPost", PostID] });
-      const previousPost = queryClient.getQueryData(["inPost", PostID]);
-      queryClient.setQueryData(["inPost", PostID], (old) => ({
-        ...old,
-        status: newStatus,
-      }));
-      setIsOn(newStatus); // Update UI immediately
-      return { previousPost };
-    },
     onSuccess: (newStatus) => {
       console.log("Success update", newStatus);
       queryClient.invalidateQueries({ queryKey: ["profile", posterID] });
       queryClient.invalidateQueries({ queryKey: ["inPost", PostID] });
     },
-    onError: (error, newStatus, context) => {
+    onError: (error) => {
       console.error("Failed to update status:", error);
-      queryClient.setQueryData(["inPost", PostID], context.previousPost);
-      setIsOn(status); // Revert to prop status on error
+      setIsOn(status);
     },
   });
 
   const handleToggle = () => {
     const newStatus = !isOn;
-    console.log("new status", newStatus);
+    setIsOn(newStatus);
     mutation.mutate(newStatus);
   };
 
+  
   return (
     <Switch
       checked={!isOn} // Controlled component
