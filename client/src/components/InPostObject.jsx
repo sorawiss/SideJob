@@ -3,6 +3,7 @@ import moment from 'moment'
 import { Link } from 'react-router-dom'
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
+import { useMemo } from 'react';
 
 import starIcon from '../assets/svg/star.svg'
 import phone from '../assets/svg/phone.svg'
@@ -24,11 +25,15 @@ import DialogReview from './DialogReview.jsx';
 
 
 const baseUrl = import.meta.env.VITE_BASE_URL
-function InPostObject({ postDate, title, details, salary, location, picture, posterID, category, members, review, postID, isJob, status }) {
+function InPostObject({ postDate, title, details, salary, location, picture, posterID, category, members, review, postID, isJob, status, accept }) {
 
     const dateFormat = new Date(postDate).toLocaleDateString('th-TH');
 
     const { currentUser } = useContext(AuthContext)
+
+    const isAcceptedByCurrentUser = useMemo(() => {
+        return accept.some((acc) => acc.memberID === currentUser.id)
+    }, [accept, currentUser.id])
 
 
     return (
@@ -108,7 +113,7 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
                             </div>
                         ) : null}
 
-                        <PriceButton text={salary.toLocaleString()} isJob={isJob} />
+                        <PriceButton text={salary.toLocaleString()} isJob={isJob} postID={postID} isAcceptedByCurrentUser={isAcceptedByCurrentUser} />
 
 
                         {currentUser && currentUser.id === posterID ? (

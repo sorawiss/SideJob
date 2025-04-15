@@ -69,7 +69,7 @@ function PostObject({ postDate, title, detail, price, fname, lname, category, lo
 
                     {images.length > 0 ? (<img src={`${images[0].image}`} alt="Image in post" className='max-h-[20rem] object-cover w-[100%] rounded-[8px] ' />) : null}
 
-                    <PriceButton isJob={isJob} text={`${price.toLocaleString('th-TH')} บาท`} />
+                    <PriceButton isJob={isJob} text={`${price.toLocaleString('th-TH')}`} />
                 </div>
             </Link>
 
