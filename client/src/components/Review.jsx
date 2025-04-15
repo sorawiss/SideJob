@@ -21,9 +21,7 @@ function Review({ member, detail, date, rating, reviewId }) {
 
     return (
         <div className='review-container bg-primarylight w-[100%] rounded-[16px] py-[0.5rem] px-[1rem] flex flex-col gap-[1rem] '>
-            <Link to={'/profile/' + member.id}>
-                <ProfileOnTop fname={member.fname} lname={member.lname} date={date} reviewerID={member.id} reviewId={reviewId} profilePic={member.profile_picture} />
-            </Link>
+            <ProfileOnTop fname={member.fname} lname={member.lname} date={date} reviewerID={member.id} reviewId={reviewId} profilePic={member.profile_picture} />
 
             <div className="star-wrapper">
                 <Rating value={rating} readonly ratedColor="amber" />
