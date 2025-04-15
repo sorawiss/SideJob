@@ -108,7 +108,7 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
                             </div>
                         ) : null}
 
-                        <PriceButton text={salary.toLocaleString()} isJob={isJob} />
+                        <PriceButton text={salary.toLocaleString()} isJob={isJob} postID={postID} memberID={members.id} />
 
 
                         {currentUser && currentUser.id === posterID ? (

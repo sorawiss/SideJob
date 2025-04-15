@@ -34,6 +34,9 @@ import InPostRoute from './routes/inPost.js'
 import profileRoute from './routes/profile.js'
 import reviewRoute from './routes/review.js'
 import multerRoute from './routes/multer.js'
+import acceptRoute from './routes/acceptSystem.js'
+
+
 
 
 
@@ -45,6 +48,8 @@ app.use(InPostRoute)
 app.use(profileRoute)
 app.use(reviewRoute)
 app.use(multerRoute)
+app.use(acceptRoute)
+
 
 
 

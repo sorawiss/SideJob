@@ -1,5 +1,5 @@
 import express from 'express'
-import supabase from '../db'
+import supabase from '../db.js'
 
 const router = express.Router()
 
@@ -13,7 +13,8 @@ router.post('/addAccecpt', async (req, res) => {
             .from('accept')
             .insert({
                 postID,
-                memberID
+                memberID,
+                status: false
             })
             .select('*')
             .single()
@@ -29,3 +30,5 @@ router.post('/addAccecpt', async (req, res) => {
     }
 })
 
+
+export default router;
