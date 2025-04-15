@@ -99,6 +99,46 @@ router.post('/createPost', verifyToken, async (req, res) => {
 })
 
 
+// Switch Post
+router.put('/switchPost/:id', verifyToken, async (req, res) => {
+  const { id } = req.params
+  const { status } = req.body
+
+  try {
+    const { error: fetchError, data: fetchData } = await supabase
+      .from('workPost')
+      .select('posterID')
+      .eq('postID', id)
+      .single()
+
+    if (fetchError) {
+      return res.status(500).json({ message: 'Failed to fetch user from update post', error: error.message });
+    }
+
+
+    if (req.user.id !== fetchData.posterID) {
+      return res.status(401).json({ message: 'Unauthorized' })
+    }
+
+    const { error } = await supabase
+      .from('workPost')
+      .update({ status })
+      .eq('postID', id)
+
+    if (error) {
+      return res.status(500).json({ message: 'Failed to update post status', error: error.message });
+    }
+
+    res.status(200).json({ message: 'Post status updated successfully' })
+
+}
+catch(err) {
+  res.status(500).json({ message: 'Internal server error', error: err.message })
+}
+})
+
+
+
 
 
 

@@ -23,7 +23,8 @@ import SwitchBtn from './SwitchBtn';
 import DialogReview from './DialogReview.jsx';
 
 
-function InPostObject({ postDate, title, details, salary, location, picture, posterID, category, members, review, postID, isJob }) {
+const baseUrl = import.meta.env.VITE_BASE_URL
+function InPostObject({ postDate, title, details, salary, location, picture, posterID, category, members, review, postID, isJob, status }) {
 
     const dateFormat = new Date(postDate).toLocaleDateString('th-TH');
 
@@ -109,9 +110,11 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
 
                         <PriceButton text={salary.toLocaleString()} isJob={isJob} />
 
+
                         {currentUser && currentUser.id === posterID ? (
-                            <SwitchBtn />
+                            <SwitchBtn PostID={postID} status={status} posterID={posterID} />
                         ) : null}
+
 
                         {picture.length > 0 ? (
                             picture.map((items, index) => {
