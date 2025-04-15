@@ -1,5 +1,7 @@
 import React from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 
 import { Button } from "rizzui";
 
@@ -9,7 +11,6 @@ const baseUrl = import.meta.env.VITE_BASE_URL
 
 async function addAccept(param) {
     try {
-        console.log(param)
         const res = await fetch(`${baseUrl}/addAccecpt`, {
             method: 'POST',
             headers: {
@@ -18,7 +19,7 @@ async function addAccept(param) {
             credentials: 'include',
             body: JSON.stringify({
                 postID: param.postID,
-                memberID: param.memberID
+                memberID: param.currentUser.id
             })
         })
         
@@ -33,7 +34,9 @@ async function addAccept(param) {
 }
 
 
-function PriceButton( {text, isJob, postID, memberID } ) {
+function PriceButton( {text, isJob, postID, isAcceptedByCurrentUser } ) {
+
+    const { currentUser } = useContext(AuthContext)
 
     const queryClient = useQueryClient()
 
@@ -54,13 +57,13 @@ function PriceButton( {text, isJob, postID, memberID } ) {
 
 
     function handleClick() {
-        mutation.mutate( { postID, memberID } )
+        mutation.mutate( { postID, currentUser } )
     }
 
 
     return (
-        <Button onClick={handleClick} className="price bg-primarydark w-[10rem] rounded-[16px] px-[1rem] py-[4px] flex items-center mt-[0.9rem] justify-start " >
-            <p className={`${isJob ? "text-accent" : "text-white"} `}>{text} บาท</p>
+        <Button disabled={isAcceptedByCurrentUser} onClick={handleClick} className={`price min-w-[10rem] !border-none !w-fit rounded-[16px] px-[1rem] py-[4px] flex items-center mt-[0.9rem] justify-start ${isAcceptedByCurrentUser ? 'cursor-not-allowed bg-secondary' : 'cursor-pointer bg-primarydark'}`} >
+            <p className={`${isJob ? "text-accent" : "text-white"} `}>{text} บาท {isAcceptedByCurrentUser && "(สมัครแล้ว)"}</p>
         </Button>
         
     )
