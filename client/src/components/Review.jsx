@@ -1,5 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
+import { Link } from 'react-router-dom';
+
 
 import cutWords from '../function/WordCuter'
 
@@ -19,8 +21,10 @@ function Review({ member, detail, date, rating, reviewId }) {
 
     return (
         <div className='review-container bg-primarylight w-[100%] rounded-[16px] py-[0.5rem] px-[1rem] flex flex-col gap-[1rem] '>
-            <ProfileOnTop fname={member.fname} lname={member.lname} date={date} reviewerID={member.id} reviewId={reviewId} profilePic={member.profile_picture} />
-            
+            <Link to={'/profile/' + member.id}>
+                <ProfileOnTop fname={member.fname} lname={member.lname} date={date} reviewerID={member.id} reviewId={reviewId} profilePic={member.profile_picture} />
+            </Link>
+
             <div className="star-wrapper">
                 <Rating value={rating} readonly ratedColor="amber" />
             </div>

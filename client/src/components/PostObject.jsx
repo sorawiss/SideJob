@@ -17,6 +17,7 @@ function PostObject({ postDate, title, detail, price, fname, lname, category, lo
 
 
     const CLOUDINARY_NAME = import.meta.env.VITE_CLOUDINARY_NAME
+    
     return (
         <div className={`${isJob ? "bg-white" : "bg-secondarylight "} post-object-container w-[30rem] p-[1rem] rounded-[16px] flex flex-col gap-[1rem]`} >
 

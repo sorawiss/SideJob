@@ -1,6 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React, {  useState } from 'react';
 import { Input } from "rizzui";
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 
 import searchIcon from '../assets/svg/search-icon.svg';
 import './Style/Home.css'

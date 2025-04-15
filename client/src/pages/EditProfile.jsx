@@ -80,7 +80,6 @@ function EditProfile() {
     try {
       const localData = JSON.parse(localStorage.getItem('user'));
       const newData = { ...localData, ...updateData }
-      console.log(newData);
       login(newData)
     }
     catch (error) {
@@ -117,6 +116,7 @@ function EditProfile() {
 
     if (Object.keys(updates).length === 0) {
       console.log("No changes to save");
+      navigate(-1)
       return;
     }
 
@@ -170,7 +170,7 @@ function EditProfile() {
         />
       </form>
 
-      <Button onClick={handleSubmit} className='bg-primarydark text-white rounded-[16px] ' >Button</Button>
+      <Button onClick={handleSubmit} className='bg-primarydark text-white rounded-[16px] ' >ยืนยันการแก้ไข</Button>
 
       <Button isLoading={isLogingout} onClick={handleLogout} >ออกจากระบบ</Button>
 

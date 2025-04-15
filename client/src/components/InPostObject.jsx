@@ -92,15 +92,19 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
 
                         {members.line ? (
                             <div className="phone-wrapper flex items-center gap-[0.5rem] p2 ">
-                                <img src={line} alt="Phone Icoon" className='inline ' />
-                                <p className='inline ' > {members.line} </p>
+                                <a href={'http://line.me/ti/p/' + members.line} >
+                                    <img src={line} alt="Phone Icoon" className='inline ' />
+                                    <p className='inline ' > {members.line} </p>
+                                </a>
                             </div>
                         ) : null}
 
                         {members.email ? (
                             <div className="phone-wrapper flex items-center gap-[0.5rem]  ">
-                                <img src={gmail} alt="Phone Icoon" className='inline ' />
-                                <p className='inline ' > {members.email} </p>
+                                <a href={`mailto:${members.email}`}>
+                                    <img src={gmail} alt="Phone Icoon" className='inline ' />
+                                    <p className='inline ' > {members.email} </p>
+                                </a>
                             </div>
                         ) : null}
 
