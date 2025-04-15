@@ -40,7 +40,6 @@ function SwitchBtn({ PostID, status, posterID }) {
       console.log("Success update", newStatus);
       queryClient.invalidateQueries({ queryKey: ["profile", posterID] });
       queryClient.invalidateQueries({ queryKey: ["inPost", PostID] });
-      setIsOn(newStatus);
     },
     onError: (error) => {
       console.error("Failed to update status:", error);
@@ -50,9 +49,11 @@ function SwitchBtn({ PostID, status, posterID }) {
 
   const handleToggle = () => {
     const newStatus = !isOn;
+    setIsOn(newStatus);
     mutation.mutate(newStatus);
   };
 
+  
   return (
     <Switch
       checked={!isOn} // Controlled component
