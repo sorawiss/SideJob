@@ -19,12 +19,11 @@ import ShowRating from './ShowRating';
 import Review from './Review'
 import ImageDialog from './ImageDialog';
 import PriceButton from './PriceButton';
-import SwitchBtn from './SwitchBtn';
+import PostStatusToggle from './PostStatusToggle.jsx';
 
 import DialogReview from './DialogReview.jsx';
 
 
-const baseUrl = import.meta.env.VITE_BASE_URL
 function InPostObject({ postDate, title, details, salary, location, picture, posterID, category, members, review, postID, isJob, status, accept }) {
 
     const dateFormat = new Date(postDate).toLocaleDateString('th-TH');
@@ -117,7 +116,7 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
 
 
                         {currentUser && currentUser.id === posterID ? (
-                            <SwitchBtn PostID={postID} status={status} posterID={posterID} />
+                            <PostStatusToggle postID={postID} status={status} posterID={posterID} />
                         ) : null}
 
 
