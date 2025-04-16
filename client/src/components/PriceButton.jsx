@@ -2,6 +2,7 @@ import React from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 import { Button } from "rizzui";
 
@@ -37,8 +38,10 @@ async function addAccept(param) {
 function PriceButton( {text, isJob, postID, isAcceptedByCurrentUser } ) {
 
     const { currentUser } = useContext(AuthContext)
+    const navigate = useNavigate()
 
     const queryClient = useQueryClient()
+
 
     const mutation = useMutation({
         mutationFn: addAccept,
@@ -60,9 +63,13 @@ function PriceButton( {text, isJob, postID, isAcceptedByCurrentUser } ) {
         mutation.mutate( { postID, currentUser } )
     }
 
+    function handleNavigate() {
+        navigate('/')
+    }
+
 
     return (
-        <Button disabled={isAcceptedByCurrentUser} onClick={handleClick} className={`price min-w-[10rem] !border-none !w-fit rounded-[16px] px-[1rem] py-[4px] flex items-center mt-[0.9rem] justify-start ${isAcceptedByCurrentUser ? 'cursor-not-allowed bg-secondary' : 'cursor-pointer bg-primarydark'}`} >
+        <Button disabled={isAcceptedByCurrentUser} onClick={currentUser ? handleClick : handleNavigate} className={`price min-w-[10rem] !border-none !w-fit rounded-[16px] px-[1rem] py-[4px] flex items-center mt-[0.9rem] justify-start ${isAcceptedByCurrentUser ? 'cursor-not-allowed bg-secondary' : 'cursor-pointer bg-primarydark'}`} >
             <p className={`${isJob ? "text-accent" : "text-white"} `}>{text} บาท {isAcceptedByCurrentUser && "(สมัครแล้ว)"}</p>
         </Button>
         
