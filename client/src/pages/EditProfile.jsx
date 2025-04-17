@@ -19,7 +19,6 @@ const baseUrl = import.meta.env.VITE_BASE_URL
 
 function EditProfile() {
   const navigate = useNavigate();
-  const { id } = useParams();
   const { login, logout, currentUser } = useContext(AuthContext);
   const [isLogingout, setIsLogingout] = useState(false);
   const [form, setForm] = useState({
@@ -64,7 +63,7 @@ function EditProfile() {
 
   async function updateData(updateData) {
     const response = await fetch(`${baseUrl}/editProfile`, {
-      method: 'PUT',
+      method: 'PATCH',
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',

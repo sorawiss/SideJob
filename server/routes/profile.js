@@ -33,10 +33,15 @@ router.get('/getProfile/:id', async (req, res) => {
 
 
 // Edit profile
-router.put('/editProfile', verifyToken, async (req, res) => {
+router.patch('/editProfile', verifyToken, async (req, res) => {
   try { 
     const id = req.user.id
     const update = req.body
+
+    
+    if (!update || Object.keys(update).length === 0) {
+      return res.status(400).json({ message: 'No data to update' });
+    }
     
     
     if (req.user.id !== parseInt(id)) {
