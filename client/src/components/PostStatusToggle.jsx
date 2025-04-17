@@ -80,6 +80,7 @@ export default function PostStatusToggle({ postID, status, posterID }) {
                 open={confirmOpen}
                 onClose={handleCloseDialog}
                 onConfirm={handleConfirm}
+                body={"เมื่อเปลี่ยนสถานะโพสต์ โพสต์ของคุณจะไม่ถูกมองเห็นในหน้าหลักแต่ยังคงอยู่ในโปรไฟล์ของคุณ"}
             />
         </>
     );
