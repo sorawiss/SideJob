@@ -3,6 +3,7 @@ import moment from 'moment'
 import { Link } from 'react-router-dom'
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
+import { useMemo } from 'react';
 
 import starIcon from '../assets/svg/star.svg'
 import phone from '../assets/svg/phone.svg'
@@ -18,18 +19,23 @@ import ShowRating from './ShowRating';
 import Review from './Review'
 import ImageDialog from './ImageDialog';
 import PriceButton from './PriceButton';
-import SwitchBtn from './SwitchBtn';
+import PostStatusToggle from './PostStatusToggle.jsx';
 
 import DialogReview from './DialogReview.jsx';
 
 
-const baseUrl = import.meta.env.VITE_BASE_URL
-function InPostObject({ postDate, title, details, salary, location, picture, posterID, category, members, review, postID, isJob, status }) {
+function InPostObject({ postDate, title, details, salary, location, picture, posterID, category, members, review, postID, isJob, status, accept }) {
 
     const dateFormat = new Date(postDate).toLocaleDateString('th-TH');
 
     const { currentUser } = useContext(AuthContext)
 
+    const isAcceptedByCurrentUser = useMemo(() => {
+        if (!currentUser) {
+            return false
+        }
+        return accept.some((acc) => acc.memberID === currentUser.id)
+    }, [accept])
 
     return (
         <div className='Inpost-object-container w-[30rem] bg-white p-[1rem] rounded-[16px] flex flex-col gap-[5rem] p-1rem min-h-screen '>
@@ -108,11 +114,11 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
                             </div>
                         ) : null}
 
-                        <PriceButton text={salary.toLocaleString()} isJob={isJob} />
+                        <PriceButton text={salary.toLocaleString()} isJob={isJob} postID={postID} isAcceptedByCurrentUser={isAcceptedByCurrentUser} />
 
 
                         {currentUser && currentUser.id === posterID ? (
-                            <SwitchBtn PostID={postID} status={status} posterID={posterID} />
+                            <PostStatusToggle postID={postID} status={status} posterID={posterID} />
                         ) : null}
 
 

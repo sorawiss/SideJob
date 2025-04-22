@@ -18,7 +18,7 @@ const allowedOrigins = process.env.ORIGIN || "http://localhost:5173"
 const corsOptions = {
   origin: allowedOrigins,
   credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
 
@@ -34,6 +34,9 @@ import InPostRoute from './routes/inPost.js'
 import profileRoute from './routes/profile.js'
 import reviewRoute from './routes/review.js'
 import multerRoute from './routes/multer.js'
+import acceptRoute from './routes/acceptSystem.js'
+
+
 
 
 
@@ -45,6 +48,8 @@ app.use(InPostRoute)
 app.use(profileRoute)
 app.use(reviewRoute)
 app.use(multerRoute)
+app.use(acceptRoute)
+
 
 
 

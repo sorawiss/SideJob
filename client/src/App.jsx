@@ -18,6 +18,9 @@ import Profile from './pages/Profile';
 import EditProfile from './pages/EditProfile';
 import Post from './components/Post';
 import NewPost from './components/NewPost';
+import Notification from './pages/Notification';
+
+
 
 
 
@@ -50,6 +53,7 @@ function App() {
               <Route path="editProfile" element={<EditProfile />} />
               <Route path='/home/hire/new' element={<NewPost isJob={false} />} />
               <Route path='/home/find/new' element={<NewPost isJob={true} />} />
+              <Route path='/notification/:id' element={<Notification />} />
             </Route>
 
           </Routes>
