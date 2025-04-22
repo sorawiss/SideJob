@@ -144,17 +144,17 @@ function NewPost({ isJob }) {
 
   async function submitHandle(e) {
     e.preventDefault()
-    if ( !formData.categoryID ) {
+    if (!formData.categoryID) {
       setError('กรุณาเลือกหมวดหมู่')
       return
     }
 
-    if ( !formData.salary ) {
+    if (!formData.salary) {
       setError('กรุณากรอกราคา')
       return
     }
 
-    if ( !formData.title ) {
+    if (!formData.title) {
       setError('กรุณากรอกหัวเรื่อง')
       return
     }
@@ -169,7 +169,7 @@ function NewPost({ isJob }) {
       <div className="new-post-content-wrapper  w-[30rem] flex flex-col gap-[3rem] bg-white p-[1.5rem] rounded-[16px] "  >
 
 
-        <div className="arrow-wrapper">
+        <div className="arrow-wrapper cursor-pointer ">
           <img src={arrow} alt="" onClick={() => navigate(-1)} />
         </div>
 
@@ -203,7 +203,9 @@ function NewPost({ isJob }) {
                   multiple
                   accept="image/*"
                   className="hidden"
-                  onChange={(e) => setSelectedFiles([...e.target.files])}
+                  onChange={(e) => {
+                    setSelectedFiles((prev) => [...prev, ...e.target.files] )
+                  }}
                 />
               </label>
               <Select
@@ -219,16 +221,18 @@ function NewPost({ isJob }) {
           </div>
         </div>
 
-        <div className="contact-wrapper flex flex-col gap-[1rem]">
-          <p className='text-backgrounddark ' >การติดต่อ(ไม่บังคับ)</p>
-
-          <div className="contact-input">
-            <div className="more-detail-wrapper">
-              <img src={phone} alt="" />
-              <p className='p2 ' >{currentUser.phone_number}</p>
-            </div>
-          </div>
+        <div className="image-wrapper flex flex-wrap gap-2  "> {/* Added flex-wrap and gap for basic layout */}
+          {selectedFiles.length > 0 &&
+            selectedFiles.map((file, index) => (
+              <img
+                key={index}
+                src={URL.createObjectURL(file)}
+                alt={`Selected file preview ${index + 1}`}
+                className="w-30 h-30 object-cover rounded" 
+              />
+            ))}
         </div>
+
 
         {error && <p className="error">{error}</p>}
 
