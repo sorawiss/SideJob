@@ -11,7 +11,6 @@ import ProfileOnTop from './ProfileOnTop'
 import { AuthContext } from '../context/AuthContext';
 
 import arrow from '../assets/svg/arrow.svg'
-import phone from '../assets/svg/phone.svg'
 
 import './style/NewPost.css'
 
