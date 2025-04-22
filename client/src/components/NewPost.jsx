@@ -11,10 +11,8 @@ import ProfileOnTop from './ProfileOnTop'
 import { AuthContext } from '../context/AuthContext';
 
 import arrow from '../assets/svg/arrow.svg'
-import type from '../assets/svg/type.svg'
-import picture from '../assets/svg/picture.svg'
-import location from '../assets/svg/location.svg'
-import phone from '../assets/svg/phone.svg'
+
+import './style/NewPost.css'
 
 
 
@@ -34,6 +32,7 @@ function NewPost({ isJob }) {
   const [value, setValue] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState([]);
+  const [error, setError] = useState(null);
   const [formData, setFormData] = useState(
     {
       title: '',
@@ -62,7 +61,7 @@ function NewPost({ isJob }) {
 
   const handleUpload = async () => {
     setIsUploading(true);
-    
+
     const formData = new FormData();
     selectedFiles.forEach((file) => {
       formData.append('images', file);
@@ -80,7 +79,7 @@ function NewPost({ isJob }) {
       } else {
         console.error('File upload failed');
       }
-    } 
+    }
     catch (error) {
       console.error('Error uploading files:', error);
     }
@@ -144,6 +143,21 @@ function NewPost({ isJob }) {
 
   async function submitHandle(e) {
     e.preventDefault()
+    if (!formData.categoryID) {
+      setError('กรุณาเลือกหมวดหมู่')
+      return
+    }
+
+    if (!formData.salary) {
+      setError('กรุณากรอกราคา')
+      return
+    }
+
+    if (!formData.title) {
+      setError('กรุณากรอกหัวเรื่อง')
+      return
+    }
+
     setIsUploading(true)
     await handleUpload()
   }
@@ -151,10 +165,10 @@ function NewPost({ isJob }) {
 
   return (
     <div className='new-post-container w-screen h-screen bg-secondary/55 fixed flex justify-center ' >
-      <div className="new-post-content-wrapper  w-[30rem] flex flex-col gap-[3rem] bg-secondarylight p-[1.5rem] rounded-[16px] "  >
+      <div className="new-post-content-wrapper  w-[30rem] flex flex-col gap-[3rem] bg-white p-[1.5rem] rounded-[16px] "  >
 
 
-        <div className="arrow-wrapper">
+        <div className="arrow-wrapper cursor-pointer ">
           <img src={arrow} alt="" onClick={() => navigate(-1)} />
         </div>
 
@@ -178,52 +192,57 @@ function NewPost({ isJob }) {
                 onChange={handleChange} />
             </div>
 
-            <div className="add-more-detail-section flex flex-col gap-[1.5rem] ">
-              <div className="more-detail-wrapper">
-                <img src={type} alt="" />
-                <Select
-                  placeholder="ประเภท"
-                  options={options}
-                  value={value}
-                  name='categoryID'
-                  onChange={handleSelectChange}
-                  selectClassName="ring-0 focus:ring-0 border-none "
-                />
-              </div>
-              <div className="more-detail-wrapper">
-                <img src={picture} alt="" />
-                <FileInput
-                  name='images'
+            <section className="quick-actions">
+              <button>📍 สถานที่</button>
+              <label className="cursor-pointer inline-flex items-center px-4 py-2 bg-[#eee] w-[30%] rounded-[16px] p-[0.5rem] ">
+                🖼️ รูปภาพ
+                <input
+                  type="file"
+                  name="images"
                   multiple
-                  inputClassName="ring-0 border-none "
-                  onChange={(e) => setSelectedFiles([...e.target.files])}
-                  accept='image/*'
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => {
+                    setSelectedFiles((prev) => [...prev, ...e.target.files] )
+                  }}
                 />
-              </div>
-              <div className="more-detail-wrapper">
-                <img src={location} alt="" />
-                <p>สถานที่</p>
-              </div>
-            </div>
+              </label>
+              <Select
+                placeholder="🏷️ หมวดหมู่"
+                options={options}
+                value={value}
+                name='categoryID'
+                onChange={handleSelectChange}
+                selectClassName="ring-0 focus:ring-0 border-none !w-full "
+              />
+            </section>
+
           </div>
         </div>
 
-        <div className="contact-wrapper flex flex-col gap-[1rem]">
-          <p className='text-backgrounddark ' >การติดต่อ(ไม่บังคับ)</p>
-
-          <div className="contact-input">
-            <div className="more-detail-wrapper">
-              <img src={phone} alt="" />
-              <p className='p2 ' >{currentUser.phone_number}</p>
-            </div>
-          </div>
+        <div className="image-wrapper flex flex-wrap gap-2  "> {/* Added flex-wrap and gap for basic layout */}
+          {selectedFiles.length > 0 &&
+            selectedFiles.map((file, index) => (
+              <img
+                key={index}
+                src={URL.createObjectURL(file)}
+                alt={`Selected file preview ${index + 1}`}
+                className="w-30 h-30 object-cover rounded" 
+              />
+            ))}
         </div>
 
-        <div className="price-set bg-primarydark rounded-[16px] px-[1rem] py-[4px] mt-[0.9rem] ">
-          <input type="number" placeholder='ราคา..' className='price-text outline-none ' onChange={handleChange} name='salary' />
+
+        {error && <p className="error">{error}</p>}
+
+        <div className="button-wrapper flex flex-col gap-[1rem] ">
+          <input name='salary' type="text" className="price-input" placeholder="ราคา" onChange={handleChange} />
+
+          <Button isLoading={isUploading} onClick={submitHandle} className="submit-button">ประกาศ ✔</Button>
         </div>
 
-        <Button isLoading={isUploading}  onClick={submitHandle} className='text-3xl text-accent bg-primarydark rounded-[16px] p-[2rem] ' >ยืนยัน</Button>
+
+
       </div>
     </div>
   )
