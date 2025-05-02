@@ -54,7 +54,8 @@ router.get('/getAccept/:id', async (req, res) => {
         // Step 2: Get accept entries that match those posts
         const { data: acceptData, error } = await supabase
             .from("accept")
-            .select("*, members!memberID(id, fname, lname, profile_picture), workPost!postID(postID, title)")
+            .select("*, members!memberID(id, fname, lname, profile_picture), workPost!postID(postID, title, isJob)")
+            .eq("status", false)
             .in("postID", validPostIDs);
 
         if (error) {
