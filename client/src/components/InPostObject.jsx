@@ -74,7 +74,7 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
 
                         <div className="lower flex gap-[1rem] ">
                             <p className='p3 text-secondary '>{moment(postDate).fromNow()}</p>
-                            <p className='p3 text-secondary'>{WordCuter(location, 54)}</p>
+                            <p className='p3 text-secondary'>📍{WordCuter(location, 54)}</p>
                         </div>
                     </div>
 
@@ -110,6 +110,14 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
                                 <a href={`mailto:${members.email}`}>
                                     <img src={gmail} alt="Phone Icoon" className='inline ' />
                                     <p className='inline ' > {members.email} </p>
+                                </a>
+                            </div>
+                        ) : null}
+
+                        {location ? (
+                            <div className="location-wrapper flex items-center gap-[0.5rem]  ">
+                                <a href={`mailto:${members.email}`}>
+                                    <p className='inline ' >📍 {location} </p>
                                 </a>
                             </div>
                         ) : null}
