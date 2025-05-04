@@ -3,7 +3,7 @@ import { Select } from "rizzui";
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
-import { FileInput } from "rizzui";
+import { LocationDialog } from './LocationDialog';
 import { Button } from "rizzui";
 
 import ProfileOnTop from './ProfileOnTop'
@@ -38,6 +38,7 @@ function NewPost({ isJob }) {
       title: '',
       salary: '',
       details: '',
+      location: '',
       categoryID: null
     }
   )
@@ -128,6 +129,7 @@ function NewPost({ isJob }) {
       posterID: currentUser.id,
       isJob: isJob,
       images: fileNames, // Include the file names here
+      location: formData.location,
     }
 
     try {
@@ -155,6 +157,11 @@ function NewPost({ isJob }) {
 
     if (!formData.title) {
       setError('กรุณากรอกหัวเรื่อง')
+      return
+    }
+
+    if (!formData.location) {
+      setError('กรุณากรอกสถาณที่')
       return
     }
 
@@ -193,7 +200,8 @@ function NewPost({ isJob }) {
             </div>
 
             <section className="quick-actions">
-              <button>📍 สถานที่</button>
+              <LocationDialog formData={formData} handleChange={handleChange} />
+
               <label className="cursor-pointer inline-flex items-center px-4 py-2 bg-[#eee] w-[30%] rounded-[16px] p-[0.5rem] ">
                 🖼️ รูปภาพ
                 <input

@@ -54,7 +54,7 @@ function PostObject({ postDate, title, detail, price, fname, lname, category, lo
 
                     <div className="lower flex gap-[1rem] ">
                         <p className='p3 text-secondary '>{moment(postDate).fromNow()}</p>
-                        <p className='p3 text-secondary'>{WordCuter(location, 54)}</p>
+                        {location && <p className='p3 text-secondary'>📍{location}</p>}
                     </div>
                 </div>
 
