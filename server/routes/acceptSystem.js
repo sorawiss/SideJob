@@ -93,9 +93,9 @@ router.patch('/updateAcceptStatus', async (req, res) => {
         if (!postData) {
             return res.status(404).json({ message: 'Post not found' });
         }
-        if (postData.posterID !== req.user.id) {
-            return res.status(403).json({ message: 'Forbidden: You are not the owner of this post.' });
-        }
+        // if (postData.posterID !== req.user.id) {
+        //     return res.status(403).json({ message: 'Forbidden: You are not the owner of this post.' });
+        // }
 
 
         // Update the status in the accept table
