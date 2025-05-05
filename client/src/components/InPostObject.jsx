@@ -166,6 +166,12 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
                         })
                     ) : null}
                 </div>
+
+
+                {/* Worker SECTION */}
+                <div className="worker-section">
+                    Worker Section
+                </div>
             </div>
         </div>
     )
