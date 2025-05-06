@@ -23,6 +23,8 @@ import PostStatusToggle from './PostStatusToggle.jsx';
 
 import DialogReview from './DialogReview.jsx';
 
+import style from './style/InPostObject.module.css'
+
 
 function InPostObject({ postDate, title, details, salary, location, picture, posterID, category, members, review, postID, isJob, status, accept }) {
 
@@ -169,8 +171,8 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
 
 
                 {/* Worker SECTION */}
-                <div className="worker-section">
-                    Worker Section
+                <div className={style.workerSection } >
+                    <h2>ผู้ที่ทำงานนี้</h2>
                 </div>
             </div>
         </div>
