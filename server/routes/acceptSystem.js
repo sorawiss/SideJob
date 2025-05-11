@@ -34,9 +34,7 @@ router.post('/addAccecpt', async (req, res) => {
 
 // Get Accept
 router.get('/getAccept/:id', async (req, res) => {
-
     const posterID = req.params.id
-
     try {
         // Step 1: Get post IDs created by this poster
         const { data: posts, error: error1 } = await supabase
@@ -130,5 +128,37 @@ router.patch('/updateAcceptStatus', async (req, res) => {
         return res.status(500).json({ message: 'Internal server error', error: err.message });
     }
 });
+
+
+
+// Set False
+router.patch('/setFalse', async (req, res) => {
+    try {
+        const { postID, memberID } = req.body;
+
+        const { data, error } = await supabase
+            .from('accept')
+            .update({ status: true })
+            .eq('postID', postID)
+            .eq('memberID', memberID)
+            .select()
+            .single()
+
+        if (error) {
+            console.error("Error in setFalse:", error);
+            return res.status(500).json({ message: 'Failed to set false', error: error.message });
+        }
+
+        if (!data) {
+            return res.status(404).json({ message: 'Accept record not found' });
+        }
+
+        return res.status(200).json({ message: 'Set false successfully', data });
+    }
+    catch (err) {
+        console.error("Error in setFalse:", err);
+        return res.status(500).json({ message: 'Internal server error', error: err.message });
+    }
+})
 
 export default router;
