@@ -20,6 +20,7 @@ import Review from './Review'
 import ImageDialog from './ImageDialog';
 import PriceButton from './PriceButton';
 import PostStatusToggle from './PostStatusToggle.jsx';
+import WorkingMembers from './WorkingMembers';
 
 import DialogReview from './DialogReview.jsx';
 
@@ -173,6 +174,7 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
                 {/* Worker SECTION */}
                 <div className={style.workerSection } >
                     <h2>ผู้ที่ทำงานนี้</h2>
+                    <WorkingMembers postID={postID} />
                 </div>
             </div>
         </div>

@@ -12,8 +12,33 @@ router.get('/getInPosts/:id', async (req, res) => {
     try {
       const { data, error } = await supabase
         .from('workPost')
-        .select('*, members!posterID(fname, lname, phone_number, profile_picture, line, email ), category!categoryID(name), picture(image), accept(*)')
+        .select(`
+          *,
+          members!posterID(
+            fname,
+            lname,
+            phone_number,
+            profile_picture,
+            line,
+            email
+          ),
+          category!categoryID(name),
+          picture(image),
+          accept!inner(
+            *,
+            members!memberID(
+              id,
+              fname,
+              lname,
+              profile_picture,
+              phone_number,
+              line,
+              email
+            )
+          )
+        `)
         .eq('postID', req.params.id)
+        .eq('accept.status', true)
         .single()
   
       if (error) {

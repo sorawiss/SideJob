@@ -38,8 +38,7 @@ function InPost() {
     queryKey: ['comment', id],
     queryFn: () =>
       fetch(`${baseUrl}/getReviews/${id}`).then((res) =>
-        res.json(),
-      ),
+        res.json()),
   })
 
 

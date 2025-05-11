@@ -1,0 +1,69 @@
+import React from 'react';
+import { useQuery } from '@tanstack/react-query';
+
+const baseURL = import.meta.env.VITE_BASE_URL;
+
+const fetchWorkingMembers = async (postID) => {
+  const response = await fetch(`${baseURL}/getInPosts/${postID}`);
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+  return response.json();
+};
+
+function WorkingMembers({ postID }) {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['workingMembers', postID],
+    queryFn: () => fetchWorkingMembers(postID),
+    enabled: !!postID,
+  });
+
+  if (isLoading) {
+    return <div>Loading working members...</div>;
+  }
+
+  if (error) {
+    return <div>Error loading working members: {error.message}</div>;
+  }
+
+  if (!data?.accept || data.accept.length === 0) {
+    return <div>No working members found</div>;
+  }
+
+  return (
+    <div className="working-members-container">
+      <h3 className="text-lg font-semibold mb-4">Working Members</h3>
+      <div className="grid gap-4">
+        {data.accept.map((member) => (
+          <div key={member.memberID} className="member-card bg-white p-4 rounded-lg shadow">
+            <div className="flex items-center gap-4">
+              <div className="profile-picture">
+                <img 
+                  src={member.members.profile_picture || '/default-avatar.png'} 
+                  alt={`${member.members.fname}'s profile`}
+                  className="w-12 h-12 rounded-full object-cover"
+                />
+              </div>
+              <div className="member-info">
+                <h4 className="font-medium">{member.members.fname} {member.members.lname}</h4>
+                <div className="contact-info text-sm text-gray-600">
+                  {member.members.phone_number && (
+                    <p>Phone: {member.members.phone_number}</p>
+                  )}
+                  {member.members.line && (
+                    <p>Line: {member.members.line}</p>
+                  )}
+                  {member.members.email && (
+                    <p>Email: {member.members.email}</p>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default WorkingMembers; 
