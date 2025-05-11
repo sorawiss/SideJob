@@ -134,26 +134,43 @@ router.patch('/updateAcceptStatus', async (req, res) => {
 // Set False
 router.patch('/setFalse', async (req, res) => {
     try {
-        const { postID, memberID } = req.body;
+        const { postID, memberID, status } = req.body;
 
-        const { data, error } = await supabase
-            .from('accept')
-            .update({ status: true })
-            .eq('postID', postID)
-            .eq('memberID', memberID)
-            .select()
-            .single()
+        if (status === false) {
+            // Delete the record if status is false
+            const { error: deleteError } = await supabase
+                .from('accept')
+                .delete()
+                .eq('postID', postID)
+                .eq('memberID', memberID);
 
-        if (error) {
-            console.error("Error in setFalse:", error);
-            return res.status(500).json({ message: 'Failed to set false', error: error.message });
+            if (deleteError) {
+                console.error("Error in deleting record:", deleteError);
+                return res.status(500).json({ message: 'Failed to delete record', error: deleteError.message });
+            }
+
+            return res.status(200).json({ message: 'Record deleted successfully' });
+        } else {
+            // Update the record if status is true
+            const { data, error } = await supabase
+                .from('accept')
+                .update({ status: status })
+                .eq('postID', postID)
+                .eq('memberID', memberID)
+                .select()
+                .single();
+
+            if (error) {
+                console.error("Error in setFalse:", error);
+                return res.status(500).json({ message: 'Failed to update status', error: error.message });
+            }
+
+            if (!data) {
+                return res.status(404).json({ message: 'Accept record not found' });
+            }
+
+            return res.status(200).json({ message: 'Status updated successfully', data });
         }
-
-        if (!data) {
-            return res.status(404).json({ message: 'Accept record not found' });
-        }
-
-        return res.status(200).json({ message: 'Set false successfully', data });
     }
     catch (err) {
         console.error("Error in setFalse:", err);

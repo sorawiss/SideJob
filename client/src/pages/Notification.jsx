@@ -24,13 +24,13 @@ const fetchNotifications = async (userId) => {
 
 
 // Set False
-const setFalse = async ({ postID, memberID }) => {
-  const response = await fetch(`${baseURL}/acceptSystem/setFalse`, {
+const setFalse = async ({ postID, memberID, status }) => {
+  const response = await fetch(`${baseURL}/setFalse`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ postID, memberID }),
+    body: JSON.stringify({ postID, memberID, status }),
     credentials: 'include',
   });
 
@@ -51,6 +51,7 @@ function Notification() {
   const queryClient = useQueryClient();
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [isAcceptDialog, setIsAcceptDialog] = useState(false);
 
   const { data, error, isLoading, isError } = useQuery({
     queryKey: ['notifications', id],
@@ -65,6 +66,7 @@ function Notification() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['notifications', id] });
       setIsConfirmOpen(false);
+      setIsAcceptDialog(false);
     },
   });
 
@@ -107,6 +109,10 @@ function Notification() {
                   {/* Yes SVG */}
                   <svg width="25" height="26" viewBox="0 0 25 26" fill="none" xmlns="http://www.w3.org/2000/svg"
                     className='cursor-pointer'
+                    onClick={() => {
+                      setSelectedItem(items);
+                      setIsAcceptDialog(true);
+                    }}
                   >
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M12.5 25.5C14.1415 25.5 15.767 25.1767 17.2835 24.5485C18.8001 23.9203 20.1781 22.9996 21.3388 21.8388C22.4996 20.6781 23.4203 19.3001 24.0485 17.7835C24.6767 16.267 25 14.6415 25 13C25 11.3585 24.6767 9.73303 24.0485 8.21646C23.4203 6.69989 22.4996 5.3219 21.3388 4.16116C20.1781 3.00043 18.8001 2.07969 17.2835 1.45151C15.767 0.823322 14.1415 0.5 12.5 0.5C9.18479 0.5 6.00537 1.81696 3.66117 4.16116C1.31696 6.50537 0 9.68479 0 13C0 16.3152 1.31696 19.4946 3.66117 21.8388C6.00537 24.183 9.18479 25.5 12.5 25.5ZM12.1778 18.0556L19.1222 9.72222L16.9889 7.94444L11.0167 15.1097L7.92639 12.0181L5.9625 13.9819L10.1292 18.1486L11.2042 19.2236L12.1778 18.0556Z" fill="#2E2E38" />
                   </svg>
@@ -131,6 +137,7 @@ function Notification() {
         })}
       </div>
 
+      {/* Reject Dialog */}
       <ConfirmDialog 
         open={isConfirmOpen} 
         onClose={() => setIsConfirmOpen(false)} 
@@ -139,7 +146,24 @@ function Notification() {
           if (selectedItem) {
             mutation.mutate({ 
               postID: selectedItem.postID, 
-              memberID: selectedItem.members.id 
+              memberID: selectedItem.members.id,
+              status: false
+            });
+          }
+        }} 
+      />
+
+      {/* Accept Dialog */}
+      <ConfirmDialog 
+        open={isAcceptDialog} 
+        onClose={() => setIsAcceptDialog(false)} 
+        body="ต้องการยอมรับการร่วมงานหรือไม่" 
+        onConfirm={() => {
+          if (selectedItem) {
+            mutation.mutate({ 
+              postID: selectedItem.postID, 
+              memberID: selectedItem.members.id,
+              status: true
             });
           }
         }} 
