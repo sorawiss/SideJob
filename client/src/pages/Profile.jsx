@@ -145,7 +145,7 @@ function Profile() {
       {/* Working Posts */}
       {data.accept && (
         <div className='post-grid-container bg-primarylight flex flex-col items-center gap-[1rem]'>
-          <h2 className="text-xl font-semibold text-primarydark">งานที่กำลังทำ</h2>
+          <h2 className="text-xl font-semibold text-primarydark">งานที่ทำ</h2>
           {data.accept
             .filter(acceptItem => acceptItem.status === true)
             .length > 0 ? (
@@ -176,7 +176,7 @@ function Profile() {
                   );
                 })
             ) : (
-              <p className="text-secondary">ยังไม่มีงานที่กำลังทำ</p>
+              <p className="text-secondary">ยังไม่มีงานที่ทำ</p>
             )}
         </div>
       )}

@@ -34,11 +34,11 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
     const { currentUser } = useContext(AuthContext)
 
     const isAcceptedByCurrentUser = useMemo(() => {
-        if (!currentUser) {
+        if (!currentUser || !accept) {
             return false
         }
         return accept.some((acc) => acc.memberID === currentUser.id)
-    }, [accept])
+    }, [accept, currentUser])
 
     return (
         <div className='Inpost-object-container w-[30rem] bg-white p-[1rem] rounded-[16px] flex flex-col gap-[5rem] p-1rem min-h-screen '>

@@ -27,14 +27,21 @@ function WorkingMembers({ postID }) {
   }
 
   if (!data?.accept || data.accept.length === 0) {
-    return <div>No working members found</div>;
+    return <div>ไม่มีผู้ที่ร่วมงานนี้</div>;
+  }
+
+  // Filter accept records where status is true
+  const acceptedMembers = data.accept.filter(item => item.status === true);
+  
+  if (acceptedMembers.length === 0) {
+    return <div>ไม่มีผู้ที่ร่วมงานนี้</div>;
   }
 
   return (
     <div className="working-members-container flex flex-col gap-4 justify-center items-center ">
       <h2 className="b-4">ผู้ที่ทำงานนี้</h2>
       <div className="grid gap-4">
-        {data.accept.map((member) => (
+        {acceptedMembers.map((member) => (
           <div key={member.memberID} className="member-card bg-white p-4 rounded-lg shadow">
             <div className="flex items-center gap-4">
               <div className="profile-picture">
