@@ -115,6 +115,7 @@ function Profile() {
 
 
       <div className='post-grid-container bg-primarylight flex flex-col items-center gap-[1rem]  '>
+        <h2 className="text-xl font-semibold text-primarydark">โพสต์ที่สร้าง</h2>
         {data.workPost.length > 0 ? (
           data.workPost.map((items) => (
             <PostObject
@@ -140,6 +141,47 @@ function Profile() {
           <p className="text-secondary ">ยังไม่มีโพสต์</p>
         )}
       </div>
+
+      {/* Working Posts */}
+      {data.accept && (
+        <div className='post-grid-container bg-primarylight flex flex-col items-center gap-[1rem]'>
+          <h2 className="text-xl font-semibold text-primarydark">งานที่กำลังทำ</h2>
+          {data.accept
+            .filter(acceptItem => acceptItem.status === true)
+            .length > 0 ? (
+              data.accept
+                .filter(acceptItem => acceptItem.status === true)
+                .map((acceptItem) => {
+                  const workPost = acceptItem.workPost;
+                  if (!workPost) return null;
+                  
+                  return (
+                    <PostObject
+                      key={workPost.postID}
+                      posterID={workPost.posterID}
+                      postDate={workPost.postDate}
+                      title={workPost.title}
+                      detail={workPost.details}
+                      price={workPost.salary}
+                      profilePic={workPost.members?.profile_picture}
+                      fname={workPost.members?.fname}
+                      lname={workPost.members?.lname}
+                      category={workPost.category?.name}
+                      location={workPost.location}
+                      rating={workPost.review}
+                      images={workPost.picture}
+                      postID={workPost.postID}
+                      isJob={workPost.isJob}
+                    />
+                  );
+                })
+            ) : (
+              <p className="text-secondary">ยังไม่มีงานที่กำลังทำ</p>
+            )}
+        </div>
+      )}
+
+      {/* Working Members */}
     </div>
   )
 }
