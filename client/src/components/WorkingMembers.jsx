@@ -31,8 +31,8 @@ function WorkingMembers({ postID }) {
   }
 
   return (
-    <div className="working-members-container">
-      <h3 className="text-lg font-semibold mb-4">Working Members</h3>
+    <div className="working-members-container flex flex-col gap-4 justify-center items-center ">
+      <h2 className="b-4">ผู้ที่ทำงานนี้</h2>
       <div className="grid gap-4">
         {data.accept.map((member) => (
           <div key={member.memberID} className="member-card bg-white p-4 rounded-lg shadow">

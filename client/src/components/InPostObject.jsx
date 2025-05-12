@@ -172,8 +172,7 @@ function InPostObject({ postDate, title, details, salary, location, picture, pos
 
 
                 {/* Worker SECTION */}
-                <div className={style.workerSection } >
-                    <h2>ผู้ที่ทำงานนี้</h2>
+                <div className=" " >
                     <WorkingMembers postID={postID} />
                 </div>
             </div>
