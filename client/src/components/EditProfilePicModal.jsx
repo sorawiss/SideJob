@@ -8,7 +8,7 @@ import {
     DialogBody,
 } from "@material-tailwind/react"
 
-function EditProfilePicModal({ profile_picture }) {
+function EditProfilePicModal({ profile_picture }) {  
     const [open, setOpen] = useState(false)
     const { login } = useContext(AuthContext)
     
